@@ -15,8 +15,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 	<!-- Google Font -->
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
 	<link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
@@ -38,9 +37,11 @@
 	<!--Pre-loader page animation-->
 	<div class="pre-loader">
 		<div class="pre-loader-box">
-			<div class="loader-logo"><Strong>
+			<div class="loader-logo">
+				<Strong>
 					<h1>TheWhiteFrost</h1>
-				</Strong></div>
+				</Strong>
+			</div>
 			<div class='loader-progress' id="progress_div">
 				<div class='bar' id='bar1'></div>
 			</div>
@@ -67,15 +68,19 @@
 						<span class="user-name">Ross C. Lopez</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-						<a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Thông Tin tài khoản</a>
-						<a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Trợ giúp</a>
-						<a class="dropdown-item" href="login.html"><i class="dw dw-logout"></i> Đăng Xuất</a>
+						<a class="dropdown-item" href="profile.html">
+							<i class="dw dw-user1"></i> Thông Tin tài khoản</a>
+						<a class="dropdown-item" href="faq.html">
+							<i class="dw dw-help"></i> Trợ giúp</a>
+						<a class="dropdown-item" href="login.html">
+							<i class="dw dw-logout"></i> Đăng Xuất</a>
 					</div>
 				</div>
 			</div>
 			<div class="github-link">
-				<a href="https://github.com/dropways/deskapp" target="_blank"><img src="vendors/images/github.svg"
-						alt=""></a>
+				<a href="https://github.com/dropways/deskapp" target="_blank">
+					<img src="vendors/images/github.svg" alt="">
+				</a>
 			</div>
 		</div>
 	</div>
@@ -95,26 +100,34 @@
 				<ul id="accordion-menu">
 					<li class="dropdown">
 						<a href="layout.html" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-house-1"></span><span class="mtext">Trang Chủ</span>
+							<span class="micon dw dw-house-1"></span>
+							<span class="mtext">Trang Chủ</span>
 						</a>
 					</li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-edit2"></span><span class="mtext">Báo Cáo</span>
+							<span class="micon dw dw-edit2"></span>
+							<span class="mtext">Báo Cáo</span>
 						</a>
 					</li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-library"></span><span class="mtext">Dữ Liệu</span>
+							<span class="micon dw dw-library"></span>
+							<span class="mtext">Dữ Liệu</span>
 						</a>
 						<ul class="submenu">
-							<li><a href="layout-project-list.html">Dự Án</a></li>
-							<li><a href="layout-staff-list.html">Nhân Viên</a></li>
+							<li>
+								<a href="layout-project-list.html">Dự Án</a>
+							</li>
+							<li>
+								<a href="layout-staff-list.html">Nhân Viên</a>
+							</li>
 						</ul>
 					</li>
 					<li>
 						<a href="calendar.html" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-calendar1"></span><span class="mtext">Lịch</span>
+							<span class="micon dw dw-calendar1"></span>
+							<span class="mtext">Lịch</span>
 						</a>
 					</li>
 				</ul>
@@ -124,15 +137,47 @@
 	<div class="mobile-menu-overlay"></div>
 
 	<div class="main-container">
+		<!--form Thông tin chỉnh sửa-->
+		<div class="collapse" id="basic-table">
+			<form class="card card-body">
+				<div class="row">
+					<div class="col-md-4 col-sm-12">
+						<label for="">Mã dự án</label>
+						<input type="text" class="form-control">
+					</div>
+					<div class="col-md-4 col-sm-12">
+						<label for="">Tên dự án</label>
+						<input type="text" class="form-control">
+					</div>
+					<div class="col-md-4 col-sm-12">
+						<label for="">Số nhân viên tham gia</label>
+						<input type="text" class="form-control">
+					</div>
+					<div class="col-md-4 col-sm-12">
+						<label for="">Số ngày đã thực hiện</label>
+						<input type="text" class="form-control">
+					</div>
+					<div class="col-md-4 col-sm-12">
+						<label for="">Số ngày kết thúc</label>
+						<input type="text" class="form-control date-picker">
+					</div>
+					<div class="col-md-12 col-sm-12" style="margin-top:30px;">
+						<button type="button" class="btn btn-primary ">Cập nhật</button>
+					</div>
+				</div>
+			</form>
+		</div>
 		<!-- basic table  Start -->
 		<div class="pd-20 card-box mb-30">
 			<div class="clearfix mb-20">
 				<div class="pull-left">
-					<h4 class="text-blue h4"><Strong>DANH SÁCH DỰ ÁN</Strong></h4>
+					<h4 class="text-blue h4">
+						<Strong>DANH SÁCH DỰ ÁN</Strong>
+					</h4>
 				</div>
 				<div class="pull-right">
-					<a href="#basic-table" class="btn btn-primary btn-sm scroll-click" rel="content-y"
-						data-toggle="collapse" role="button">Chỉnh sửa</a>
+					<a href="#basic-table" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="collapse" role="button">Chỉnh sửa
+					</a>
 				</div>
 			</div>
 			<table class="table">
@@ -155,11 +200,16 @@
 						<td>5</td>
 						<td>18/5/2021</td>
 						<td>5</td>
-						<td><span class="badge badge-success">Đã Hoàn Thành</span></td>
+						<td>
+							<span class="badge badge-success">Đã Hoàn Thành</span>
+						</td>
 					</tr>
 				</tbody>
 			</table>
+
 		</div>
+
+
 		<!-- js -->
 		<script src="vendors/scripts/core.js"></script>
 		<script src="vendors/scripts/script.min.js"></script>
