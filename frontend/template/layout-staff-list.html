@@ -84,7 +84,7 @@
 	<!--Side menu-->
 	<div class="left-side-bar">
 		<div class="brand-logo">
-			<a href="layout.html">
+			<a href="index3.html">
 				<strong>TheWhiteFrost</strong>
 			</a>
 			<div class="close-sidebar" data-toggle="left-sidebar-close">
@@ -95,7 +95,7 @@
 			<div class="sidebar-menu">
 				<ul id="accordion-menu">
 					<li class="dropdown">
-						<a href="layout.html" class="dropdown-toggle no-arrow">
+						<a href="index3.html" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-house-1"></span><span class="mtext">Trang Chủ</span>
 						</a>
 					</li>
@@ -105,7 +105,7 @@
 						</a>
 					</li>
 					<li class="dropdown">
-						<a href="javascript:;" class="dropdown-toggle">
+						<a href="rptext.html" class="dropdown-toggle">
 							<span class="micon dw dw-library"></span><span class="mtext">Dữ Liệu</span>
 						</a>
 						<ul class="submenu">
@@ -122,10 +122,11 @@
 			</div>
 		</div>
 	</div>
+	
 	<div class="mobile-menu-overlay"></div>
 
 	<div class="main-container">
-		<!-- basic table  Start -->
+		<!-- Table staffs list -->
 		<div class="pd-20 card-box mb-30">
 			<div class="clearfix mb-20">
 				<div class="pull-left">
@@ -133,96 +134,196 @@
 				</div>
 				<div class="pull-right">
 					<a href="#collapseExample" class="btn btn-primary btn-sm scroll-click" rel="content-y"
-						data-toggle="collapse" role="button">Thêm mới</a>
+						data-toggle="modal" data-target="#addStaffModal" role="button">Thêm mới</a>
 				</div>
 				<div class="pull-right mr-2">
-					<a href="#" class="btn btn-primary btn-sm scroll-click" rel="content-y"
-						data-toggle="collapse" role="button">Chỉnh sửa</a>
+					<button id="editButton" type="button" class="btn btn-sm btn-primary" disabled
+					data-toggle="modal" data-target="#editStaffModal">Chỉnh sửa</button>
 				</div>
 				<div class="pt-5">
 					<input type="text" name="search" id="staffSearch" 
-					placeholder="Tìm kiếm nhân viên..." class="form-control">
+					placeholder="Tìm kiếm nhân viên...">
 				</div>
 			</div>
 
-			<!--Form edit collapse-->
-			<form action="">
-				<div class="form-group">
-					<div class="collapse" id="collapseExample">
-						<div class="pd-20 card-box mb-30">
-							<div class="clearfix">
-								<h4 class="text-blue h4">Thêm nhân viên</h4>
-							</div>
-							<div class="wizard-content">
-								<form class="tab-wizard wizard-circle wizard">
-									<section>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Mã nhân viên :</label>
-													<input type="text" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Họ và tên :</label>
-													<input type="text" class="form-control">
-												</div>
-											</div>
+			<!--Add staff modal model-->
+			<div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" 
+			aria-labelledby="myLargeModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myLargeModalLabel">Thêm nhân viên</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						</div>
+						<div class="modal-body">
+							<form action="">
+								<div class="form-group">
+									<div class="pd-20 card-box mb-30">
+										<div class="wizard-content">
+											<form class="tab-wizard wizard-circle wizard">
+												<section>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Mã nhân viên :</label>
+																<input type="text" class="form-control">
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Họ và tên :</label>
+																<input type="text" class="form-control">
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Số điện thoại :</label>
+																<input type="text" class="form-control">
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Email :</label>
+																<input type="email" class="form-control">
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Địa chỉ :</label>
+																<input type="text" class="form-control">
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Quốc tịch :</label>
+																<input type="text" class="form-control">
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Ngày sinh :</label>
+																<input type="text" class="form-control date-picker" placeholder="Select Date">
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Giới tính :</label>
+																<br>
+																<input type="radio" name="gender" id="genderRadio" checked> Nam
+																<input type="radio" name="gender" id="genderRadio"> Nữ
+															</div>
+														</div>
+													</div>
+												</section>
+											</form>
 										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Số điện thoại :</label>
-													<input type="text" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Email :</label>
-													<input type="text" class="form-control">
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Địa chỉ :</label>
-													<input type="email" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Quốc tịch :</label>
-													<input type="text" class="form-control">
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Ngày sinh :</label>
-													<input type="text" class="form-control date-picker" placeholder="Select Date">
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Giới tính :</label>
-													<br>
-													<input type="radio" name="gender" id="genderRadio" checked> Nam
-													<input type="radio" name="gender" id="genderRadio"> Nữ
-												</div>
-											</div>
-										</div>
-									</section>
-								</form>
-							</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+							<button type="button" class="btn btn-primary">Lưu</button>
 						</div>
 					</div>
 				</div>
-			</form>
+			</div>
 
-			<table class="table">
+			<!--Edit staff modal model-->
+			<div class="modal fade" id="editStaffModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myLargeModalLabel">Thông tin nhân viên</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						</div>
+						<div class="modal-body">
+							<form action="">
+								<div class="form-group">
+									<div class="pd-20 card-box mb-30">
+										<div class="wizard-content">
+											<form class="tab-wizard wizard-circle wizard">
+												<section>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Mã nhân viên :</label>
+																<input disabled type="text" class="form-control" value="NV002">
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Họ và tên :</label>
+																<input disabled type="text" class="form-control" value="Emryh Var Emreis">
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Số điện thoại :</label>
+																<input type="text" class="form-control" value="0123456789">
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Email :</label>
+																<input type="email" class="form-control" value="Example@email.com">
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Địa chỉ :</label>
+																<input type="text" class="form-control" value="Trái Đất">
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Quốc tịch :</label>
+																<input type="text" class="form-control" value="Tây Ban Nha">
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Ngày sinh :</label>
+																<input type="text" class="form-control date-picker" placeholder="Select Date" value="20/5/1981">
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Giới tính :</label>
+																<br>
+																<input type="radio" name="gender" id="genderRadio" checked> Nam
+																<input type="radio" name="gender" id="genderRadio"> Nữ
+															</div>
+														</div>
+													</div>
+												</section>
+											</form>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+							<button type="button" class="btn btn-primary">Lưu</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<table id="tableItems" class="table">
 				<thead>
 					<tr>
 						<th>Mã Nhân Viên</th>
@@ -235,7 +336,7 @@
 						<th>Dự Án Đang Tham Gia</th>
 					</tr>
 				</thead>
-				<tbody id="staffsTable">
+				<tbody id="staffsTableBody">
 					<tr>
 						<td>NV001</td>
 						<td>Iker Casillas</td>
@@ -258,18 +359,7 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-
-		<!--<script>
-			$(document).ready(function () {
-				$("#staffSearch").on("keyup", function () {
-					var value = $(this).val().toLowerCase();
-					$("#staffsTable tr").filter(function () {
-						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-					});
-				});
-			});
-		</script>-->
+	</div>
 		
 		<!-- js -->
 		<script src="vendors/scripts/core.js"></script>
