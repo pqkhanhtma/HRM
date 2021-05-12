@@ -1,5 +1,5 @@
 $(".dial1").knob();
-$({animatedVal: 0}).animate({animatedVal: 80}, {
+$({animatedVal: 0}).animate({animatedVal: 40}, {
 	duration: 3000,
 	easing: "swing",
 	step: function() {
@@ -8,7 +8,7 @@ $({animatedVal: 0}).animate({animatedVal: 80}, {
 });
 
 $(".dial2").knob();
-$({animatedVal: 0}).animate({animatedVal: 70}, {
+$({animatedVal: 0}).animate({animatedVal: 30}, {
 	duration: 3000,
 	easing: "swing",
 	step: function() {
@@ -17,7 +17,7 @@ $({animatedVal: 0}).animate({animatedVal: 70}, {
 });
 
 $(".dial3").knob();
-$({animatedVal: 0}).animate({animatedVal: 90}, {
+$({animatedVal: 0}).animate({animatedVal: 10}, {
 	duration: 3000,
 	easing: "swing",
 	step: function() {
@@ -26,7 +26,7 @@ $({animatedVal: 0}).animate({animatedVal: 90}, {
 });
 
 $(".dial4").knob();
-$({animatedVal: 0}).animate({animatedVal: 65}, {
+$({animatedVal: 0}).animate({animatedVal: 20}, {
 	duration: 3000,
 	easing: "swing",
 	step: function() {
@@ -102,7 +102,7 @@ Highcharts.chart('chart', {
 		y: 0
 	},
 	series: [{
-		name: 'Twitter',
+		name: 'Web demo',
 		color: '#00789c',
 		marker: {
 			symbol: 'circle'
@@ -110,28 +110,12 @@ Highcharts.chart('chart', {
 		data: [0, 10, 5, 30, 40, 20, 10]
 	},
 	{
-		name: 'Facebook',
-		color: '#236adc',
-		marker: {
-			symbol: 'circle'
-		},
-		data: [40, 20, 10, 40, 15, 15, 20]
-	},
-	{
-		name: 'Chat',
+		name: 'Mobile game',
 		color: '#ff686b',
 		marker: {
 			symbol: 'circle'
 		},
 		data: [0, 15, 5, 30, 40, 30, 28]
-	},
-	{
-		name: 'Forum',
-		color: '#264653',
-		marker: {
-			symbol: 'circle'
-		},
-		data: [35, 25, 10, 40, 15, 5, 38]
 	}]
 });
 Highcharts.chart('compliance-trend', {
