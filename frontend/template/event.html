@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Basic Page Info -->
+	<meta charset="utf-8">
+	<title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+
+	<!-- Site favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="vendors/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="vendors/images/favicon-16x16.png">
+
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
+	<link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="src/plugins/fullcalendar/fullcalendar.css">
+	<link rel="stylesheet" type="text/css" href="vendors/styles/style.css">
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-119386393-1');
+	</script>
+</head>
+<body>
+	<!--Pre-loader page animation-->
+	<!-- <div class="pre-loader">
+		<div class="pre-loader-box">
+			<div class="loader-logo"><Strong><h1>TheWhiteFrost</h1></Strong></div>
+			<div class='loader-progress' id="progress_div">
+				<div class='bar' id='bar1'></div>
+			</div>
+			<div class='percent' id='percent1'>0%</div>
+			<div class="loading-text">
+				Loading...
+			</div>
+		</div>
+	</div> -->
+
+	<!--Header-->
+	<div class="header">
+		<div class="header-left">
+			<div class="menu-icon dw dw-menu"></div>
+			<div class="search-toggle-icon dw dw-search2" data-toggle="header_search"></div>
+		</div>
+		<div class="header-right">
+			<div class="user-info-dropdown">
+				<div class="dropdown">
+					<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+						<span class="user-icon">
+							<img src="vendors/images/photo1.jpg" alt="">
+						</span>
+						<span class="user-name">Emryh Var Emreis</span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+						<a class="dropdown-item" href="staff_info.html"><i class="dw dw-user1"></i> Thông Tin tài khoản</a>
+						<a class="dropdown-item" href="#"><i class="dw dw-help"></i> Trợ giúp</a>
+						<a class="dropdown-item" href="login.html"><i class="dw dw-logout"></i> Đăng Xuất</a>
+					</div>
+				</div>
+			</div>
+			<div class="github-link">
+				<a href="https://github.com/dropways/deskapp" target="_blank"><img src="vendors/images/github.svg"
+						alt=""></a>
+			</div>
+		</div>
+	</div>
+
+	<!--Side menu-->
+	<div class="left-side-bar">
+		<div class="brand-logo">
+			<a href="index2.html">
+				<strong>TheWhiteFrost</strong>
+			</a>
+			<div class="close-sidebar" data-toggle="left-sidebar-close">
+				<i class="ion-close-round"></i>
+			</div>
+		</div>
+		<div class="menu-block customscroll">
+			<div class="sidebar-menu">
+				<ul id="accordion-menu">
+					<li class="dropdown">
+						<a href="index2.html" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-house-1"></span><span class="mtext">Trang Chủ</span>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a href="html5-editor.html" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-edit2"></span><span class="mtext">Báo Cáo</span>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon dw dw-library"></span><span class="mtext">Dữ Liệu</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="layout-project-list.html">Dự Án</a></li>
+							<li><a href="layout-staff-list.html">Nhân Viên</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="event.html" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-calendar1"></span><span class="mtext">Sự kiện</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="mobile-menu-overlay"></div>
+
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+				<div class="pd-20 card-box mb-30">
+					<div class="calendar-wrap">
+						<div id='calendar'></div>
+					</div>
+					<!-- calendar modal -->
+					<div id="modal-view-event" class="modal modal-top fade calendar-modal">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-body">
+									<h4 class="h4"><span class="event-icon weight-400 mr-3"></span><span class="event-title"></span></h4>
+									<div class="event-body"></div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<form id="add-event">
+									<div class="modal-body">
+										<h4 class="text-blue h4 mb-10">Chi tiết sự kiện</h4>
+										<div class="form-group">
+											<label>Tên sự kiện</label>
+											<input type="text" class="form-control" name="ename">
+										</div>
+										<div class="form-group">
+											<label>Ngày bắt đầu</label>
+											<input type='text' class="datetimepicker form-control" name="edate">
+										</div>
+										<div class="form-group">
+											<label>Ngày kết thúc</label>
+											<input type='text' class="datetimepicker form-control" name="edate">
+										</div>
+										<div class="form-group">
+											<label>Thông tin sự kiện</label>
+											<textarea class="form-control" name="edesc"></textarea>
+										</div>
+										<div class="form-group">
+											<label>Sự kiện</label>
+											<select class="form-control" name="ecolor">
+												<option >Đi công tác</option>
+												<option >Ngày nghỉ lễ</option>
+												<option >Tham quan</option>
+												<option >Tổ chức dã ngoại</option>
+												<option >Các cuộc họp quan trọng</option>
+											</select>
+										</div>
+										
+									</div>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-primary" >Lưu</button>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="footer-wrap pd-20 mb-20 card-box">
+				DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
+			</div>
+		</div>
+	</div>
+	<!-- js -->
+	<script src="vendors/scripts/core.js"></script>
+	<script src="vendors/scripts/script.min.js"></script>
+	<script src="vendors/scripts/process.js"></script>
+	<script src="vendors/scripts/layout-settings.js"></script>
+	<script src="src/plugins/fullcalendar/fullcalendar.min.js"></script>
+	<script src="vendors/scripts/calendar-setting.js"></script>
+</body>
+</html>
