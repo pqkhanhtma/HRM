@@ -4,7 +4,7 @@
 <head>
 	<!-- Basic Page Info -->
 	<meta charset="utf-8">
-	<title>TheWhiteFrost</title>
+	<title>Web Quan ly nhan vien - Quan ly du an</title>
 
 	<!-- Site favicon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png">
@@ -65,7 +65,7 @@
 						<span class="user-icon">
 							<img src="vendors/images/photo1.jpg" alt="">
 						</span>
-						<span class="user-name">Ross C. Lopez</span>
+						<span class="user-name">Emryh Var Emreis</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="profile.html">
@@ -179,6 +179,10 @@
 					<a href="#basic-table" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="collapse" role="button">Chỉnh sửa
 					</a>
 				</div>
+				<div class="pt-5">
+					<input type="text" name="search" id="projectSearch" 
+					placeholder="Tìm kiếm dự án..." class="form-control">
+				</div>
 			</div>
 			<table class="table">
 				<thead>
@@ -191,12 +195,10 @@
 						<th scope="col">Tình trạng</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="projectsTable">
 					<tr>
-						<th scope="row">001</th>
-						<td>
-							<div contenteditable>web demo</div>
-						</td>
+						<td>DA001</td>
+						<td>Web demo</td>
 						<td>5</td>
 						<td>18/5/2021</td>
 						<td>5</td>
@@ -204,11 +206,17 @@
 							<span class="badge badge-success">Đã Hoàn Thành</span>
 						</td>
 					</tr>
+					<tr>
+						<td>DA002</td>
+						<td>Mobile Game</td>
+						<td>14</td>
+						<td>5/4/2022</td>
+						<td>20</td>
+						<td><span class="badge badge-warning">Đang thực hiện</span></td>
+					</tr>
 				</tbody>
 			</table>
-
 		</div>
-
 
 		<!-- js -->
 		<script src="vendors/scripts/core.js"></script>
@@ -221,6 +229,7 @@
 		<script src="src/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
 		<script src="src/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 		<script src="vendors/scripts/dashboard2.js"></script>
+		<script src="./src/scripts/mySript.js"></script>
 </body>
 
 </html>

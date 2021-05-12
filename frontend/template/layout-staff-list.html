@@ -4,7 +4,7 @@
 <head>
 	<!-- Basic Page Info -->
 	<meta charset="utf-8">
-	<title>TheWhiteFrost</title>
+	<title>Web Quan ly nhan vien - Quan ly du an</title>
 
 	<!-- Site favicon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png">
@@ -25,6 +25,7 @@
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() { dataLayer.push(arguments); }
@@ -64,7 +65,7 @@
 						<span class="user-icon">
 							<img src="vendors/images/photo1.jpg" alt="">
 						</span>
-						<span class="user-name">Ross C. Lopez</span>
+						<span class="user-name">Emryh Var Emreis</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Thông Tin tài khoản</a>
@@ -128,16 +129,110 @@
 		<div class="pd-20 card-box mb-30">
 			<div class="clearfix mb-20">
 				<div class="pull-left">
-					<h4 class="text-blue h4"><Strong>THÔNG TIN NHÂN VIÊN</Strong></h4>
+					<h4 class="text-blue h4"><Strong>DANH SÁCH NHÂN VIÊN</Strong></h4>
 				</div>
+				<div class="pull-right">
+					<a href="#collapseExample" class="btn btn-primary btn-sm scroll-click" rel="content-y"
+						data-toggle="collapse" role="button">Thêm mới</a>
+				</div>
+<<<<<<< HEAD
 				<div class="pull-right">
 					<a href="#basic-table" class="btn btn-primary btn-sm scroll-click" rel="content-y"
 						data-toggle="collapse" role="button">Chỉnh sửa</a>
 				</div>
+=======
+				<div class="pull-right mr-2">
+					<a href="#" class="btn btn-primary btn-sm scroll-click" rel="content-y"
+						data-toggle="collapse" role="button">Chỉnh sửa</a>
+				</div>
+				<div class="pt-5">
+					<input type="text" name="search" id="staffSearch" 
+					placeholder="Tìm kiếm nhân viên..." class="form-control">
+				</div>
+>>>>>>> 82a7941899114d153057b0162fc04436f3792f18
 			</div>
+
+			<!--Form edit collapse-->
+			<form action="">
+				<div class="form-group">
+					<div class="collapse" id="collapseExample">
+						<div class="pd-20 card-box mb-30">
+							<div class="clearfix">
+								<h4 class="text-blue h4">Thêm nhân viên</h4>
+							</div>
+							<div class="wizard-content">
+								<form class="tab-wizard wizard-circle wizard">
+									<section>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Mã nhân viên :</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Họ và tên :</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Số điện thoại :</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Email :</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Địa chỉ :</label>
+													<input type="email" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Quốc tịch :</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Ngày sinh :</label>
+													<input type="text" class="form-control date-picker" placeholder="Select Date">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label>Giới tính :</label>
+													<br>
+													<input type="radio" name="gender" id="genderRadio" checked> Nam
+													<input type="radio" name="gender" id="genderRadio"> Nữ
+												</div>
+											</div>
+										</div>
+									</section>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+
 			<table class="table">
 				<thead>
 					<tr>
+<<<<<<< HEAD
 						<th scope="col">Mã Nhân Viên</th>
 						<th scope="col">Tên Nhân Viên</th>
 						<th scope="col">Giới Tính</th>
@@ -147,25 +242,48 @@
 						<th scope="col">Số Điện Thoại</th>
 						<th scope="col">Dự Án Đang Tham Gia</th>
 						<th scope="col"></th>
+=======
+						<th>Mã Nhân Viên</th>
+						<th>Tên Nhân Viên</th>
+						<th>Giới Tính</th>
+						<th>Ngày Sinh</th>
+						<th>Quốc Tịch</th>
+						<th>Địa Chỉ</th>
+						<th>Số Điện Thoại</th>
+						<th>Dự Án Đang Tham Gia</th>
+>>>>>>> 82a7941899114d153057b0162fc04436f3792f18
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="staffsTable">
 					<tr>
-						<th scope="row">NV001</th>
-						<td>
-							<div contenteditable>Iker Casillas</div>
-						</td>
+						<td>NV001</td>
+						<td>Iker Casillas</td>
 						<td>Nam</td>
 						<td>20/5/1981</td>
 						<td>Tây Ban Nha</td>
 						<td>Thủ Đô Mardid</td>
 						<td>0123456789</td>
+<<<<<<< HEAD
 						<td>Web Demo</td>
 						<td><a href="staff_info.html" class="btn btn-light btn-sm"><strong>...</strong></a></td>
+=======
+						<td>Web demo</td>
+					</tr>
+					<tr>
+						<td>NV002</td>
+						<td>Emryh Var Emreis</td>
+						<td>Nam</td>
+						<td>20/5/1981</td>
+						<td>Tây Ban Nha</td>
+						<td>Thủ Đô Mardid</td>
+						<td>0123456789</td>
+						<td>Mobile game</td>
+>>>>>>> 82a7941899114d153057b0162fc04436f3792f18
 					</tr>
 				</tbody>
 			</table>
 		</div>
+<<<<<<< HEAD
 		<div class="mobile-menu-overlay"></div>
 
 	<div class="main-container">
@@ -213,6 +331,19 @@
 				</div>
 			</form>
 		</div>
+=======
+
+		<!--<script>
+			$(document).ready(function () {
+				$("#staffSearch").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#staffsTable tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+			});
+		</script>-->
+>>>>>>> 82a7941899114d153057b0162fc04436f3792f18
 		
 		<!-- js -->
 		<script src="vendors/scripts/core.js"></script>
@@ -225,6 +356,7 @@
 		<script src="src/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
 		<script src="src/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 		<script src="vendors/scripts/dashboard2.js"></script>
+		<script src="./src/scripts/mySript.js"></script>
 </body>
 
 </html>
