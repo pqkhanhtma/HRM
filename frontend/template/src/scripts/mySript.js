@@ -30,4 +30,14 @@ $(document).ready(function () {
             $(this).css('background-color', 'lightgray');
         }
     });
+
+    //Enable field in staff_info.html
+    $('#sti_editButton').click(function() {
+        $('#collapseForm').collapse('show');
+        $('#sti_infoForm input').prop('disabled', false);
+    });
+    $('#sti_cancelButton').click(function() {
+        $('#sti_infoForm input').prop('disabled', true);
+        $('#collapseForm').collapse('hide');
+    });
 });

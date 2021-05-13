@@ -15,7 +15,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 	<!-- Google Font -->
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+		rel="stylesheet">
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
 	<link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
@@ -68,7 +69,7 @@
 						<span class="user-name">Emryh Var Emreis</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-						<a class="dropdown-item" href="profile.html">
+						<a class="dropdown-item" href="staff_info.html">
 							<i class="dw dw-user1"></i> Thông Tin tài khoản</a>
 						<a class="dropdown-item" href="faq.html">
 							<i class="dw dw-help"></i> Trợ giúp</a>
@@ -136,8 +137,8 @@
 	</div>
 	<div class="mobile-menu-overlay"></div>
 
+	<!-- Table projects list and modal -->
 	<div class="main-container">
-		<!-- Table projects list -->
 		<div class="pd-20 card-box mb-30">
 			<div class="clearfix mb-20">
 				<div class="pull-left">
@@ -147,21 +148,20 @@
 				</div>
 				<div class="pull-right">
 					<button id="addButton" type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-					data-target="#addStaffModal">Thêm mới</button>
+						data-target="#addStaffModal">Thêm mới</button>
 				</div>
 				<div class="pull-right mr-2">
-					<button id="editButton" type="button" class="btn btn-sm btn-primary" disabled
-					data-toggle="modal" data-target="#editStaffModal">Chỉnh sửa</button>
+					<button id="editButton" type="button" class="btn btn-sm btn-primary" disabled data-toggle="modal"
+						data-target="#editStaffModal">Chỉnh sửa</button>
 				</div>
 				<div class="pt-5">
-					<input type="text" name="search" id="projectSearch" 
-					placeholder="Tìm kiếm dự án...">
+					<input type="text" name="search" id="projectSearch" placeholder="Tìm kiếm dự án...">
 				</div>
 			</div>
 
 			<!--Add project modal model-->
-			<div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" 
-			aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+				aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered modal-lg">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -199,7 +199,8 @@
 														<div class="col-md-6">
 															<div class="form-group">
 																<label>Ngày kết thúc :</label>
-																<input type="text" class="form-control date-picker" placeholder="Select date">
+																<input type="text" class="form-control date-picker"
+																	placeholder="Select date">
 															</div>
 														</div>
 													</div>
@@ -233,8 +234,8 @@
 			</div>
 
 			<!--Edit project modal model-->
-			<div class="modal fade" id="editStaffModal" tabindex="-1" role="dialog" 
-			aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal fade" id="editStaffModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+				aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered modal-lg">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -252,13 +253,15 @@
 														<div class="col-md-6">
 															<div class="form-group">
 																<label>Mã dự án :</label>
-																<input type="text" class="form-control" value="DA001" disabled>
+																<input type="text" class="form-control" value="DA001"
+																	disabled>
 															</div>
 														</div>
 														<div class="col-md-6">
 															<div class="form-group">
 																<label>Tên dự án :</label>
-																<input type="text" class="form-control" value="Web demo" disabled>
+																<input type="text" class="form-control" value="Web demo"
+																	disabled>
 															</div>
 														</div>
 													</div>
@@ -272,7 +275,9 @@
 														<div class="col-md-6">
 															<div class="form-group">
 																<label>Ngày kết thúc :</label>
-																<input type="text" value="18/5/2021" class="form-control date-picker" placeholder="Select date">
+																<input type="text" value="18/5/2021"
+																	class="form-control date-picker"
+																	placeholder="Select date">
 															</div>
 														</div>
 													</div>
@@ -286,7 +291,8 @@
 														<div class="col-md-6">
 															<div class="form-group">
 																<label>Tình trạng :</label>
-																<input type="text" value="Đã hoàn thành" class="form-control">
+																<input type="text" value="Đã hoàn thành"
+																	class="form-control">
 															</div>
 														</div>
 													</div>
@@ -305,6 +311,7 @@
 				</div>
 			</div>
 
+			<!--Table-->
 			<table id="tableItems" class="table">
 				<thead>
 					<tr>
@@ -339,7 +346,7 @@
 					</tr>
 				</tbody>
 			</table>
-	</div>
+		</div>
 
 		<!-- js -->
 		<script src="vendors/scripts/core.js"></script>
