@@ -73,15 +73,15 @@
 						<div class="login-title">
 							<h2 class="text-center text-primary">TheWhiteFrost</h2>
 						</div>
-						<form>
+						<form action="http://localhost:1337/auth/local" method="POST">
 							<div class="input-group custom">
-								<input type="text" class="form-control form-control-lg" placeholder="Tên tài khoản">
+								<input id="username" type="text" class="form-control form-control-lg" placeholder="Tên tài khoản">
 								<div class="input-group-append custom">
 									<span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
 								</div>
 							</div>
 							<div class="input-group custom">
-								<input type="password" class="form-control form-control-lg" placeholder="Mật khẩu">
+								<input id="password" type="password" class="form-control form-control-lg" placeholder="Mật khẩu">
 								<div class="input-group-append custom">
 									<span class="input-group-text"><i class="dw dw-padlock1"></i></span>
 								</div>
@@ -89,11 +89,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="input-group mb-0">
-										<!--
-											use code for form submit
-											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
-										-->
-										<a class="btn btn-primary btn-lg btn-block" href="index3.html">Đăng Nhập</a>
+										<button id="loginButton" type="submit" class="btn btn-lg btn-block btn-primary">Đăng nhập</button>
 									</div>
 								</div>
 							</div>
@@ -109,6 +105,29 @@
 	<script src="vendors/scripts/script.min.js"></script>
 	<script src="vendors/scripts/process.js"></script>
 	<script src="vendors/scripts/layout-settings.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('#loginButton').click(function () {
+				var username = $('#username').val();
+				var password = $('#password').val();
+
+				$.ajax({
+					url: "http://localhost:1337/auth/local",
+					type: "POST",
+					data: {
+						"identifier": username,
+						"password": password
+					},
+					success: function (data, textStatus, jqXHR) {
+						window.location.href = "index3.html";
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						window.location.href = "login.html";
+					}
+				});
+			});
+		});
+	</script>
 </body>
 
 </html>
