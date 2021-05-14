@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<!-- Basic Page Info -->
 	<meta charset="utf-8">
@@ -14,7 +15,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 	<!-- Google Font -->
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+		rel="stylesheet">
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
 	<link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
@@ -24,13 +26,31 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
+		function gtag() { dataLayer.push(arguments); }
 		gtag('js', new Date());
 
 		gtag('config', 'UA-119386393-1');
 	</script>
 </head>
+
 <body class="login-page">
+	<!--Pre-loader page animation-->
+	<div class="pre-loader">
+		<div class="pre-loader-box">
+			<div class="loader-logo"><Strong>
+					<h1>TheWhiteFrost</h1>
+				</Strong></div>
+			<div class='loader-progress' id="progress_div">
+				<div class='bar' id='bar1'></div>
+			</div>
+			<div class='percent' id='percent1'>0%</div>
+			<div class="loading-text">
+				Loading...
+			</div>
+		</div>
+	</div>
+
+	<!--Header-->
 	<div class="login-header box-shadow">
 		<div class="container-fluid d-flex justify-content-between align-items-center">
 			<div class="brand-logo">
@@ -40,6 +60,8 @@
 			</div>
 		</div>
 	</div>
+
+	<!--Login form-->
 	<div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
 		<div class="container">
 			<div class="row align-items-center">
@@ -67,11 +89,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="input-group mb-0">
-										<!--
-											use code for form submit
-											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
-										-->
-										<a class="btn btn-primary btn-lg btn-block" href="index.html">Đăng Nhập</a>
+										<button type="submit" class="btn btn-primary btn-lg btn-block">Đăng Nhập</button>
 									</div>
 								</div>
 							</div>
@@ -81,10 +99,12 @@
 			</div>
 		</div>
 	</div>
+
 	<!-- js -->
 	<script src="vendors/scripts/core.js"></script>
 	<script src="vendors/scripts/script.min.js"></script>
 	<script src="vendors/scripts/process.js"></script>
 	<script src="vendors/scripts/layout-settings.js"></script>
 </body>
+
 </html>

@@ -15,19 +15,34 @@ $(document).ready(function () {
         });
     });
 
-    //Highlight selected row on table, enable and disable editbutton
-    $('#tableItems tbody tr').on('click', function() {
-        if($(this).hasClass('selected')) {
-            $(this).css('background-color', 'white');
-            $(this).removeClass('selected');
-            $('#editButton').prop('disabled', true);
+    // //Highlight selected row on table, enable and disable editbutton
+    // $('#tableItems tbody tr').on('click', function() {
+    //     if($(this).hasClass('selected')) {
+    //         $(this).removeAttr('style');
+    //         $(this).removeClass('selected');
+    //         $('#editButton').prop('disabled', true);
             
-        }else {
-            $('.selected').css('background-color', 'white');
-            $('.selected').removeClass('selected');
-            $(this).addClass('selected');
-            $('#editButton').removeAttr('disabled');
-            $(this).css('background-color', 'lightgray');
-        }
+    //     }else {
+    //         $('.selected').removeAttr('style');
+    //         $('.selected').removeClass('selected');
+    //         $(this).addClass('selected');
+    //         $('#editButton').removeAttr('disabled');
+    //         $(this).css('background-color', 'lightgray');
+    //     }
+    // });
+
+    //Modal arlet
+    $('.delete-modal').click(function() {
+        $('#confirmation-modal').modal();
+    });
+
+    //Enable field in staff_info.html
+    $('#sti_editButton').click(function() {
+        $('#collapseForm').collapse('show');
+        $('#sti_infoForm input').prop('disabled', false);
+    });
+    $('#sti_cancelButton').click(function() {
+        $('#sti_infoForm input').prop('disabled', true);
+        $('#collapseForm').collapse('hide');
     });
 });
