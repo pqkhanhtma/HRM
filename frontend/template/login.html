@@ -105,29 +105,7 @@
 	<script src="vendors/scripts/script.min.js"></script>
 	<script src="vendors/scripts/process.js"></script>
 	<script src="vendors/scripts/layout-settings.js"></script>
-	<script>
-		$(document).ready(function () {
-			$('#loginButton').click(function () {
-				var username = $('#username').val();
-				var password = $('#password').val();
-
-				$.ajax({
-					url: "http://localhost:1337/auth/local",
-					type: "POST",
-					data: {
-						"identifier": username,
-						"password": password
-					},
-					success: function (data, textStatus, jqXHR) {
-						window.location.href = "index3.html";
-					},
-					error: function (jqXHR, textStatus, errorThrown) {
-						window.location.href = "login.html";
-					}
-				});
-			});
-		});
-	</script>
+	
 </body>
 
 </html>
