@@ -1,6 +1,9 @@
 $(document).ready(function () {
     //Retrieve projects data from server
-    loadDataProjects();
+    loadProjectsData();
+
+    //Retrieve staffs data from server
+    loadStaffsData();
 
     //projectlist filter
     $("#projectSearch").on("keyup", function () {
@@ -31,7 +34,7 @@ $(document).ready(function () {
 });
 
 //Retrieve staffs data function
-function loadDataStaffs() {
+function loadStaffsData() {
     $.ajax({
         url: 'http://localhost:1337/staffs',
         type: 'GET',
@@ -48,8 +51,8 @@ function loadDataStaffs() {
 
                 //Fetch data to html table
                 str += '<tr id="'+ items.id +'">';
-                str += '<td>' + items.staffs_id + '</td>';
-                str += '<td>' + items.staffs_name + '</td>';
+                str += '<td>' + items.staff_id + '</td>';
+                str += '<td>' + items.staff_name + '</td>';
                 str += '<td>' + items.birthday + '</td>';
                 str += '<td>' + gender + '</td>';
                 str += '<td>' + items.phonenumber + '</td>';
@@ -86,7 +89,7 @@ function loadDataStaffs() {
 }
 
 //Retrieve projects data function
-function loadDataProjects() {
+function loadProjectsData() {
     $.ajax({
         url: 'http://localhost:1337/projects',
         type: 'GET',
@@ -167,7 +170,7 @@ function sentStaffData() {
 }
 
 //Retrieve data by id function
-function editData(id) {
+function editStaffData(id) {
     $.ajax({
         url: 'http://localhost:1337/staffs/' + id,
         type: 'PUT',
