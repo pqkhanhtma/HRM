@@ -130,306 +130,309 @@
 
 	<!-- Table staffs list and modal -->
 	<div class="main-container">
-		<div class="pd-20 card-box mb-30">
-			<div class="clearfix mb-20">
-				<div class="pd-5">
-					<h4 class="text-blue h4"><Strong>DANH SÁCH NHÂN VIÊN</Strong></h4>
-				</div>
-				<div class="pull-right">
-					<a href="#collapseExample" class="btn btn-primary btn-sm scroll-click" rel="content-y"
-						data-toggle="modal" data-target="#addStaffModal" role="button">Thêm mới</a>
-				</div>
-				<div class="row">
-					<div>
-						<div id="DataTables_Table_1_filter" class="dataTables_filter">
-							<input type="search" class="form-control form-control-sm" placeholder="Search" aria-controls="DataTables_Table_1">
-						</div>
+	
+		<!--Add staff modal model-->
+		<div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myLargeModalLabel01">Thêm nhân viên</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					</div>
+					<div class="modal-body">
+						<form action="">
+							<div class="form-group">
+								<div class="pd-20 card-box mb-30">
+									<div class="wizard-content">
+										<form class="tab-wizard wizard-circle wizard">
+											<section>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Mã nhân viên :</label>
+															<input id="staffIdAdd" type="text" class="form-control">
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Họ và tên :</label>
+															<input id="staffNameAdd" type="text" class="form-control">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-3">
+														<div class="form-group">
+															<label>Ngày sinh :</label>
+															<input id="birthdayAdd" type="text"
+																class="form-control date-picker" placeholder="Select Date">
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<label>Giới tính :</label>
+															<br>
+															<input class="genderAdd" type="radio" value="true" name="gender"
+																id="genderRadioMaleAdd" checked> Nam
+															<input class="genderAdd" type="radio" value="false"
+																name="gender" id="genderRadioFemaleAdd"> Nữ
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Quốc tịch :</label>
+															<input id="nationalityAdd" type="text" class="form-control">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Địa chỉ :</label>
+															<input id="addressAdd" type="text" class="form-control">
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Số điện thoại :</label>
+															<input id="phoneNumberAdd" type="text" class="form-control">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Email :</label>
+															<input id="emailAdd" type="email" class="form-control">
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Chức vụ :</label>
+															<select name="role" id="roleSelection" class="form-control">
+																<option value="Manager">Manager</option>
+																<option value="Leader">Leader</option>
+																<option value="Senior">Senior</option>
+																<option value="Intern">Intern</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</section>
+										</form>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button id="cancelButtonStaffAddModal" type="button" class="btn btn-secondary"
+							data-dismiss="modal">Hủy</button>
+						<button id="saveButtonStaffAddModal" type="button" class="btn btn-primary">Lưu</button>
 					</div>
 				</div>
 			</div>
-
-			<!--Add staff modal model-->
-			<div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered modal-lg">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h4 class="modal-title" id="myLargeModalLabel">Thêm nhân viên</h4>
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						</div>
-						<div class="modal-body">
-							<form action="">
-								<div class="form-group">
-									<div class="pd-20 card-box mb-30">
-										<div class="wizard-content">
-											<form class="tab-wizard wizard-circle wizard">
-												<section>
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Mã nhân viên :</label>
-																<input type="text" class="form-control">
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Họ và tên :</label>
-																<input type="text" class="form-control">
-															</div>
+		</div>
+	
+		<!--Edit staff modal model-->
+		<div id="editStaffModal" class="modal fade" id="editStaffModal" tabindex="-1" role="dialog"
+			aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myLargeModalLabel01">Thông tin nhân viên</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					</div>
+					<div class="modal-body">
+						<form action="">
+							<div class="form-group">
+								<div class="pd-20 card-box mb-30">
+									<div class="wizard-content">
+										<form class="tab-wizard wizard-circle wizard">
+											<section>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Mã nhân viên :</label>
+															<input id="staffId" disabled type="text" class="form-control"
+																value="NV002">
 														</div>
 													</div>
-													<div class="row">
-														<div class="col-md-3">
-															<div class="form-group">
-																<label>Ngày sinh :</label>
-																<input type="text" class="form-control date-picker"
-																	placeholder="Select Date">
-															</div>
-														</div>
-														<div class="col-md-3">
-															<div class="form-group">
-																<label>Giới tính :</label>
-																<br>
-																<input type="radio" name="gender" id="genderRadio" checked> Nam
-																<input type="radio" name="gender" id="genderRadio"> Nữ
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Quốc tịch :</label>
-																<input type="text" class="form-control">
-															</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Họ và tên :</label>
+															<input id="staffName" disabled type="text" class="form-control"
+																value="Emryh Var Emreis">
 														</div>
 													</div>
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Địa chỉ :</label>
-																<input type="text" class="form-control">
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Số điện thoại :</label>
-																<input type="text" class="form-control">
-															</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Số điện thoại :</label>
+															<input id="phoneNumber" type="text" class="form-control"
+																value="0123456789">
 														</div>
 													</div>
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Email :</label>
-																<input type="email" class="form-control">
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Chức vụ :</label>
-																<select name="role" id="roleSelection" class="form-control">
-																	<option value="Manager">Manager</option>
-																	<option value="Leader">Leader</option>
-																	<option value="Senior">Senior</option>
-																	<option value="Intern">Intern</option>
-																</select>
-															</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Email :</label>
+															<input id="email" type="email" class="form-control"
+																value="Example@email.com">
 														</div>
 													</div>
-												</section>
-											</form>
-										</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Địa chỉ :</label>
+															<input id="address" type="text" class="form-control"
+																value="Trái Đất">
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Quốc tịch :</label>
+															<input id="nationality" type="text" class="form-control"
+																value="Tây Ban Nha">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Ngày sinh :</label>
+															<input id="birthday" type="text"
+																class="form-control date-picker" placeholder="Select Date"
+																value="20/5/1981">
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Giới tính :</label>
+															<br>
+															<input type="radio" name="gender" id="genderRadioMale" checked>
+															Nam
+															<input type="radio" name="gender" id="genderRadioFemale"> Nữ
+														</div>
+													</div>
+												</div>
+											</section>
+										</form>
 									</div>
 								</div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-							<button type="button" class="btn btn-primary">Lưu</button>
-						</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-primary">Lưu</button>
 					</div>
 				</div>
 			</div>
-
-			<!--Edit staff modal model-->
-			<div class="modal fade" id="editStaffModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered modal-lg">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h4 class="modal-title" id="myLargeModalLabel">Thông tin nhân viên</h4>
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						</div>
-						<div class="modal-body">
-							<form action="">
-								<div class="form-group">
-									<div class="pd-20 card-box mb-30">
-										<div class="wizard-content">
-											<form class="tab-wizard wizard-circle wizard">
-												<section>
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Mã nhân viên :</label>
-																<input disabled type="text" class="form-control"
-																	value="NV002">
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Họ và tên :</label>
-																<input disabled type="text" class="form-control"
-																	value="Emryh Var Emreis">
-															</div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Số điện thoại :</label>
-																<input type="text" class="form-control"
-																	value="0123456789">
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Email :</label>
-																<input type="email" class="form-control"
-																	value="Example@email.com">
-															</div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Địa chỉ :</label>
-																<input type="text" class="form-control"
-																	value="Trái Đất">
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Quốc tịch :</label>
-																<input type="text" class="form-control"
-																	value="Tây Ban Nha">
-															</div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Ngày sinh :</label>
-																<input type="text" class="form-control date-picker"
-																	placeholder="Select Date" value="20/5/1981">
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Giới tính :</label>
-																<br>
-																<input type="radio" name="gender" id="genderRadio"
-																	checked> Nam
-																<input type="radio" name="gender" id="genderRadio"> Nữ
-															</div>
-														</div>
-													</div>
-												</section>
-											</form>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-							<button type="button" class="btn btn-primary">Lưu</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!--Confirm modal-->
-			<div class="pd-20 card-box height-100-p">
-				<div class="modal fade" id="confirmation-modal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-body text-center font-18">
-								<h4 class="padding-top-30 mb-30 weight-500">Bạn có muốn xóa dòng hiện tại?</h4>
-								<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
-									<div class="col-6">
-										<button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
-										Không
-									</div>
-									<div class="col-6">
-										<button type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn" data-dismiss="modal"><i class="fa fa-check"></i></button>
-										Có
-									</div>
-								</div>
+		</div>
+	
+		<!--Confirm modal-->
+		<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" style="display: none;"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body text-center font-18">
+						<h4 class="padding-top-30 mb-30 weight-500">Bạn có muốn xóa dòng hiện tại?</h4>
+						<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+							<div class="col-6">
+								<button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+									data-dismiss="modal"><i class="fa fa-times"></i></button>
+								Không
+							</div>
+							<div class="col-6">
+								<button type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
+									data-dismiss="modal"><i class="fa fa-check"></i></button>
+								Có
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
+		</div>
+	
+		<div class="card-box mb-30">
+			<!--Table title-->
+			<div class="pd-20">
+				<h3 class="text-blue ">Thông tin nhân viên </h3>
+			</div>
+			<div class="pull-right mr-20">
+				<a id="createNew" href="#addStaffModal" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="modal"
+				 role="button">Thêm mới</a>
+			</div>
 			<!--Table-->
-			<div class="card-box mb-30">
-				<div class="pb-20">
-					<table id="tableItems" class="data-table table-striped table stripe hover nowrap">
-						<thead>
-							<tr>
-								<th class="table-plus datatable-nosort">Mã nhân viên</th>
-								<th>Họ tên</th>
-								<th>Ngày sinh</th>
-								<th>Số điện thoại</th>
-								<th>Email</th>
-								<th>Địa chỉ</th>
-								<th>Quốc tịch</th>
-								<th class="datatable-nosort">Chức vụ</th>
-							</tr>
-						</thead>
-						<tbody id="staffsTable">
-							<tr>
-								<td>NV001</td>
-								<td class="table-plus">Gloria F. Mead</td>
-								<td>06/05/1972</td>
-								<td>0123456789</td>
-								<td>Sagittarius@email.com</td>
-								<td>2829 Trainer Avenue Peoria, IL 61602 </td>
-								<td>Canada</td>
-								<td>Manager</td>
-								<td>
-									<div class="dropdown">
-										<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-											<i class="dw dw-more"></i>
-										</a>
-										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-											<a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-											<a class="dropdown-item delete-modal" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+			<div class="pb-20">
+				<div class="row">
+					<div class="col-sm-12 col-md-6">
+						<div id="DataTables_Table_0_filter" class="dataTables_filter">
+							<label>
+								<input id="staffSearch" type="search" class="form-control form-control-sm" placeholder="Search"
+									aria-controls="DataTables_Table_0">
+							</label>
+						</div>
+					</div>
 				</div>
-				<div class="row pull-right">
-					<div class="col-sm-12 col-md-7">
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="data-table table stripe hover nowrap dataTable no-footer dtr-inline"
+							id="staffTable" role="grid" aria-describedby="DataTables_Table_0_info">
+							<thead>
+								<tr role="row">
+									<th class="table-plus datatable-nosort" 
+									rowspan="1" colspan="1" aria-label="staff ID">Mã nhân viên</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Staff Name: activate to sort column ascending">Tên nhân viên</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Birthday: activate to sort column ascending">Ngày sinh</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Gender: activate to sort column ascending">Giới tính</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Phonenumber: activate to sort column ascending">Số điện thoại</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Email: activate to sort column ascending">Email</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Address: activate to sort column ascending">Địa chỉ</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Nationality: activate to sort column ascending">Quốc tịch</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Role: activate to sort column ascending">Chức vụ</th>
+									<th class="datatable-nosort " rowspan="1" colspan="1" aria-label="Action"></th>
+								</tr>
+							</thead>
+							<tbody id="staffList">
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!--Pagination next,pre-->
+				<div class="row">
+					<div class="col-sm-12 col-md-12">
 						<div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
 							<ul class="pagination pull-right">
 								<li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
-									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">
+									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0"
+										class="page-link">
 										<i class="ion-chevron-left"></i>
 									</a>
 								</li>
 								<li class="paginate_button page-item active">
-									<a href="#" aria-controls="DataTables_Table_0" 
-									data-dt-idx="1" tabindex="0" class="page-link">1</a>
+									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0"
+										class="page-link">1</a>
 								</li>
 								<li class="paginate_button page-item ">
-									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2"
-										tabindex="0" class="page-link">2
-									</a>
+									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0"
+										class="page-link">2</a>
 								</li>
 								<li class="paginate_button page-item next" id="DataTables_Table_0_next">
-									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" class="page-link">
+									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0"
+										class="page-link">
 										<i class="ion-chevron-right"></i>
 									</a>
 								</li>
@@ -439,6 +442,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
 		<!-- js -->
 		<script src="vendors/scripts/core.js"></script>
