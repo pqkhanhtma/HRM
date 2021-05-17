@@ -25,11 +25,7 @@ $(document).ready(function () {
 
     //Save staff data to server
     $('#saveButtonStaffAddModal').click(function() {
-        senStafftData();
-    });
-
-    $('#createNew').click(function() {
-        console.log($('tbody').attr('id'));
+        sentStaffsData();
     });
 });
 
@@ -133,25 +129,47 @@ function loadProjectsData() {
 }
 
 //Sent staff data function
-function sentStaffData() {
+function sentStaffsData() {
     //Get values from input elements
-    var staffs_id = $('#staffIdAdd').val();
-    var staffs_name = $('#staffNameAdd').val();
-    var birthday = $('#birthdayAdd').datepicker({dateFormat: 'yyyy-mm-dd'}).val();
+    var staff_id = $('#staffIdAdd').val();
+    var staff_name = $('#staffNameAdd').val();
+    //Get new birthday
+    var birthday = new Date($('#birthdayAdd').val());
+    var year = birthday.getFullYear();
+    var month = birthday.getMonth() + 1;
+    var newMonth = '0';
+    var date = birthday.getDate();
+    var newDate = '0';
+    if(month <= 9) {
+        newMonth += month.toString();
+    }else {
+        newMonth = '';
+        newMonth += month.toString();
+    }
+    if(date <= 9) {
+        newDate += date.toString();
+    }else {
+        newDate = '';
+        newDate += date.toString();
+    }
+    var newBirthday = year + '-' + newMonth + '-' + newDate;
     var gender = $('input[name=gender]:checked').val();
     var nationality = $('#nationalityAdd').val();
     var address = $('#addressAdd').val();
     var phonenumber = $('#phoneNumberAdd').val();
     var email = $('#emailAdd').val();
-    var role = $('#roleSelection').val();  
+    var role = $('#roleSelection').val();
+    console.log(newMonth, typeof(newMonth), newDate, typeof(newDate))
+    
 
     //Sent new staff data back to server
     $.ajax({
         url: 'http://localhost:1337/staffs',
         type: 'POST',
         data: {
-            "staffs_id": staffs_id,
-            "staffs_name": staffs_name,
+            "staff_id": staff_id,
+            "staff_name": staff_name,
+            "birthday": newBirthday,
             "gender": gender,
             "phonenumber": phonenumber,
             "email": email,
@@ -161,7 +179,8 @@ function sentStaffData() {
         },
         success: function () {
             alert('Đã thêm dữ liệu!');
-            loadData();
+            $('#addStaffModal').modal('hide');
+            loadStaffsData();
         },
         error: function () {
             alert('Nope!')
