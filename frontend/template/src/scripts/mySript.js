@@ -46,7 +46,7 @@ function loadData() {
                 }
 
                 //Fetch data to html table
-                str += '<tr id="'+ items.id +'">';
+                str += '<tr>';
                 str += '<td>' + items.staffs_id + '</td>';
                 str += '<td>' + items.staffs_name + '</td>';
                 str += '<td>' + items.birthday + '</td>';
@@ -90,7 +90,7 @@ function editData(id) {
         url: 'http://localhost:1337/staffs/' + id,
         type: 'PUT',
         data: {
-            
+
         },
         success: function() {
             
