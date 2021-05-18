@@ -142,36 +142,26 @@ function loadProjectsInfo() {
 
 //Sent new staff infomation function
 function sentStaffInfo() {
-    //Get values from input elements
+    //Collect value from html input elements
     var staff_id = $('#staffIdAdd').val();
     var staff_name = $('#staffNameAdd').val();
-    //Get new birthday
+
+    //Get value from birthday input
     var birthday = new Date($('#birthdayAdd').val());
-    var year = birthday.getFullYear();
-    var month = birthday.getMonth() + 1;
-    var newMonth = '0';
-    var date = birthday.getDate();
-    var newDate = '0';
-    if(month <= 9) {
-        newMonth += month.toString();
-    }else {
-        newMonth = '';
-        newMonth += month.toString();
-    }
-    if(date <= 9) {
-        newDate += date.toString();
-    }else {
-        newDate = '';
-        newDate += date.toString();
-    }
-    var newBirthday = year + '-' + newMonth + '-' + newDate;
+    //Convert birthday to ISO date format
+    var birthdayString = birthday.toISOString();
+    //Check birthdayString format
+    var check_birthdayString = moment(birthdayString);
+    //Convert check_birthdayString to format 'YYYY-MM-DD'
+    var finalBirthday = check_birthdayString.utc().format('YYYY-MM-DD');
+
+    //Continue collect value from html input elements
     var gender = $('input[name=gender]:checked').val();
     var nationality = $('#nationalityAdd').val();
     var address = $('#addressAdd').val();
     var phonenumber = $('#phoneNumberAdd').val();
     var email = $('#emailAdd').val();
     var role = $('#roleSelection').val();
-    console.log(newMonth, typeof(newMonth), newDate, typeof(newDate))
     
 
     //Sent new staff data back to server
@@ -181,7 +171,7 @@ function sentStaffInfo() {
         data: {
             "staff_id": staff_id,
             "staff_name": staff_name,
-            "birthday": newBirthday,
+            "birthday": finalBirthday,
             "gender": gender,
             "phonenumber": phonenumber,
             "email": email,
@@ -202,57 +192,27 @@ function sentStaffInfo() {
 
 //Sent new project infomation function
 function sentProjectInfo() {
-    //Get values from input elements
+    //Collect value from html input elements
+    var project_id = $('#projectIdAdd').val();
     var project_name = $('#projectNameAdd').val();
     var description = $('#descriptionAdd').val();
+
     //Get start_date and end_date format
     var startDate = new Date($('#startDateAdd').val());
     var endDate = new Date($('#endDateAdd').val());
-    var startYear = startDate.getFullYear();
-    var endYear = endDate.getFullYear();
-    var startMonth = startDate.getMonth() + 1;
-    var endMonth = endDate.getMonth() + 1;
-    var newStartMonth = '0'; 
-    var newEndMonth = '0';
-    var startDate02 = startDate.getDate();
-    var endDate02 = endDate.getDate();
-    var newStartDate = '0';
-    var newEndDate = '0';
-    if(startMonth <= 9) {
-        newStartMonth += startMonth.toString();
-    }else {
-        newStartMonth = '';
-        newStartMonth += startMonth.toString();
-    }
+    //Convert startDate and endDate to ISO date format
+    var startDateString = startDate.toISOString();
+    var endDateString = endDate.toISOString();
+    //Check startDateString and endDateString format
+    var check_startDateString = moment(startDateString);
+    var check_endDateString = moment(endDateString);
+    //Convert check_startDateString and check_endDateString to format 'YYYY-MM-DD'
+    var finalStartDate = check_startDateString.utc().format('YYYY-MM-DD');
+    var finalEndDate = check_endDateString.utc().format('YYYY-MM-DD');
 
-    if(startDate02 <= 9) {
-        newStartDate += startDate02.toString();
-    }else {
-        newStartDate = '';
-        newStartDate += startDate02.toString();
-    }
-
-    if(endMonth <= 9) {
-        newEndMonth += endMonth.toString();
-    }else {
-        newEndMonth = '';
-        newEndMonth += endMonth.toString();
-    }
-
-    if(endDate02 <= 9) {
-        newEndDate += endDate02.toString();
-    }else {
-        newEndDate = '';
-        newEndDate += endDate02.toString();
-    }
-    var newStartDate02 = startYear + '-' + newStartMonth + '-' + newStartDate;
-    var newEndDate02 = endYear + '-' + newEndMonth + '-' + newEndDate;
+    //Continue collect value from html input elements
     var number_of_staffs = $('#numberOfStaffsAdd').val();
     var status = $('#statusSelectionAdd').val();
-    
-    console.log(project_name +'-'+ typeof(project_name), description +'-'+ typeof(description), 
-    newStartDate02+'-'+typeof(newStartDate02), newEndDate02+'-'+typeof(newEndDate02), 
-    number_of_staffs+'-'+typeof(number_of_staffs), status+'-'+typeof(status));
 
     //Sent new staff data back to server
     $.ajax({
@@ -261,13 +221,13 @@ function sentProjectInfo() {
         data: {
             "project_name": project_name,
             "description": description,
-            "start_date": newStartDate02,
-            "end_date": newEndDate02,
+            "start_date": finalStartDate,
+            "end_date": finalEndDate,
             "number_of_staffs": number_of_staffs,
             "status": status
         },
         headers: {
-            'Authorization':'Bearer ' + localStorage.token
+            'Authorization':'Bearer ' + 'token_value_here'
         },
         success: function () {
             alert('Đã thêm dữ liệu mới!');
@@ -293,7 +253,14 @@ function logIn() {
             "identifier": identifier,
             "password": password
         },
-        success: function (data) {
+        success: function (result) {
+            console.log(result.jwt);
+            console.log(result.user.username);
+            //Save token and username in localstorage
+            localStorage.setItem('username', 'username_value');
+            localStorage.setItem('token', 'token_value');
+            localStorage.setItem('id', 'id_value');
+
             alert('Đăng nhập thành công!');
             window.location.replace('index3.html');
         },
