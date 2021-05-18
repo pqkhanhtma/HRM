@@ -37,7 +37,7 @@
 
 <body>
 	<!--Pre-loader page animation-->
-	<!-- <div class="pre-loader">
+	<div class="pre-loader">
 		<div class="pre-loader-box">
 			<div class="loader-logo"><Strong>
 					<h1>TheWhiteFrost</h1>
@@ -50,7 +50,7 @@
 				Loading...
 			</div>
 		</div>
-	</div> -->
+	</div>
 
 	<!--Header-->
 	<div class="header">
@@ -148,13 +148,7 @@
 										<form class="tab-wizard wizard-circle wizard">
 											<section>
 												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Mã nhân viên :</label>
-															<input id="staffIdAdd" type="text" class="form-control">
-														</div>
-													</div>
-													<div class="col-md-6">
+													<div class="col-md-12">
 														<div class="form-group">
 															<label>Họ và tên :</label>
 															<input id="staffNameAdd" type="text" class="form-control">
@@ -252,14 +246,7 @@
 										<form class="tab-wizard wizard-circle wizard">
 											<section>
 												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Mã nhân viên :</label>
-															<input id="staffId" disabled type="text" class="form-control"
-																value="NV002">
-														</div>
-													</div>
-													<div class="col-md-6">
+													<div class="col-md-12">
 														<div class="form-group">
 															<label>Họ và tên :</label>
 															<input id="staffName" disabled type="text" class="form-control"
@@ -357,35 +344,43 @@
 			</div>
 		</div>
 	
-		<div class="card-box mb-30">
-			<!--Table title-->
-			<div class="pd-20">
-				<h3 class="text-blue ">Thông tin nhân viên </h3>
+		<!--Table staffs-->
+		<div class="pd-20 card-box mb-30">
+			<!--Title-->
+			<div class="clearfix mb-20">
+				<div class="pull-left">
+					<h4 class="text-blue h4">
+						<Strong>DANH SÁCH NHÂN VIÊN</Strong>
+					</h4>
+				</div>
 			</div>
-			<div class="pull-right mr-20">
-				<a id="createNew" href="#addStaffModal" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="modal"
-				 role="button">Thêm mới</a>
-			</div>
-			<!--Table-->
+
+			<!--Search field, add button, Table-->
 			<div class="pb-20">
+				<!--Search field, add button-->
 				<div class="row">
-					<div class="col-sm-12 col-md-6">
+					<div class="col-lg-10 col-sm-10 col-10 pd-2">
 						<div id="DataTables_Table_0_filter" class="dataTables_filter">
 							<label>
-								<input id="staffSearch" type="search" class="form-control form-control-sm" placeholder="Search"
-									aria-controls="DataTables_Table_0">
+								<input id="staffSearch" type="search" class="form-control form-control-sm" 
+								placeholder="Tìm kiếm..." aria-controls="DataTables_Table_0">
 							</label>
 						</div>
 					</div>
+					<div class="col-lg-2 col-sm-2 col-2 pb-2">
+						<button id="addStaffButton" type="button" class="btn btn-sm btn-primary pull-right" data-toggle="modal"
+							data-target="#addStaffModal">Thêm mới
+						</button>
+					</div>
 				</div>
+
+				<!--Table-->
 				<div class="row">
 					<div class="col-sm-12">
 						<table class="data-table table stripe hover nowrap dataTable no-footer dtr-inline"
 							id="staffTable" role="grid" aria-describedby="DataTables_Table_0_info">
 							<thead>
 								<tr role="row">
-									<th class="table-plus datatable-nosort" 
-									rowspan="1" colspan="1" aria-label="staff ID">Mã nhân viên</th>
 									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
 										aria-label="Staff Name: activate to sort column ascending">Tên nhân viên</th>
 									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
