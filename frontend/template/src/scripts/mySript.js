@@ -335,8 +335,8 @@ function logIn() {
             "password": password
         },
         success: function (result) {
-            console.log(result.jwt);
-            console.log(result.user.username);
+            localStorage.setItem('token', result.jwt);
+            localStorage.setItem('username', result.user.username);
             alert('Đăng nhập thành công!');
             window.location.replace('index3.html');
         },
