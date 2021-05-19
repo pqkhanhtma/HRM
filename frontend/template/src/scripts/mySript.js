@@ -111,12 +111,41 @@ function loadStaffsInfo() {
             });
             //Change table on html by data table from above
             $('#staffList').html(str);
+
+            //Check role
+            checkRole();
+
+            //Collect value that match with id and assign into modal's input
+            $('#staffList .edit-modal').on('click', function() {
+                var id = '';
+                var elementId = $(this).attr('id');
+                var getRealId = elementId.substr(6);
+                id += getRealId;
+                for(let i in result) {
+                    if(result[i].id == id) {
+                        $('#staffNameEdit').val(result[i].staff_name);
+                        $('#birthdayEdit').val(result[i].birthday);
+                        $('input[name=gender]').val(result[i].gender);
+                        $('#nationalityEdit').val(result[i].nationality);
+                        $('#addressEdit').val(result[i].address);
+                        $('#phoneNumberEdit').val(result[i].phonenumber);
+                        $('#emailEdit').val(result[i].email);
+                        $('#roleSelectionEdit').val(result[i].role);
+                    }
+                }
+            });
+
+            console.log($('input[name=gender]').val());
+            ////Sent edited staff infomation
+            $('#editStaffSaveButton').click(function() {
+
+            });
         }
     });
 }
 
 //Sent new staff infomation function
-function sentStaffInfo() {
+function sentNewStaffInfo() {
     //Collect value from html input elements
     var staff_id = $('#staffIdAdd').val();
     var staff_name = $('#staffNameAdd').val();
@@ -163,6 +192,11 @@ function sentStaffInfo() {
             alert('Nope!')
         }
     });
+}
+
+//Edit staff infomation function
+function sentEditedStaffInfo(id) {
+
 }
 
 
@@ -231,7 +265,7 @@ function loadProjectsInfo() {
                     
                 }
 
-                //Sent edited infomation
+                //Sent edited project infomation
                 $('#saveEditedProjectModal').click(function () {
                     sentEditedProjectInfo(id);
                 });
@@ -280,12 +314,18 @@ function sentNewProjectInfo() {
             'Authorization':'Bearer ' + localStorage.token
         },
         success: function () {
-            alert('Đã thêm dữ liệu mới!');
             $('#addProjectModal').modal('hide');
+            $('#projectStatusModalConfirmButton').show();
+            $('#projectStatusModalCancelButton').hide();
+            $('#projectStatusModalTitle').html('Đã thêm dữ liệu mới!')
+            $('#projectStatusModal').modal();
             loadProjectsInfo();
         },
         error: function () {
-            alert('Đã có lỗi xảy ra trong quá trình thêm mới!')
+            $('#projectStatusModalConfirmButton').hide();
+            $('#projectStatusModalCancelButton').show();
+            $('#projectStatusModalTitle').html('Không thể thêm dữ liệu!')
+            $('#projectStatusModal').modal();
         }
     });
 }
@@ -329,12 +369,18 @@ function sentEditedProjectInfo(id) {
             'Authorization': 'Bearer ' + localStorage.token
         },
         success: function () {
-            alert('Đã cập nhật thông tin dữ liệu!');
             $('#editProjectModal').modal('hide');
-            loadProjectsInfo();
+            $('#projectStatusModalConfirmButton').show();
+            $('#projectStatusModalCancelButton').hide();
+            $('#projectStatusModalTitle').html('Đã cập nhật thông tin!')
+            $('#projectStatusModal').modal();
+            
         },
         error: function () {
-            alert('Đã có lỗi xảy ra trong quá trình cập nhật dữ liệu!')
+            $('#projectStatusModalConfirmButton').hide();
+            $('#projectStatusModalCancelButton').show();
+            $('#projectStatusModalTitle').html('Không thể cập nhật thông tin!')
+            $('#projectStatusModal').modal();
         }
     });
 }
@@ -349,12 +395,18 @@ function deleteSpecifiedProject(id) {
             'Authorization': 'Bearer ' + localStorage.token
         },
         success: function () {
-            alert('Đã xóa dữ liệu!');
-            $('#confirmationModal').modal('hide');
+            $('#deleteProjectConfirmationModal').modal('hide');
+            $('#projectStatusModalConfirmButton').show();
+            $('#projectStatusModalCancelButton').hide();
+            $('#projectStatusModalTitle').html('Đã xóa!')
+            $('#projectStatusModal').modal();
             loadProjectsInfo();
         },
         error: function () {
-            alert('Đã có lỗi xảy ra trong quá trình xóa dữ liệu!')
+            $('#projectStatusModalConfirmButton').hide();
+            $('#projectStatusModalCancelButton').show();
+            $('#projectStatusModalTitle').html('Không thể xóa!')
+            $('#projectStatusModal').modal();
         }
     });
 }
@@ -380,15 +432,19 @@ function logIn() {
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('role', result.user.role.name);
             console.log(result.user.role.name);
-            $('#confirmModalTitle').html('Xin chào ' + localStorage.username);
-            $('#confirmationModalLogin').modal();
-            $('#confirmButtonModal').click(function() {
+            $('#loginStatusModalCancelButton').hide();
+            $('#loginStatusModalConfirmButton').show();
+            $('#loginStatusModalTitle').html('Xin chào ' + localStorage.username);
+            $('#loginStatusModal').modal();
+            $('#loginStatusModalConfirmButton').click(function() {
                 window.location.replace('index3.html');
             });
         },
         error: function() {
-            $('#confirmModalTitle').html('Username hoặc mật khẩu không chính xác!');
-            $('#confirmationModalLogin').modal();
+            $('#loginStatusModalCancelButton').show();
+            $('#loginStatusModalConfirmButton').hide();
+            $('#loginStatusModalTitle').html('Username hoặc mật khẩu không chính xác!');
+            $('#loginStatusModal').modal();
         }
     });
 }
