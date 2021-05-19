@@ -1,9 +1,22 @@
 $(document).ready(function () {
+    //Check role
+    checkRole();
+
+    //Display username
+    $('#displayUserName').html(localStorage.username);
+
     //Retrieve projects data from server
     loadProjectsInfo();
 
-    //Retrieve staffs data from server
-    
+    //Login function
+    $('#loginButton').click(function() {
+        logIn();
+    });
+
+    //Logout function
+    $('#logoutButton').click(function() {
+        logOut();
+    });
 
     //projectlist filter
     $("#projectSearch").on("keyup", function () {
@@ -21,39 +34,43 @@ $(document).ready(function () {
         });
     });
 
-    //Login function
-    $('#loginButton').click(function() {
-        logIn();
-    });
-
-    //Logout function
-    $('#logoutButton').click(function() {
-        logOut();
+    //Save new project infomation to server
+    $('#saveProjectButtonAddModal').click(function() {
+        sentNewProjectInfo();
     });
 
     //Save edited project infomation to server
-    $(document).on('click', '.edit-modal', function () {
+    // $(document).on('click', '.edit-modal', function () {
+    //     var id = '';
+    //     var elementId = $(this).attr('id');
+    //     var getRealId = elementId.substr(6);
+    //     id += getRealId;
+    //     console.log(id);
+    //     $('#saveEditedProjectModal').click(function() {
+    //         sentEditedProjectInfo(id);
+    //     });
+    // });
+
+    //Delete specified project
+    $(document).on('click', '.delete-modal', function() {
         var id = '';
         var elementId = $(this).attr('id');
         var getRealId = elementId.substr(6);
         id += getRealId;
         console.log(id);
-        $('#saveEditedProjectModal').click(function() {
-            sentEditedProjectInfo(id);
+        $('#accept').click(function() {
+            deleteSpecifiedProject(id);
         });
     });
 
     //Save new staff infomation to server
     $('#saveButtonStaffAddModal').click(function() {
         sentStaffInfo();
-    });
-
-    //Save new project infomation to server
-    $('#saveProjectButtonAddModal').click(function() {
-        sentNewProjectInfo();
-    });
+    });  
 });
 
+
+//===============STAFFS FUNCTIONS==========================
 //Retrieve staffs data function
 function loadStaffsInfo() {
     $.ajax({
@@ -64,9 +81,9 @@ function loadStaffsInfo() {
             $.each(result, function (i, items) {
                 //Check gender, if true gender is "Male" else "Female"
                 var gender = '';
-                if(items.gender === true) {
+                if (items.gender === true) {
                     gender = 'Nam';
-                }else {
+                } else {
                     gender = 'Nữ';
                 }
 
@@ -86,25 +103,14 @@ function loadStaffsInfo() {
                                         <i class="dw dw-more"></i>\
                                     </a>\
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
-                                        <a class="dropdown-item edit-modal" href="#editStaffModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
-                                        <a class="dropdown-item delete-modal" href="#confirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
+                                        <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editStaffModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
+                                        <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" href="#confirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
                                     </div>\
                                 </div>'+ '</td>';
                 str += '</tr>';
             });
             //Change table on html by data table from above
             $('#staffList').html(str);
-
-            // //Highlight selected row on table
-            // $('#staffList tr').on('click', function () {
-            //     if ($(this).hasClass('selected')) {
-            //         $(this).removeClass('selected');
-
-            //     } else {
-            //         $('.selected').removeClass('selected');
-            //         $(this).addClass('selected');
-            //     }
-            // });
         }
     });
 }
@@ -159,6 +165,9 @@ function sentStaffInfo() {
     });
 }
 
+
+
+//===============PROJECTS FUNCTIONS=========================
 //Retrieve projects data function
 function loadProjectsInfo() {
     $.ajax({
@@ -167,6 +176,20 @@ function loadProjectsInfo() {
         success: function (result) {
             var str = '';
             $.each(result, function (i, items) {
+                // $('.project_name').html(items.project_name);
+                // $('.start_date').html(items.start_date);
+                // $('.end_date').html(items.end_date);
+                // $('.number_of_staffs').html(items.number_of_staffs);
+                // $('.status').html(items.status);
+                // $('.actionButtons').html('<div class="dropdown">\
+                // <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
+                //     <i class="dw dw-more"></i>\
+                // </a>\
+                // <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
+                //     <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editProjectModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
+                //     <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" href="#confirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
+                // </div>\
+                // </div>');
                 //Fetch data to html table
                 str += '<tr>';
                 str += '<td>' + items.project_name + '</td>';
@@ -174,30 +197,45 @@ function loadProjectsInfo() {
                 str += '<td>' + items.end_date + '</td>';
                 str += '<td>' + items.number_of_staffs + '</td>';
                 str += '<td>' + items.status + '</td>';
-                str += '<td>' + '<div class="dropdown">\
+                str += '<td class="dropdownMod">' + '<div class="dropdown">\
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
                                         <i class="dw dw-more"></i>\
                                     </a>\
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
-                                        <a id="dataE_'+ items.id + '"' +' class="dropdown-item edit-modal" href="#editProjectModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
-                                        <a id="dataR_'+ items.id + '"' +' class="dropdown-item delete-modal" href="#confirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
+                                        <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editProjectModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
+                                        <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" href="#confirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
                                     </div>\
                                 </div>'+ '</td>';
                 str += '</tr>';
             });
             //Change table on html by projects data table from above
             $('#projectList').html(str);
+            
+            //Check role
+            checkRole();
 
-            // //Highlight selected row on table
-            // $('#staffList tr').on('click', function () {
-            //     if ($(this).hasClass('selected')) {
-            //         $(this).removeClass('selected');
+            //Collect value that match with id and assign into modal's input
+            $('#projectList .edit-modal').on('click', function () {
+                var id = '';
+                var elementId = $(this).attr('id');
+                var getRealId = elementId.substr(6);
+                id += getRealId;
+                console.log(result.filter(el => el.id == id));
+                for (let i in result) {
+                    if (result[i].id == id) {
+                        $('#projectNameEdit').val(result[i].project_name);
+                        $('#startDateEdit').val(result[i].start_date);
+                        $('#endDateEdit').val(result[i].end_date);
+                        $('#numberOfStaffsEdit').val(result[i].number_of_staffs);
+                    }
+                    
+                }
 
-            //     } else {
-            //         $('.selected').removeClass('selected');
-            //         $(this).addClass('selected');
-            //     }
-            // });
+                //Sent edited infomation
+                $('#saveEditedProjectModal').click(function () {
+                    sentEditedProjectInfo(id);
+                });
+            });
         }
     });
 }
@@ -239,7 +277,7 @@ function sentNewProjectInfo() {
             "status": status
         },
         headers: {
-            'Authorization':'Bearer ' + 'token_value_here'
+            'Authorization':'Bearer ' + localStorage.token
         },
         success: function () {
             alert('Đã thêm dữ liệu mới!');
@@ -288,7 +326,7 @@ function sentEditedProjectInfo(id) {
             "status": status
         },
         headers: {
-            'Authorization': 'Bearer ' + 'token_value_here'
+            'Authorization': 'Bearer ' + localStorage.token
         },
         success: function () {
             alert('Đã cập nhật thông tin dữ liệu!');
@@ -308,7 +346,7 @@ function deleteSpecifiedProject(id) {
         url: 'http://localhost:1337/projects/' + id,
         type: 'DELETE',
         headers: {
-            'Authorization': 'Bearer ' + 'token_value_here'
+            'Authorization': 'Bearer ' + localStorage.token
         },
         success: function () {
             alert('Đã xóa dữ liệu!');
@@ -321,6 +359,9 @@ function deleteSpecifiedProject(id) {
     });
 }
 
+
+
+//===============ACCOUNTS FUNCTIONS=========================
 //Login function
 function logIn() {
     //Get value from username and password input
@@ -337,22 +378,33 @@ function logIn() {
         success: function (result) {
             localStorage.setItem('token', result.jwt);
             localStorage.setItem('username', result.user.username);
-            alert('Đăng nhập thành công!');
-            window.location.replace('index3.html');
+            localStorage.setItem('role', result.user.role.name);
+            console.log(result.user.role.name);
+            $('#confirmModalTitle').html('Xin chào ' + localStorage.username);
+            $('#confirmationModalLogin').modal();
+            $('#confirmButtonModal').click(function() {
+                window.location.replace('index3.html');
+            });
         },
         error: function() {
-            alert('Username hoặc password không chính xác!');
+            $('#confirmModalTitle').html('Username hoặc mật khẩu không chính xác!');
+            $('#confirmationModalLogin').modal();
         }
     });
 }
 
-//Get token
-function getToken() {
-    alert(typeof(localStorage.token));
-}
-
 //Logout function
 function logOut() {
-    localStorage.clear();
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
 }
 
+//Check logged in
+function checkRole() {
+    if(localStorage.role == 'Public') {
+        $('#addProjectsButton').hide();
+        $('#dropdownActionButton').hide();
+        $('.dropdownMod').hide();
+    }
+}

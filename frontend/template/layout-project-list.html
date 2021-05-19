@@ -68,14 +68,14 @@
 						<span class="user-icon">
 							<img src="vendors/images/photo1.jpg" alt="">
 						</span>
-						<span class="user-name">Emryh Var Emreis</span>
+						<span id="displayUserName" class="user-name"></span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="staff_info.html">
 							<i class="dw dw-user1"></i> Thông Tin tài khoản</a>
 						<a class="dropdown-item" href="faq.html">
 							<i class="dw dw-help"></i> Trợ giúp</a>
-						<a class="dropdown-item" href="login.html">
+						<a id="logoutButton" class="dropdown-item" href="login.html">
 							<i class="dw dw-logout"></i> Đăng Xuất</a>
 					</div>
 				</div>
@@ -242,8 +242,7 @@
 													<div class="col-md-12">
 														<div class="form-group">
 															<label>Tên dự án :</label>
-															<input id="projectNameEdit" type="text" class="form-control" value="Web demo"
-																disabled>
+															<input id="projectNameEdit" type="text" class="form-control" disabled>
 														</div>
 													</div>
 												</div>
@@ -259,7 +258,7 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Ngày kết thúc :</label>
-															<input id="endDateEdit" type="text" value="18/5/2021"
+															<input id="endDateEdit" type="text"
 																class="form-control date-picker"
 																placeholder="Select date">
 														</div>
@@ -269,7 +268,7 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Số nhân viên tham gia :</label>
-															<input id="numberOfStaffsEdit" type="text" value="5" class="form-control">
+															<input id="numberOfStaffsEdit" type="text" class="form-control">
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -307,12 +306,12 @@
 						<h4 class="padding-top-30 mb-30 weight-500">Bạn có muốn xóa dòng hiện tại?</h4>
 						<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
 							<div class="col-6">
-								<button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+								<button id="noAccept" type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
 									data-dismiss="modal"><i class="fa fa-times"></i></button>
 								Không
 							</div>
 							<div class="col-6">
-								<button type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
+								<button id="accept" type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
 									data-dismiss="modal"><i class="fa fa-check"></i></button>
 								Có
 							</div>
@@ -374,6 +373,14 @@
 								</tr>
 							</thead>
 							<tbody id="projectList">
+								<tr>
+									<td class="project_name"></td>
+									<td class="start_date"></td>
+									<td class="end_date"></td>
+									<td class="number_of_staffs"></td>
+									<td class="status"></td>
+									<td></td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
