@@ -31,9 +31,16 @@ $(document).ready(function () {
         logOut();
     });
 
-    //test
-    $('#cancelProjectButtonAddModal').click(function() {
-        getToken();
+    //Save edited project infomation to server
+    $(document).on('click', '.edit-modal', function () {
+        var id = '';
+        var elementId = $(this).attr('id');
+        var getRealId = elementId.substr(6);
+        id += getRealId;
+        console.log(id);
+        $('#saveEditedProjectModal').click(function() {
+            sentEditedProjectInfo(id);
+        });
     });
 
     //Save new staff infomation to server
@@ -43,7 +50,7 @@ $(document).ready(function () {
 
     //Save new project infomation to server
     $('#saveProjectButtonAddModal').click(function() {
-        sentProjectInfo();
+        sentNewProjectInfo();
     });
 });
 
@@ -102,6 +109,56 @@ function loadStaffsInfo() {
     });
 }
 
+//Sent new staff infomation function
+function sentStaffInfo() {
+    //Collect value from html input elements
+    var staff_id = $('#staffIdAdd').val();
+    var staff_name = $('#staffNameAdd').val();
+
+    //Get value from birthday input
+    var birthday = new Date($('#birthdayAdd').val());
+    //Convert birthday to ISO date format
+    var birthdayString = birthday.toISOString();
+    //Check birthdayString format
+    var check_birthdayString = moment(birthdayString);
+    //Convert check_birthdayString to format 'YYYY-MM-DD'
+    var finalBirthday = check_birthdayString.utc().format('YYYY-MM-DD');
+
+    //Continue collect value from html input elements
+    var gender = $('input[name=gender]:checked').val();
+    var nationality = $('#nationalityAdd').val();
+    var address = $('#addressAdd').val();
+    var phonenumber = $('#phoneNumberAdd').val();
+    var email = $('#emailAdd').val();
+    var role = $('#roleSelection').val();
+    
+
+    //Sent new staff data back to server
+    $.ajax({
+        url: 'http://localhost:1337/staffs',
+        type: 'POST',
+        data: {
+            "staff_id": staff_id,
+            "staff_name": staff_name,
+            "birthday": finalBirthday,
+            "gender": gender,
+            "phonenumber": phonenumber,
+            "email": email,
+            "address": address,
+            "nationality": nationality,
+            "role": role
+        },
+        success: function () {
+            alert('Đã thêm dữ liệu!');
+            $('#addStaffModal').modal('hide');
+            loadStaffsData();
+        },
+        error: function () {
+            alert('Nope!')
+        }
+    });
+}
+
 //Retrieve projects data function
 function loadProjectsInfo() {
     $.ajax({
@@ -122,8 +179,8 @@ function loadProjectsInfo() {
                                         <i class="dw dw-more"></i>\
                                     </a>\
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
-                                        <a class="dropdown-item edit-modal" href="#editProjectModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
-                                        <a class="dropdown-item delete-modal" href="#confirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
+                                        <a id="dataE_'+ items.id + '"' +' class="dropdown-item edit-modal" href="#editProjectModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
+                                        <a id="dataR_'+ items.id + '"' +' class="dropdown-item delete-modal" href="#confirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
                                     </div>\
                                 </div>'+ '</td>';
                 str += '</tr>';
@@ -145,134 +202,44 @@ function loadProjectsInfo() {
     });
 }
 
-//Sent new staff infomation function
-function sentStaffInfo() {
-    //Get values from input elements
-    var staff_id = $('#staffIdAdd').val();
-    var staff_name = $('#staffNameAdd').val();
-    //Get new birthday
-    var birthday = new Date($('#birthdayAdd').val());
-    var year = birthday.getFullYear();
-    var month = birthday.getMonth() + 1;
-    var newMonth = '0';
-    var date = birthday.getDate();
-    var newDate = '0';
-    if(month <= 9) {
-        newMonth += month.toString();
-    }else {
-        newMonth = '';
-        newMonth += month.toString();
-    }
-    if(date <= 9) {
-        newDate += date.toString();
-    }else {
-        newDate = '';
-        newDate += date.toString();
-    }
-    var newBirthday = year + '-' + newMonth + '-' + newDate;
-    var gender = $('input[name=gender]:checked').val();
-    var nationality = $('#nationalityAdd').val();
-    var address = $('#addressAdd').val();
-    var phonenumber = $('#phoneNumberAdd').val();
-    var email = $('#emailAdd').val();
-    var role = $('#roleSelection').val();
-    console.log(newMonth, typeof(newMonth), newDate, typeof(newDate))
-    
-
-    //Sent new staff data back to server
-    $.ajax({
-        url: 'http://localhost:1337/staffs',
-        type: 'POST',
-        data: {
-            "staff_id": staff_id,
-            "staff_name": staff_name,
-            "birthday": newBirthday,
-            "gender": gender,
-            "phonenumber": phonenumber,
-            "email": email,
-            "address": address,
-            "nationality": nationality,
-            "role": role
-        },
-        success: function () {
-            alert('Đã thêm dữ liệu!');
-            $('#addStaffModal').modal('hide');
-            loadStaffsData();
-        },
-        error: function () {
-            alert('Nope!')
-        }
-    });
-}
-
 //Sent new project infomation function
-function sentProjectInfo() {
-    //Get values from input elements
+function sentNewProjectInfo() {
+    //Collect value from html input elements
+    var project_id = $('#projectIdAdd').val();
     var project_name = $('#projectNameAdd').val();
     var description = $('#descriptionAdd').val();
+
     //Get start_date and end_date format
     var startDate = new Date($('#startDateAdd').val());
     var endDate = new Date($('#endDateAdd').val());
-    var startYear = startDate.getFullYear();
-    var endYear = endDate.getFullYear();
-    var startMonth = startDate.getMonth() + 1;
-    var endMonth = endDate.getMonth() + 1;
-    var newStartMonth = '0'; 
-    var newEndMonth = '0';
-    var startDate02 = startDate.getDate();
-    var endDate02 = endDate.getDate();
-    var newStartDate = '0';
-    var newEndDate = '0';
-    if(startMonth <= 9) {
-        newStartMonth += startMonth.toString();
-    }else {
-        newStartMonth = '';
-        newStartMonth += startMonth.toString();
-    }
+    //Convert startDate and endDate to ISO date format
+    var startDateString = startDate.toISOString();
+    var endDateString = endDate.toISOString();
+    //Check startDateString and endDateString format
+    var check_startDateString = moment(startDateString);
+    var check_endDateString = moment(endDateString);
+    //Convert check_startDateString and check_endDateString to format 'YYYY-MM-DD'
+    var finalStartDate = check_startDateString.utc().format('YYYY-MM-DD');
+    var finalEndDate = check_endDateString.utc().format('YYYY-MM-DD');
 
-    if(startDate02 <= 9) {
-        newStartDate += startDate02.toString();
-    }else {
-        newStartDate = '';
-        newStartDate += startDate02.toString();
-    }
-
-    if(endMonth <= 9) {
-        newEndMonth += endMonth.toString();
-    }else {
-        newEndMonth = '';
-        newEndMonth += endMonth.toString();
-    }
-
-    if(endDate02 <= 9) {
-        newEndDate += endDate02.toString();
-    }else {
-        newEndDate = '';
-        newEndDate += endDate02.toString();
-    }
-    var newStartDate02 = startYear + '-' + newStartMonth + '-' + newStartDate;
-    var newEndDate02 = endYear + '-' + newEndMonth + '-' + newEndDate;
+    //Continue collect value from html input elements
     var number_of_staffs = $('#numberOfStaffsAdd').val();
     var status = $('#statusSelectionAdd').val();
-    
-    console.log(project_name +'-'+ typeof(project_name), description +'-'+ typeof(description), 
-    newStartDate02+'-'+typeof(newStartDate02), newEndDate02+'-'+typeof(newEndDate02), 
-    number_of_staffs+'-'+typeof(number_of_staffs), status+'-'+typeof(status));
 
-    //Sent new staff data back to server
+    //Sent new project data back to server
     $.ajax({
         url: 'http://localhost:1337/projects',
         type: 'POST',
         data: {
             "project_name": project_name,
             "description": description,
-            "start_date": newStartDate02,
-            "end_date": newEndDate02,
+            "start_date": finalStartDate,
+            "end_date": finalEndDate,
             "number_of_staffs": number_of_staffs,
             "status": status
         },
         headers: {
-            'Authorization':'Bearer ' 
+            'Authorization':'Bearer ' + 'token_value_here'
         },
         success: function () {
             alert('Đã thêm dữ liệu mới!');
@@ -281,6 +248,75 @@ function sentProjectInfo() {
         },
         error: function () {
             alert('Đã có lỗi xảy ra trong quá trình thêm mới!')
+        }
+    });
+}
+
+//Edit project infomation function
+function sentEditedProjectInfo(id) {
+    //Collect value from html input elements
+    var project_name = $('#projectNameEdit').val();
+    var description = $('#descriptionAdd').val();
+
+    //Get start_date and end_date format
+    var startDate = new Date($('#startDateEdit').val());
+    var endDate = new Date($('#endDateEdit').val());
+    //Convert startDate and endDate to ISO date format
+    var startDateString = startDate.toISOString();
+    var endDateString = endDate.toISOString();
+    //Check startDateString and endDateString format
+    var check_startDateString = moment(startDateString);
+    var check_endDateString = moment(endDateString);
+    //Convert check_startDateString and check_endDateString to format 'YYYY-MM-DD'
+    var finalStartDate = check_startDateString.utc().format('YYYY-MM-DD');
+    var finalEndDate = check_endDateString.utc().format('YYYY-MM-DD');
+
+    //Continue collect value from html input elements
+    var number_of_staffs = $('#numberOfStaffsEdit').val();
+    var status = $('#statusSelectionEdit').val();
+
+    // Sent edited project data back to server
+    $.ajax({
+        url: 'http://localhost:1337/projects/' + id,
+        type: 'PUT',
+        data: {
+            "project_name": project_name,
+            "description": description,
+            "start_date": finalStartDate,
+            "end_date": finalEndDate,
+            "number_of_staffs": number_of_staffs,
+            "status": status
+        },
+        headers: {
+            'Authorization': 'Bearer ' + 'token_value_here'
+        },
+        success: function () {
+            alert('Đã cập nhật thông tin dữ liệu!');
+            $('#editProjectModal').modal('hide');
+            loadProjectsInfo();
+        },
+        error: function () {
+            alert('Đã có lỗi xảy ra trong quá trình cập nhật dữ liệu!')
+        }
+    });
+}
+
+//Delete specified projects
+function deleteSpecifiedProject(id) {
+    //Specifie project data back to server
+    $.ajax({
+        url: 'http://localhost:1337/projects/' + id,
+        type: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + 'token_value_here'
+        },
+        success: function () {
+            alert('Đã xóa dữ liệu!');
+            $('#confirmationModal').modal('hide');
+            loadProjectsInfo();
+        },
+        error: function () {
+            alert('Đã có lỗi xảy ra trong quá trình xóa dữ liệu!')
         }
     });
 }
@@ -299,7 +335,8 @@ function logIn() {
             "password": password
         },
         success: function (result) {
-            console.log(result);
+            console.log(result.jwt);
+            console.log(result.user.username);
             alert('Đăng nhập thành công!');
             window.location.replace('index3.html');
         },
