@@ -403,8 +403,7 @@ function logOut() {
 //Check logged in
 function checkRole() {
     if(localStorage.role == 'Public') {
-        $('#addProjectsButton').hide();
-        $('#dropdownActionButton').hide();
+        $('#addButton').hide();
         $('.dropdownMod').hide();
     }
 }
