@@ -56,7 +56,7 @@
 	<div class="header">
 		<div class="header-left">
 			<div class="menu-icon dw dw-menu"></div>
-			<!-- <div class="search-toggle-icon dw dw-search2" data-toggle="header_search"></div> -->
+
 		</div>
 		<div class="header-right">
 			<div class="user-info-dropdown">
@@ -140,298 +140,294 @@
 		<!-- Table projects list -->
 		<div class="card-box mb-30">
 			<div class="pd-20">
-				<h4 class="text-blue h4">Thông tin dự án </h4>	
+				<h3 class="text-blue ">Thông tin dự án </h3>
 			</div>
 			<div class="pull-right mr-20">
-				<a href="#collapseExample" class="btn btn-primary btn-sm scroll-click" rel="content-y"
-					data-toggle="modal" data-target="#addProjectModal" role="button">Thêm mới</a>
+				<a href="#collapseExample" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="modal" data-target="#addProjectModal"
+				 role="button">Thêm mới</a>
 			</div>
 			<div class="pb-20">
-				<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-					<div class="row">
-						
-						<div class="col-sm-12 col-md-6">
-							<div id="DataTables_Table_0_filter" class="dataTables_filter">Search:
-								<label>  
-									<input type="search" class="form-control form-control-sm" placeholder="Search" aria-controls="DataTables_Table_0">
-								</label>
-							</div>
+
+				<div class="row">
+					<div class="col-sm-12 col-md-6">
+						<div id="DataTables_Table_0_filter" class="dataTables_filter">
+							<label>
+								<input type="search" class="form-control form-control-sm" placeholder="Search" aria-controls="DataTables_Table_0">
+							</label>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-sm-12">
-							<table class="data-table table stripe hover nowrap dataTable no-footer dtr-inline" id="DataTables_Table_0" role="grid"
-							 aria-describedby="DataTables_Table_0_info">
-								<thead>
-									<tr role="row">
-										<th class="table-plus datatable-nosort" rowspan="1" colspan="1" aria-label="Name">Mã dự án</th>
-										<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending">Tên dự án</th>
-										<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">Số ngày thực hiện</th>
-										<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending">Ngày kết thúc</th>
-										<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Start Date: activate to sort column ascending">Số nhân viên tham gia</th>
-										<th class="datatable-nosort " rowspan="1" colspan="1" aria-label="Action">Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr role="row" class="odd">
-										<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-										<td>30</td>
-										<td>Gemini</td>
-										<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-										<td style="">29-03-2018</td>
-										<td style="">
-											<div class="dropdown">
-												<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-												 aria-expanded="false">
-													<i class="dw dw-more"></i>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="data-table table stripe hover nowrap dataTable no-footer dtr-inline" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+							<thead>
+								<tr role="row">
+									<th class="table-plus datatable-nosort" rowspan="1" colspan="1" aria-label="Name">Mã dự án</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending">Tên dự án</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">Ngày bắt đầu</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending">Ngày kết thúc</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Start Date: activate to sort column ascending">Số nhân viên tham gia</th>
+									<th class="datatable-nosort " rowspan="1" colspan="1" aria-label="Action"></th>
+								</tr>
+							</thead>
+							<tbody id="projectList">
+								<tr role="row" class="odd">
+									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
+									<td>30</td>
+									<td>Gemini</td>
+									<td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
+									<td>29-03-2018</td>
+									<td>
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+											 aria-expanded="false">
+												<i class="dw dw-more"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" style="">
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
+													<i class="dw dw-eye"></i> View</a>
+												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
+													<i class="dw dw-edit2"></i> Edit
 												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" style="">
-													<a class="dropdown-item"  href="#" data-toggle="modal" data-target="#editview">
-														<i class="dw dw-eye"></i> View</a>
-													<a class="dropdown-item"  data-toggle="modal" data-target="#editModal" href="#">
-														<i class="dw dw-edit2"></i> Edit	 
-													</a>
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-														<i class="dw dw-delete-3"></i> Delete</a>
-												</div>
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
+													<i class="dw dw-delete-3"></i> Delete</a>
 											</div>
-										</td>
-									</tr>
-									<tr role="row" class="even">
-										<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-										<td>20</td>
-										<td>Gemini</td>
-										<td style="">2829 Trainer Avenue Peoria, IL 61602 </td>
-										<td style="">29-03-2018</td>
-										<td style="">
-											<div class="dropdown show">
-												<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-												 aria-expanded="true">
-													<i class="dw dw-more"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-135px, 28px, 0px);">
-													<a class="dropdown-item" href="#">
-														<i class="dw dw-eye"></i> View</a>
-													<a class="dropdown-item"  data-toggle="modal" data-target="#editModal" href="#">
-														<i class="dw dw-edit2"></i> Edit</a>
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-														<i class="dw dw-delete-3"></i> Delete</a>
-												</div>
+										</div>
+									</td>
+								</tr>
+								<tr role="row" class="even">
+									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
+									<td>20</td>
+									<td>Gemini</td>
+									<td>2829 Trainer Avenue Peoria, IL 61602 </td>
+									<td>2829 Trainer Avenue Peoria, IL 61602</td>
+									<td>
+										<div class="dropdown show">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+											 aria-expanded="true">
+												<i class="dw dw-more"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-135px, 28px, 0px);">
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
+													<i class="dw dw-eye"></i> View</a>
+												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
+													<i class="dw dw-edit2"></i> Edit</a>
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
+													<i class="dw dw-delete-3"></i> Delete</a>
 											</div>
-										</td>
-									</tr>
-									<tr role="row" class="odd">
-										<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-										<td>30</td>
-										<td>Sagittarius</td>
-										<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-										<td style="">29-03-2018</td>
-										<td style="">
-											<div class="dropdown">
-												<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-													<i class="dw dw-more"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-													<a class="dropdown-item" href="#">
-														<i class="dw dw-eye"></i> View</a>
-													<a class="dropdown-item"  data-toggle="modal" data-target="#editModal" href="#">
-														<i class="dw dw-edit2"></i> Edit</a>
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-														<i class="dw dw-delete-3"></i> Delete</a>
-												</div>
+										</div>
+									</td>
+								</tr>
+								<tr role="row" class="odd">
+									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
+									<td>30</td>
+									<td>Sagittarius</td>
+									<td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
+									<td>29-03-2018</td>
+									<td>
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+												<i class="dw dw-more"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
+													<i class="dw dw-eye"></i> View</a>
+												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
+													<i class="dw dw-edit2"></i> Edit</a>
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
+													<i class="dw dw-delete-3"></i> Delete</a>
 											</div>
-										</td>
-									</tr>
-									<tr role="row" class="even">
-										<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-										<td>25</td>
-										<td>Gemini</td>
-										<td style="">2829 Trainer Avenue Peoria, IL 61602 </td>
-										<td style="">29-03-2018</td>
-										<td style="">
-											<div class="dropdown">
-												<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-												 aria-expanded="false">
-													<i class="dw dw-more"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" style="">
-													<a class="dropdown-item" href="#">
-														<i class="dw dw-eye"></i> View</a>
-													<a class="dropdown-item"  data-toggle="modal" data-target="#editModal" href="#">
-														<i class="dw dw-edit2"></i> Edit</a>
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-														<i class="dw dw-delete-3"></i> Delete</a>
-												</div>
+										</div>
+									</td>
+								</tr>
+								<tr role="row" class="even">
+									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
+									<td>25</td>
+									<td>Gemini</td>
+									<td>2829 Trainer Avenue Peoria, IL 61602 </td>
+									<td>29-03-2018</td>
+									<td>
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+											 aria-expanded="false">
+												<i class="dw dw-more"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" style="">
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
+													<i class="dw dw-eye"></i> View</a>
+												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
+													<i class="dw dw-edit2"></i> Edit</a>
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
+													<i class="dw dw-delete-3"></i> Delete</a>
 											</div>
-										</td>
-									</tr>
-									<tr role="row" class="odd">
-										<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-										<td>20</td>
-										<td>Sagittarius</td>
-										<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-										<td style="">29-03-2018</td>
-										<td style="">
-											<div class="dropdown">
-												<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-													<i class="dw dw-more"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-													<a class="dropdown-item" href="#">
-														<i class="dw dw-eye"></i> View</a>
-													<a class="dropdown-item"  data-toggle="modal" data-target="#editModal" href="#">
-														<i class="dw dw-edit2"></i> Edit</a>
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-														<i class="dw dw-delete-3"></i> Delete</a>
-												</div>
+										</div>
+									</td>
+								</tr>
+								<tr role="row" class="odd">
+									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
+									<td>20</td>
+									<td>Sagittarius</td>
+									<td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
+									<td>29-03-2018</td>
+									<td>
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+												<i class="dw dw-more"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+												<a class="dropdown-item" href="# data-toggle=" modal " data-target="#editview "">
+													<i class="dw dw-eye"></i> View</a>
+												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
+													<i class="dw dw-edit2"></i> Edit</a>
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
+													<i class="dw dw-delete-3"></i> Delete</a>
 											</div>
-										</td>
-									</tr>
-									<tr role="row" class="even">
-										<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-										<td>18</td>
-										<td>Gemini</td>
-										<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-										<td style="">29-03-2018</td>
-										<td style="">
-											<div class="dropdown">
-												<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-													<i class="dw dw-more"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-													<a class="dropdown-item" href="#">
-														<i class="dw dw-eye"></i> View</a>
-													<a class="dropdown-item"  data-toggle="modal" data-target="#editModal" href="#">
-														<i class="dw dw-edit2"></i> Edit</a>
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-														<i class="dw dw-delete-3"></i> Delete</a>
-												</div>
+										</div>
+									</td>
+								</tr>
+								<tr role="row" class="even">
+									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
+									<td>18</td>
+									<td>Gemini</td>
+									<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
+									<td style="">29-03-2018</td>
+									<td style="">
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+												<i class="dw dw-more"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
+													<i class="dw dw-eye"></i> View</a>
+												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
+													<i class="dw dw-edit2"></i> Edit</a>
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
+													<i class="dw dw-delete-3"></i> Delete</a>
 											</div>
-										</td>
-									</tr>
-									<tr role="row" class="odd">
-										<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-										<td>30</td>
-										<td>Sagittarius</td>
-										<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-										<td style="">29-03-2018</td>
-										<td style="">
-											<div class="dropdown">
-												<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-													<i class="dw dw-more"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-													<a class="dropdown-item" href="#">
-														<i class="dw dw-eye"></i> View</a>
-													<a class="dropdown-item"  data-toggle="modal" data-target="#editModal" href="#">
-														<i class="dw dw-edit2"></i> Edit</a>
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-														<i class="dw dw-delete-3"></i> Delete</a>
-												</div>
+										</div>
+									</td>
+								</tr>
+								<tr role="row" class="odd">
+									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
+									<td>30</td>
+									<td>Sagittarius</td>
+									<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
+									<td style="">29-03-2018</td>
+									<td style="">
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+												<i class="dw dw-more"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
+													<i class="dw dw-eye"></i> View</a>
+												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
+													<i class="dw dw-edit2"></i> Edit</a>
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
+													<i class="dw dw-delete-3"></i> Delete</a>
 											</div>
-										</td>
-									</tr>
-									<tr role="row" class="even">
-										<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-										<td>30</td>
-										<td>Sagittarius</td>
-										<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-										<td style="">29-03-2018</td>
-										<td style="">
-											<div class="dropdown">
-												<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-													<i class="dw dw-more"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-													<a class="dropdown-item" href="#">
-														<i class="dw dw-eye"></i> View</a>
-													<a class="dropdown-item"  data-toggle="modal" data-target="#editModal" href="#">
-														<i class="dw dw-edit2"></i> Edit</a>
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-														<i class="dw dw-delete-3"></i> Delete</a>
-												</div>
+										</div>
+									</td>
+								</tr>
+								<tr role="row" class="even">
+									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
+									<td>30</td>
+									<td>Sagittarius</td>
+									<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
+									<td style="">29-03-2018</td>
+									<td style="">
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+												<i class="dw dw-more"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
+													<i class="dw dw-eye"></i> View</a>
+												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
+													<i class="dw dw-edit2"></i> Edit</a>
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
+													<i class="dw dw-delete-3"></i> Delete</a>
 											</div>
-										</td>
-									</tr>
-									<tr role="row" class="odd">
-										<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-										<td>30</td>
-										<td>Gemini</td>
-										<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-										<td style="">29-03-2018</td>
-										<td style="">
-											<div class="dropdown">
-												<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-													<i class="dw dw-more"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-													<a class="dropdown-item" href="#">
-														<i class="dw dw-eye"></i> View</a>
-													<a class="dropdown-item"  data-toggle="modal" data-target="#editModal" href="#">
-														<i class="dw dw-edit2"></i> Edit</a>
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-														<i class="dw dw-delete-3"></i> Delete</a>
-												</div>
+										</div>
+									</td>
+								</tr>
+								<tr role="row" class="odd">
+									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
+									<td>30</td>
+									<td>Gemini</td>
+									<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
+									<td style="">29-03-2018</td>
+									<td style="">
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+												<i class="dw dw-more"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
+													<i class="dw dw-eye"></i> View</a>
+												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
+													<i class="dw dw-edit2"></i> Edit</a>
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
+													<i class="dw dw-delete-3"></i> Delete</a>
 											</div>
-										</td>
-									</tr>
-									<tr role="row" class="even">
-										<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-										<td>30</td>
-										<td>Gemini</td>
-										<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-										<td style="">29-03-2018</td>
-										<td style="">
-											<div class="dropdown">
-												<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-													<i class="dw dw-more"></i>
-												</a>
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-													<a class="dropdown-item" href="#">
-														<i class="dw dw-eye"></i> View1</a>
-													<a class="dropdown-item"  data-toggle="modal" data-target="#editModal" href="#">
-														<i class="dw dw-edit2"></i> Edit</a>
-													<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-														<i class="dw dw-delete-3"></i> Delete</a>
-												</div>
+										</div>
+									</td>
+								</tr>
+								<tr role="row" class="even">
+									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
+									<td>30</td>
+									<td>Gemini</td>
+									<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
+									<td style="">29-03-2018</td>
+									<td style="">
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+												<i class="dw dw-more"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
+													<i class="dw dw-eye"></i> View</a>
+												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
+													<i class="dw dw-edit2"></i> Edit</a>
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
+													<i class="dw dw-delete-3"></i> Delete</a>
 											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-					<!--next,pre-->
-					<div class="row">
-						<!-- <div class="col-sm-12 col-md-5">
-							<div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">1-10 of 12 entries</div>
-						</div> -->
-						<div class="col-sm-12 col-md-12">
-							<div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-								<ul class="pagination  pull-right">
-									<li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
-										<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">
-											<i class="ion-chevron-left"></i>
-										</a>
-									</li>
-									<li class="paginate_button page-item active">
-										<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-									</li>
-									<li class="paginate_button page-item ">
-										<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-									</li>
-									<li class="paginate_button page-item next" id="DataTables_Table_0_next">
-										<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" class="page-link">
-											<i class="ion-chevron-right"></i>
-										</a>
-									</li>
-								</ul>
-							</div>
+				</div>
+				<!--next,pre-->
+				<div class="row">
+
+					<div class="col-sm-12 col-md-12">
+						<div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+							<ul class="pagination  pull-right">
+								<li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
+									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">
+										<i class="ion-chevron-left"></i>
+									</a>
+								</li>
+								<li class="paginate_button page-item active">
+									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+								</li>
+								<li class="paginate_button page-item ">
+									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+								</li>
+								<li class="paginate_button page-item next" id="DataTables_Table_0_next">
+									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" class="page-link">
+										<i class="ion-chevron-right"></i>
+									</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 	</div>
 	<!--Modal form edit-->
@@ -486,8 +482,15 @@
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
-														<label>Tình trạng :</label>
-														<input type="text" value="Đã hoàn thành" class="form-control">
+														<label>Trạng thái :</label>
+														<select class="form-control" name="ecolor">
+															<option value="fc-bg-default">Đã hoàn thành</option>
+															<option value="fc-bg-blue">Đang thực hiện</option>
+															<option value="fc-bg-lightgreen">Trễ hạn
+																<nav></nav>
+															</option>
+														</select>
+
 													</div>
 												</div>
 											</div>
@@ -504,9 +507,9 @@
 				</div>
 			</div>
 		</div>
-	
+
 	</div>
-	 <!-- Edit modal form them moi-->
+	<!-- Edit modal form them moi-->
 	<div>
 		<div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModal" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered modal-lg">
@@ -526,13 +529,13 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Mã dự án :</label>
-															<input type="text" class="form-control" value="DA001" >
+															<input type="text" class="form-control" value="DA001">
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Tên dự án :</label>
-															<input type="text" class="form-control" value="Web demo" >
+															<input type="text" class="form-control" value="Web demo">
 														</div>
 													</div>
 												</div>
@@ -571,7 +574,7 @@
 					</div>
 				</div>
 			</div>
-		
+
 		</div>
 	</div>
 	<!--form View-->
@@ -643,32 +646,35 @@
 				</div>
 			</div>
 		</div>
-	
+
 	</div>
 	<!--Alert -->
 	<div class="col-md-4 col-sm-12 mb-30">
-		
-			
-			<div class="modal fade" id="confirmation-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<div class="modal-body text-center font-18">
-							<h4 class="padding-top-30 mb-30 weight-500">Are you sure you want to continue?</h4>
-							<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
-								<div class="col-6">
-									<button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
-									NO
-								</div>
-								<div class="col-6">
-									<button type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn" data-dismiss="modal"><i class="fa fa-check"></i></button>
-									YES
-								</div>
+		<div class="modal fade" id="confirmation-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body text-center font-18">
+						<h4 class="padding-top-30 mb-30 weight-500">You really want to delete?</h4>
+						<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+							<div class="col-6">
+								<button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn" data-dismiss="modal">
+									<i class="fa fa-times"></i>
+								</button>
+								NO
+							</div>
+							<div class="col-6">
+								<button type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn" data-dismiss="modal">
+									<i class="fa fa-check"></i>
+								</button>
+								YES
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 	</div>
+
 	<!-- js -->
 	<script src="vendors/scripts/core.js"></script>
 	<script src="vendors/scripts/script.min.js"></script>
