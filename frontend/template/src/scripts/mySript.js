@@ -31,6 +31,11 @@ $(document).ready(function () {
         logOut();
     });
 
+    //test
+    $('#cancelProjectButtonAddModal').click(function() {
+        getToken();
+    });
+
     //Save new staff infomation to server
     $('#saveButtonStaffAddModal').click(function() {
         sentStaffInfo();
@@ -267,7 +272,7 @@ function sentProjectInfo() {
             "status": status
         },
         headers: {
-            'Authorization':'Bearer ' + localStorage.token
+            'Authorization':'Bearer ' 
         },
         success: function () {
             alert('Đã thêm dữ liệu mới!');
@@ -293,7 +298,8 @@ function logIn() {
             "identifier": identifier,
             "password": password
         },
-        success: function (data) {
+        success: function (result) {
+            console.log(result);
             alert('Đăng nhập thành công!');
             window.location.replace('index3.html');
         },
@@ -303,9 +309,13 @@ function logIn() {
     });
 }
 
+//Get token
+function getToken() {
+    alert(typeof(localStorage.token));
+}
+
 //Logout function
 function logOut() {
     localStorage.clear();
-    window.location.replace('login.html');
 }
 
