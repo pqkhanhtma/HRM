@@ -1,12 +1,15 @@
 $(document).ready(function () {
+
+    //=============MAIN===========================
     //Check role
     checkRole();
 
     //Display username
     $('#displayUserName').html(localStorage.username);
 
-    //Retrieve projects data from server
-    loadProjectsInfo();
+    //Display user avatar
+    console.log(typeof(localStorage.avatar));
+    $('#user_avatar').prop('src', 'http://localhost:1337'+localStorage.avatar);
 
     //Login function
     $('#loginButton').click(function() {
@@ -18,18 +21,14 @@ $(document).ready(function () {
         logOut();
     });
 
+    //==============PROJECTS======================
+    //Retrieve projects data from server
+    loadProjectsInfo();
+
     //projectlist filter
     $("#projectSearch").on("keyup", function () {
         var value = $(this).val().toLowerCase();
         $("#projectList tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-
-    //Staffslist filter
-    $("#staffSearch").on("keyup", function () {
-        var value = $(this).val().toLowerCase();
-        $("#staffList tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
@@ -39,17 +38,34 @@ $(document).ready(function () {
         sentNewProjectInfo();
     });
 
-    //Save edited project infomation to server
-    // $(document).on('click', '.edit-modal', function () {
-    //     var id = '';
-    //     var elementId = $(this).attr('id');
-    //     var getRealId = elementId.substr(6);
-    //     id += getRealId;
-    //     console.log(id);
-    //     $('#saveEditedProjectModal').click(function() {
-    //         sentEditedProjectInfo(id);
-    //     });
-    // });
+    //Delete specified project
+    $(document).on('click', '.delete-modal', function() {
+        var id = '';
+        var elementId = $(this).attr('id');
+        var getRealId = elementId.substr(6);
+        id += getRealId;
+        $('#deleteProjectConfirmationModal').modal();
+        $('#deleteProjectAcceptButton').click(function() {
+            deleteSpecifiedProject(id);
+        });
+    });
+
+    //==============STAFFS========================
+    //Retrieve projects data from server
+    loadStaffsInfo();
+
+    //Staffslist filter
+    $("#staffSearch").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#staffList tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    //Save new staff infomation to server
+    $('#saveButtonStaffAddModal').click(function() {
+        sentStaffInfo();
+    });
 
     //Delete specified project
     $(document).on('click', '.delete-modal', function() {
@@ -57,16 +73,11 @@ $(document).ready(function () {
         var elementId = $(this).attr('id');
         var getRealId = elementId.substr(6);
         id += getRealId;
-        console.log(id);
-        $('#accept').click(function() {
-            deleteSpecifiedProject(id);
+        $('#deleteStaffConfirmationModal').modal();
+        $('#deleteStaffAcceptButton').click(function() {
+            deleteSpecifiedStaff(id);
         });
     });
-
-    //Save new staff infomation to server
-    $('#saveButtonStaffAddModal').click(function() {
-        sentStaffInfo();
-    });  
 });
 
 
@@ -74,7 +85,7 @@ $(document).ready(function () {
 //Retrieve staffs data function
 function loadStaffsInfo() {
     $.ajax({
-        url: 'http://localhost:1337/',
+        url: 'http://localhost:1337/staffs',
         type: 'GET',
         success: function (result) {
             var str = '';
@@ -89,16 +100,15 @@ function loadStaffsInfo() {
 
                 //Fetch data to html table
                 str += '<tr>';
-                str += '<td>' + items.staff_id + '</td>';
                 str += '<td>' + items.staff_name + '</td>';
                 str += '<td>' + items.birthday + '</td>';
                 str += '<td>' + gender + '</td>';
-                str += '<td>' + items.phonenumber + '</td>';
+                str += '<td>' + items.phone_number + '</td>';
                 str += '<td>' + items.email + '</td>';
                 str += '<td>' + items.address + '</td>';
                 str += '<td>' + items.nationality + '</td>';
                 str += '<td>' + items.role + '</td>';
-                str += '<td>' + '<div class="dropdown">\
+                str += '<td class="dropdownMod">' + '<div class="dropdown">\
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
                                         <i class="dw dw-more"></i>\
                                     </a>\
@@ -116,30 +126,35 @@ function loadStaffsInfo() {
             checkRole();
 
             //Collect value that match with id and assign into modal's input
-            $('#staffList .edit-modal').on('click', function() {
+            $('#staffList .edit-modal').on('click', function () {
                 var id = '';
                 var elementId = $(this).attr('id');
                 var getRealId = elementId.substr(6);
                 id += getRealId;
-                for(let i in result) {
-                    if(result[i].id == id) {
+                for (let i in result) {
+                    if (result[i].id == id) {
                         $('#staffNameEdit').val(result[i].staff_name);
                         $('#birthdayEdit').val(result[i].birthday);
-                        $('input[name=gender]').val(result[i].gender);
+                        if(result[i].gender == true) {
+                            $('#genderRadioMaleEdit').checked = true;
+                        }else {
+                            $('#genderRadioMaleEdit').checked = false;
+                        }
                         $('#nationalityEdit').val(result[i].nationality);
                         $('#addressEdit').val(result[i].address);
-                        $('#phoneNumberEdit').val(result[i].phonenumber);
+                        $('#phoneNumberEdit').val(result[i].phone_number);
                         $('#emailEdit').val(result[i].email);
                         $('#roleSelectionEdit').val(result[i].role);
                     }
                 }
+
+                //Sent edited staff infomation
+                $('#editStaffSaveButton').click(function () {
+                    sentEditedStaffInfo(id);
+                });
             });
 
-            console.log($('input[name=gender]').val());
-            ////Sent edited staff infomation
-            $('#editStaffSaveButton').click(function() {
 
-            });
         }
     });
 }
@@ -196,7 +211,80 @@ function sentNewStaffInfo() {
 
 //Edit staff infomation function
 function sentEditedStaffInfo(id) {
+    //Collect value from html input elements
+    var staff_name = $('#staffNameEdit').val();
+    var birthday = new Date($('#birthdayEdit').val());
+    //Convert birthday long_date format into ISO_date format
+    var birthdayString = birthday.toISOString();
+    //Check birthday_string format
+    var check_birthdayString = moment(birthdayString);
+    //Convert check_birthdayString into format "YYYY-MM-DD"
+    var finalBirthday = check_birthdayString.utc().format('YYYY-MM-DD');
 
+    //Continue collect value from html input elements
+    var gender = $('input[name=genderEdit]:checked').val();
+    var phone_number = $('#phoneNumberEdit').val();
+    var email = $('#emailEdit').val();
+    var address = $('#addressEdit').val();
+    var nationality = $('#nationalityEdit').val();
+    var role = $('#roleSelectionEdit').val();
+
+    $.ajax({
+        url: 'http://localhost:1337/staffs/' + id,
+        type: 'PUT',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.token
+        },
+        data: {
+            "staff_name": staff_name,
+            "birthday": finalBirthday,
+            "gender": gender,
+            "phone_number": phone_number,
+            "email": email,
+            "address": address,
+            "nationality": nationality,
+            "role": role
+        },
+        success:function() {
+            $('#editStaffModal').modal('hide');
+            $('#staffStatusModalConfirmButton').show();
+            $('#staffStatusModalCancelButton').hide();
+            $('#staffStatusModalTitle').html('Đã cập nhật thông tin!')
+            $('#staffStatusModal').modal();
+        },
+        error:function() {
+            $('#editStaffModal').modal('hide');
+            $('#staffStatusModalConfirmButton').hide();
+            $('#staffStatusModalCancelButton').show();
+            $('#staffStatusModalTitle').html('Không thể cập nhật thông tin!')
+            $('#staffStatusModal').modal();
+        }
+    });
+}
+
+//Delete specified staff
+function deleteSpecifiedStaff(id) {
+    $.ajax({
+        url: 'http://localhost:1337/staffs/' + id,
+        type: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.token
+        },
+        success: function() {
+            $('#deleteStaffConfirmationModal').modal('hide');
+            $('#staffStatusModalConfirmButton').show();
+            $('#staffStatusModalCancelButton').hide();
+            $('#staffStatusModalTitle').html('Đã xóa 1 bản ghi!')
+            $('#staffStatusModal').modal();
+        },
+        error: function() {
+            $('#deleteStaffConfirmationModal').modal('hide');
+            $('#staffStatusModalConfirmButton').hide();
+            $('#staffStatusModalCancelButton').show();
+            $('#staffStatusModalTitle').html('Không thể xóa bản ghi này!')
+            $('#staffStatusModal').modal();
+        }
+    });
 }
 
 
@@ -403,6 +491,7 @@ function deleteSpecifiedProject(id) {
             loadProjectsInfo();
         },
         error: function () {
+            $('#deleteProjectConfirmationModal').modal('hide');
             $('#projectStatusModalConfirmButton').hide();
             $('#projectStatusModalCancelButton').show();
             $('#projectStatusModalTitle').html('Không thể xóa!')
@@ -431,6 +520,7 @@ function logIn() {
             localStorage.setItem('token', result.jwt);
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('role', result.user.role.name);
+            localStorage.setItem('avatar',result.user.user_avatar.formats.thumbnail.url);
             console.log(result.user.role.name);
             $('#loginStatusModalCancelButton').hide();
             $('#loginStatusModalConfirmButton').show();
@@ -454,6 +544,8 @@ function logOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('role');
+    localStorage.removeItem('avatar');
+    window.location.replace('login.html');
 }
 
 //Check logged in

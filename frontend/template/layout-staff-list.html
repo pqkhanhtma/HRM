@@ -167,10 +167,10 @@
 														<div class="form-group">
 															<label>Giới tính :</label>
 															<br>
-															<input class="genderAdd" type="radio" value="true" name="gender"
+															<input class="genderAdd" type="radio" value="true" name="genderAdd"
 																id="genderRadioMaleAdd" checked> Nam
 															<input class="genderAdd" type="radio" value="false"
-																name="gender" id="genderRadioFemaleAdd"> Nữ
+																name="genderAdd" id="genderRadioFemaleAdd"> Nữ
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -265,10 +265,10 @@
 														<div class="form-group">
 															<label>Giới tính :</label>
 															<br>
-															<input class="genderEdit" type="radio" value="true" name="gender"
+															<input class="genderEdit" type="radio" value="true" name="genderEdit"
 																id="genderRadioMaleEdit" checked> Nam
 															<input class="genderEdit" type="radio" value="false"
-																name="gender" id="genderRadioFemaleEdit"> Nữ
+																name="genderEdit" id="genderRadioFemaleEdit"> Nữ
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -322,6 +322,30 @@
 						<button id="editStaffModalCancelButton" type="button" class="btn btn-secondary"
 							data-dismiss="modal">Hủy</button>
 						<button id="editStaffSaveButton" type="button" class="btn btn-primary">Lưu</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Delete specified staff confirm modal-->
+		<div class="modal fade" id="deleteStaffConfirmationModal" tabindex="-1" role="dialog" style="display: none;"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body text-center font-18">
+						<h4 class="padding-top-30 mb-30 weight-500">Bạn có muốn xóa dòng hiện tại?</h4>
+						<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+							<div class="col-6">
+								<button id="deleteStaffCancelButton" type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+									data-dismiss="modal"><i class="fa fa-times"></i></button>
+								Không
+							</div>
+							<div class="col-6">
+								<button id="deleteStaffAcceptButton" type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
+									data-dismiss="modal"><i class="fa fa-check"></i></button>
+								Có
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
