@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     //=============MAIN===========================
     //Check role
     checkRole();
@@ -8,8 +7,9 @@ $(document).ready(function () {
     $('#displayUserName').html(localStorage.username);
 
     //Display user avatar
-    console.log(typeof(localStorage.avatar));
-    $('#user_avatar').prop('src', 'http://localhost:1337'+localStorage.avatar);
+    if (localStorage.avatar) {
+        $('#user_avatar').prop('src', 'http://localhost:1337' + localStorage.avatar);
+    }
 
     //Login function
     $('#loginButton').click(function() {
@@ -63,8 +63,8 @@ $(document).ready(function () {
     });
 
     //Save new staff infomation to server
-    $('#saveButtonStaffAddModal').click(function() {
-        sentStaffInfo();
+    $('#addStaffSaveButton').click(function() {
+        sentNewStaffInfo();
     });
 
     //Delete specified project
@@ -149,7 +149,7 @@ function loadStaffsInfo() {
                 }
 
                 //Sent edited staff infomation
-                $('#editStaffSaveButton').click(function () {
+                $('#editedStaffSaveButton').click(function () {
                     sentEditedStaffInfo(id);
                 });
             });
@@ -162,7 +162,6 @@ function loadStaffsInfo() {
 //Sent new staff infomation function
 function sentNewStaffInfo() {
     //Collect value from html input elements
-    var staff_id = $('#staffIdAdd').val();
     var staff_name = $('#staffNameAdd').val();
 
     //Get value from birthday input
@@ -175,10 +174,10 @@ function sentNewStaffInfo() {
     var finalBirthday = check_birthdayString.utc().format('YYYY-MM-DD');
 
     //Continue collect value from html input elements
-    var gender = $('input[name=gender]:checked').val();
+    var gender = $('input[name=genderAdd]:checked').val();
     var nationality = $('#nationalityAdd').val();
     var address = $('#addressAdd').val();
-    var phonenumber = $('#phoneNumberAdd').val();
+    var phone_number = $('#phoneNumberAdd').val();
     var email = $('#emailAdd').val();
     var role = $('#roleSelection').val();
     
@@ -187,24 +186,32 @@ function sentNewStaffInfo() {
     $.ajax({
         url: 'http://localhost:1337/staffs',
         type: 'POST',
+        headers: {
+            "Authorization": "Bearer " + localStorage.token
+        },
         data: {
-            "staff_id": staff_id,
             "staff_name": staff_name,
             "birthday": finalBirthday,
             "gender": gender,
-            "phonenumber": phonenumber,
+            "phone_number": phone_number,
             "email": email,
             "address": address,
             "nationality": nationality,
             "role": role
         },
         success: function () {
-            alert('Đã thêm dữ liệu!');
             $('#addStaffModal').modal('hide');
-            loadStaffsData();
+            $('#staffStatusModalConfirmButton').show();
+            $('#staffStatusModalCancelButton').hide();
+            $('#staffStatusModalTitle').html('Đã thêm dữ liệu mới!')
+            $('#staffStatusModal').modal();
+            loadStaffsInfo();
         },
         error: function () {
-            alert('Nope!')
+            $('#staffStatusModalConfirmButton').hide();
+            $('#staffStatusModalCancelButton').show();
+            $('#staffStatusModalTitle').html('Không thể thêm dữ liệu mới!')
+            $('#staffStatusModal').modal();
         }
     });
 }
@@ -251,6 +258,7 @@ function sentEditedStaffInfo(id) {
             $('#staffStatusModalCancelButton').hide();
             $('#staffStatusModalTitle').html('Đã cập nhật thông tin!')
             $('#staffStatusModal').modal();
+            loadStaffsInfo();
         },
         error:function() {
             $('#editStaffModal').modal('hide');
@@ -276,6 +284,7 @@ function deleteSpecifiedStaff(id) {
             $('#staffStatusModalCancelButton').hide();
             $('#staffStatusModalTitle').html('Đã xóa 1 bản ghi!')
             $('#staffStatusModal').modal();
+            loadStaffsInfo();
         },
         error: function() {
             $('#deleteStaffConfirmationModal').modal('hide');
@@ -349,12 +358,11 @@ function loadProjectsInfo() {
                         $('#startDateEdit').val(result[i].start_date);
                         $('#endDateEdit').val(result[i].end_date);
                         $('#numberOfStaffsEdit').val(result[i].number_of_staffs);
-                    }
-                    
+                    } 
                 }
 
                 //Sent edited project infomation
-                $('#saveEditedProjectModal').click(function () {
+                $('#editedProjectSaveButton').click(function () {
                     sentEditedProjectInfo(id);
                 });
             });
@@ -462,6 +470,7 @@ function sentEditedProjectInfo(id) {
             $('#projectStatusModalCancelButton').hide();
             $('#projectStatusModalTitle').html('Đã cập nhật thông tin!')
             $('#projectStatusModal').modal();
+            loadProjectsInfo();
             
         },
         error: function () {
@@ -520,17 +529,18 @@ function logIn() {
             localStorage.setItem('token', result.jwt);
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('role', result.user.role.name);
-            localStorage.setItem('avatar',result.user.user_avatar.formats.thumbnail.url);
-            console.log(result.user.role.name);
+            if (result.user.user_avatar) {
+                localStorage.setItem('avatar', result.user.user_avatar.formats.thumbnail.url);
+            }
             $('#loginStatusModalCancelButton').hide();
             $('#loginStatusModalConfirmButton').show();
             $('#loginStatusModalTitle').html('Xin chào ' + localStorage.username);
             $('#loginStatusModal').modal();
-            $('#loginStatusModalConfirmButton').click(function() {
+            $('#loginStatusModalConfirmButton').click(function () {
                 window.location.replace('index3.html');
             });
         },
-        error: function() {
+        error: function () {
             $('#loginStatusModalCancelButton').show();
             $('#loginStatusModalConfirmButton').hide();
             $('#loginStatusModalTitle').html('Username hoặc mật khẩu không chính xác!');
