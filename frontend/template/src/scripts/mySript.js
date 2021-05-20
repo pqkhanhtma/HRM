@@ -3,6 +3,9 @@ $(document).ready(function () {
     //Check role
     checkRole();
 
+    //Account infomation
+    loadAccountInfo();
+
     //Display username
     $('#displayUserName').html(localStorage.username);
 
@@ -125,25 +128,27 @@ function loadStaffsInfo() {
             //Check role
             checkRole();
 
+            //Specified id
+            var id = '';
+
             //Collect value that match with id and assign into modal's input
-            $('#staffList .edit-modal').on('click', function () {
-                var id = '';
+            $('#staffList').on('click', '.edit-modal', function () {
                 var elementId = $(this).attr('id');
                 var getRealId = elementId.substr(6);
-                id += getRealId;
+                id = getRealId;
                 for (let i in result) {
                     if (result[i].id == id) {
                         $('#staffNameEdit').val(result[i].staff_name);
                         $('#birthdayEdit').val(result[i].birthday);
                         if(result[i].gender == true) {
-                            $('#genderRadioMaleEdit').checked = true;
+                            $('#genderRadioMaleEdit').prop('checked', true);
                         }else {
-                            $('#genderRadioMaleEdit').checked = false;
+                            $('#genderRadioFemaleEdit').prop('checked', true);
                         }
                         $('#nationalityEdit').val(result[i].nationality);
                         $('#addressEdit').val(result[i].address);
                         $('#phoneNumberEdit').val(result[i].phone_number);
-                        $('#emailEdit').val(result[i].email);
+                        $('#emailEdit').val(result[i].users_permissions_user.email);
                         $('#roleSelectionEdit').val(result[i].role);
                     }
                 }
@@ -153,8 +158,6 @@ function loadStaffsInfo() {
                     sentEditedStaffInfo(id);
                 });
             });
-
-
         }
     });
 }
@@ -165,7 +168,7 @@ function sentNewStaffInfo() {
     var staff_name = $('#staffNameAdd').val();
 
     //Get value from birthday input
-    var birthday = new Date($('#birthdayAdd').val());
+    var birthday = new Date($('#birthdayAdd').val() + 'UTC');
     //Convert birthday to ISO date format
     var birthdayString = birthday.toISOString();
     //Check birthdayString format
@@ -220,7 +223,7 @@ function sentNewStaffInfo() {
 function sentEditedStaffInfo(id) {
     //Collect value from html input elements
     var staff_name = $('#staffNameEdit').val();
-    var birthday = new Date($('#birthdayEdit').val());
+    var birthday = new Date($('#birthdayEdit').val() + 'UTC');
     //Convert birthday long_date format into ISO_date format
     var birthdayString = birthday.toISOString();
     //Check birthday_string format
@@ -235,6 +238,9 @@ function sentEditedStaffInfo(id) {
     var address = $('#addressEdit').val();
     var nationality = $('#nationalityEdit').val();
     var role = $('#roleSelectionEdit').val();
+    console.log(birthday);
+    console.log(birthdayString);
+    console.log(finalBirthday);
 
     $.ajax({
         url: 'http://localhost:1337/staffs/' + id,
@@ -345,13 +351,15 @@ function loadProjectsInfo() {
             //Check role
             checkRole();
 
+            //Specified id
+            var id = '';
+
             //Collect value that match with id and assign into modal's input
-            $('#projectList .edit-modal').on('click', function () {
-                var id = '';
+            $('#projectList').on('click', '.edit-modal', function () {
                 var elementId = $(this).attr('id');
                 var getRealId = elementId.substr(6);
-                id += getRealId;
-                console.log(result.filter(el => el.id == id));
+                id = getRealId;
+                // console.log(result.filter(el => el.id == id));
                 for (let i in result) {
                     if (result[i].id == id) {
                         $('#projectNameEdit').val(result[i].project_name);
@@ -378,8 +386,8 @@ function sentNewProjectInfo() {
     var description = $('#descriptionAdd').val();
 
     //Get start_date and end_date format
-    var startDate = new Date($('#startDateAdd').val());
-    var endDate = new Date($('#endDateAdd').val());
+    var startDate = new Date($('#startDateAdd').val() + 'UTC');
+    var endDate = new Date($('#endDateAdd').val() + 'UTC');
     //Convert startDate and endDate to ISO date format
     var startDateString = startDate.toISOString();
     var endDateString = endDate.toISOString();
@@ -415,7 +423,6 @@ function sentNewProjectInfo() {
             $('#projectStatusModalCancelButton').hide();
             $('#projectStatusModalTitle').html('Đã thêm dữ liệu mới!')
             $('#projectStatusModal').modal();
-            loadProjectsInfo();
         },
         error: function () {
             $('#projectStatusModalConfirmButton').hide();
@@ -433,8 +440,8 @@ function sentEditedProjectInfo(id) {
     var description = $('#descriptionAdd').val();
 
     //Get start_date and end_date format
-    var startDate = new Date($('#startDateEdit').val());
-    var endDate = new Date($('#endDateEdit').val());
+    var startDate = new Date($('#startDateEdit').val() + 'UTC');
+    var endDate = new Date($('#endDateEdit').val() + 'UTC');
     //Convert startDate and endDate to ISO date format
     var startDateString = startDate.toISOString();
     var endDateString = endDate.toISOString();
@@ -471,7 +478,6 @@ function sentEditedProjectInfo(id) {
             $('#projectStatusModalTitle').html('Đã cập nhật thông tin!')
             $('#projectStatusModal').modal();
             loadProjectsInfo();
-            
         },
         error: function () {
             $('#projectStatusModalConfirmButton').hide();
@@ -529,6 +535,13 @@ function logIn() {
             localStorage.setItem('token', result.jwt);
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('role', result.user.role.name);
+            localStorage.setItem('email', result.user.email);
+            localStorage.setItem('phone_number', result.user.staff.phone_number);
+            localStorage.setItem('staff_name', result.user.staff.name);
+            localStorage.setItem('birthday', result.user.staff.birthday);
+            localStorage.setItem('address', result.user.staff.address);
+            localStorage.setItem('role', result.user.staff.role);
+
             if (result.user.user_avatar) {
                 localStorage.setItem('avatar', result.user.user_avatar.formats.thumbnail.url);
             }
@@ -555,6 +568,11 @@ function logOut() {
     localStorage.removeItem('username');
     localStorage.removeItem('role');
     localStorage.removeItem('avatar');
+    localStorage.removeItem('phone_number');
+    localStorage.removeItem('address');
+    localStorage.removeItem('email');
+    localStorage.removeItem('birthday');
+    localStorage.removeItem('staff_name');
     window.location.replace('login.html');
 }
 
@@ -564,4 +582,14 @@ function checkRole() {
         $('#addButton').hide();
         $('.dropdownMod').hide();
     }
+}
+
+//Load account infomation
+function loadAccountInfo() {
+    $('#accountInfoStaffName').val(localStorage.staff_name);
+    $('#accountInfoRole').val(localStorage.role);
+    $('#accountInfoUserName').val(localStorage.username);
+    $('#accountInfoEmail').val(localStorage.email);
+    $('#accountInfoPhoneNumber').val(localStorage.phone_number);
+    $('#accountInfoAddress').val(localStorage.address);
 }
