@@ -15,7 +15,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 	<!-- Google Font -->
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+		rel="stylesheet">
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
 	<link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
@@ -24,6 +25,8 @@
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() { dataLayer.push(arguments); }
@@ -68,10 +71,8 @@
 						<span class="user-name">Emryh Var Emreis</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-						<a class="dropdown-item" href="profile.html">
+						<a class="dropdown-item" href="staff_info.html">
 							<i class="dw dw-user1"></i> Thông Tin tài khoản</a>
-						<a class="dropdown-item" href="faq.html">
-							<i class="dw dw-help"></i> Trợ giúp</a>
 						<a class="dropdown-item" href="login.html">
 							<i class="dw dw-logout"></i> Đăng Xuất</a>
 					</div>
@@ -136,390 +137,19 @@
 	</div>
 	<div class="mobile-menu-overlay"></div>
 
+	<!-- Table projects list and modal -->
 	<div class="main-container">
-		<!-- Table projects list -->
-		<div class="card-box mb-30">
-			<div class="pd-20">
-				<h3 class="text-blue ">Thông tin dự án </h3>
-			</div>
-			<div class="pull-right mr-20">
-				<a href="#collapseExample" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="modal" data-target="#addProjectModal"
-				 role="button">Thêm mới</a>
-			</div>
-			<div class="pb-20">
-
-				<div class="row">
-					<div class="col-sm-12 col-md-6">
-						<div id="DataTables_Table_0_filter" class="dataTables_filter">
-							<label>
-								<input type="search" class="form-control form-control-sm" placeholder="Search" aria-controls="DataTables_Table_0">
-							</label>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12">
-						<table class="data-table table stripe hover nowrap dataTable no-footer dtr-inline" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
-							<thead>
-								<tr role="row">
-									<th class="table-plus datatable-nosort" rowspan="1" colspan="1" aria-label="Name">Mã dự án</th>
-									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending">Tên dự án</th>
-									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">Ngày bắt đầu</th>
-									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending">Ngày kết thúc</th>
-									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Start Date: activate to sort column ascending">Số nhân viên tham gia</th>
-									<th class="datatable-nosort " rowspan="1" colspan="1" aria-label="Action"></th>
-								</tr>
-							</thead>
-							<tbody id="projectList">
-								<tr role="row" class="odd">
-									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-									<td>30</td>
-									<td>Gemini</td>
-									<td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-									<td>29-03-2018</td>
-									<td>
-										<div class="dropdown">
-											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-											 aria-expanded="false">
-												<i class="dw dw-more"></i>
-											</a>
-											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" style="">
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
-													<i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
-													<i class="dw dw-edit2"></i> Edit
-												</a>
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-													<i class="dw dw-delete-3"></i> Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr role="row" class="even">
-									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-									<td>20</td>
-									<td>Gemini</td>
-									<td>2829 Trainer Avenue Peoria, IL 61602 </td>
-									<td>2829 Trainer Avenue Peoria, IL 61602</td>
-									<td>
-										<div class="dropdown show">
-											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-											 aria-expanded="true">
-												<i class="dw dw-more"></i>
-											</a>
-											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-135px, 28px, 0px);">
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
-													<i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
-													<i class="dw dw-edit2"></i> Edit</a>
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-													<i class="dw dw-delete-3"></i> Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr role="row" class="odd">
-									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-									<td>30</td>
-									<td>Sagittarius</td>
-									<td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-									<td>29-03-2018</td>
-									<td>
-										<div class="dropdown">
-											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-												<i class="dw dw-more"></i>
-											</a>
-											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
-													<i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
-													<i class="dw dw-edit2"></i> Edit</a>
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-													<i class="dw dw-delete-3"></i> Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr role="row" class="even">
-									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-									<td>25</td>
-									<td>Gemini</td>
-									<td>2829 Trainer Avenue Peoria, IL 61602 </td>
-									<td>29-03-2018</td>
-									<td>
-										<div class="dropdown">
-											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-											 aria-expanded="false">
-												<i class="dw dw-more"></i>
-											</a>
-											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" style="">
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
-													<i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
-													<i class="dw dw-edit2"></i> Edit</a>
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-													<i class="dw dw-delete-3"></i> Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr role="row" class="odd">
-									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-									<td>20</td>
-									<td>Sagittarius</td>
-									<td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-									<td>29-03-2018</td>
-									<td>
-										<div class="dropdown">
-											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-												<i class="dw dw-more"></i>
-											</a>
-											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="# data-toggle=" modal " data-target="#editview "">
-													<i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
-													<i class="dw dw-edit2"></i> Edit</a>
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-													<i class="dw dw-delete-3"></i> Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr role="row" class="even">
-									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-									<td>18</td>
-									<td>Gemini</td>
-									<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-									<td style="">29-03-2018</td>
-									<td style="">
-										<div class="dropdown">
-											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-												<i class="dw dw-more"></i>
-											</a>
-											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
-													<i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
-													<i class="dw dw-edit2"></i> Edit</a>
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-													<i class="dw dw-delete-3"></i> Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr role="row" class="odd">
-									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-									<td>30</td>
-									<td>Sagittarius</td>
-									<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-									<td style="">29-03-2018</td>
-									<td style="">
-										<div class="dropdown">
-											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-												<i class="dw dw-more"></i>
-											</a>
-											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
-													<i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
-													<i class="dw dw-edit2"></i> Edit</a>
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-													<i class="dw dw-delete-3"></i> Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr role="row" class="even">
-									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-									<td>30</td>
-									<td>Sagittarius</td>
-									<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-									<td style="">29-03-2018</td>
-									<td style="">
-										<div class="dropdown">
-											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-												<i class="dw dw-more"></i>
-											</a>
-											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
-													<i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
-													<i class="dw dw-edit2"></i> Edit</a>
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-													<i class="dw dw-delete-3"></i> Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr role="row" class="odd">
-									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-									<td>30</td>
-									<td>Gemini</td>
-									<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-									<td style="">29-03-2018</td>
-									<td style="">
-										<div class="dropdown">
-											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-												<i class="dw dw-more"></i>
-											</a>
-											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
-													<i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
-													<i class="dw dw-edit2"></i> Edit</a>
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-													<i class="dw dw-delete-3"></i> Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr role="row" class="even">
-									<td class="table-plus sorting_1" tabindex="0">Andrea J. Cagle</td>
-									<td>30</td>
-									<td>Gemini</td>
-									<td style="">1280 Prospect Valley Road Long Beach, CA 90802 </td>
-									<td style="">29-03-2018</td>
-									<td style="">
-										<div class="dropdown">
-											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-												<i class="dw dw-more"></i>
-											</a>
-											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#editview">
-													<i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" data-toggle="modal" data-target="#editModal" href="#">
-													<i class="dw dw-edit2"></i> Edit</a>
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmation-modal">
-													<i class="dw dw-delete-3"></i> Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<!--next,pre-->
-				<div class="row">
-
-					<div class="col-sm-12 col-md-12">
-						<div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-							<ul class="pagination  pull-right">
-								<li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
-									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">
-										<i class="ion-chevron-left"></i>
-									</a>
-								</li>
-								<li class="paginate_button page-item active">
-									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-								</li>
-								<li class="paginate_button page-item ">
-									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-								</li>
-								<li class="paginate_button page-item next" id="DataTables_Table_0_next">
-									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" class="page-link">
-										<i class="ion-chevron-right"></i>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	</div>
-	</div>
-	<!--Modal form edit-->
-	<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="myLargeModalLabel">Thông tin dự án</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				</div>
-				<div class="modal-body">
-					<form action="">
-						<div class="form-group">
-							<div class="pd-20 card-box mb-30">
-								<div class="wizard-content">
-									<form class="tab-wizard wizard-circle wizard">
-										<section>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Mã dự án :</label>
-														<input type="text" class="form-control" value="DA001" disabled>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Tên dự án :</label>
-														<input type="text" class="form-control" value="Web demo" disabled>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Số ngày đã thực hiện :</label>
-														<input type="text" value="5" class="form-control">
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Ngày kết thúc :</label>
-														<input type="text" value="18/5/2021" class="form-control date-picker" placeholder="Select date">
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Số nhân viên tham gia :</label>
-														<input type="text" value="5" class="form-control">
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Trạng thái :</label>
-														<select class="form-control" name="ecolor">
-															<option value="fc-bg-default">Đã hoàn thành</option>
-															<option value="fc-bg-blue">Đang thực hiện</option>
-															<option value="fc-bg-lightgreen">Trễ hạn
-																<nav></nav>
-															</option>
-														</select>
-
-													</div>
-												</div>
-											</div>
-										</section>
-									</form>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-					<button type="button" class="btn btn-primary">Lưu</button>
-				</div>
-			</div>
-		</div>
-
-	</div>
-	<!-- Edit modal form them moi-->
-	<div>
-		<div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModal" aria-hidden="true">
+		<!--Add project modal model-->
+		<div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title" id="addProjectModal">Thêm dự án</h4>
+						<h4 class="modal-title" id="myLargeModalLabel">Thêm dự án</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					</div>
 					<div class="modal-body">
-						<form action="">
+						<form method="POST">
 							<div class="form-group">
 								<div class="pd-20 card-box mb-30">
 									<div class="wizard-content">
@@ -528,14 +158,14 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label>Mã dự án :</label>
-															<input type="text" class="form-control" value="DA001">
+															<label>Tên dự án :</label>
+															<input id="projectNameAdd" type="text" class="form-control">
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label>Tên dự án :</label>
-															<input type="text" class="form-control" value="Web demo">
+															<label>Mô tả :</label>
+															<textarea class="form-control" name="descrip" id="descriptionAdd" cols="30" rows="5"></textarea>
 														</div>
 													</div>
 												</div>
@@ -543,13 +173,17 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Ngày bắt đầu :</label>
-															<input type="text" value="18/5/2021" class="form-control date-picker" placeholder="Select date">
+															<input id="startDateAdd" type="text"
+																class="form-control date-picker"
+																placeholder="Select date">
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Ngày kết thúc :</label>
-															<input type="text" value="18/5/2021" class="form-control date-picker" placeholder="Select date">
+															<input id="endDateAdd" type="text"
+																class="form-control date-picker"
+																placeholder="Select date">
 														</div>
 													</div>
 												</div>
@@ -557,7 +191,17 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Số nhân viên tham gia :</label>
-															<input type="text" value="5" class="form-control">
+															<input id="numberOfStaffsAdd" type="text" class="form-control">
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Trạng thái :</label>
+															<select name="role" id="statusSelectionAdd" class="form-control">
+																<option value="Đã hoàn thành">Đã hoàn thành</option>
+																<option value="Đang thực hiện">Đang thực hiện</option>
+																<option value="Trễ hạn">Trễ hạn</option>
+															</select>
 														</div>
 													</div>
 												</div>
@@ -569,105 +213,197 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-primary">Lưu</button>
+						<button id="cancelProjectButtonAddModal" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+						<button id="saveProjectButtonAddModal" type="button" class="btn btn-primary">Lưu</button>
 					</div>
 				</div>
 			</div>
-
 		</div>
-	</div>
-	<!--form View-->
-	<div class="modal fade" id="editview" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="myLargeModalLabel">Thông tin dự án</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				</div>
-				<div class="modal-body">
-					<form action="">
-						<div class="form-group">
-							<div class="pd-20 card-box mb-30">
-								<div class="wizard-content">
-									<form class="tab-wizard wizard-circle wizard">
-										<section>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Mã dự án :</label>
-														<input type="text" class="form-control" value="DA001" disabled>
+
+		<!--Edit project modal model-->
+		<div class="modal fade" id="editProjectModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myLargeModalLabel">Thông tin dự án</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					</div>
+					<div class="modal-body">
+						<form action="">
+							<div class="form-group">
+								<div class="pd-20 card-box mb-30">
+									<div class="wizard-content">
+										<form class="tab-wizard wizard-circle wizard">
+											<section>
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label>Tên dự án :</label>
+															<input id="projectNameEdit" type="text" class="form-control" value="Web demo"
+																disabled>
+														</div>
 													</div>
 												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Tên dự án :</label>
-														<input type="text" class="form-control" value="Web demo" disabled>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Ngày bắt đầu :</label>
+															<input id="startDateEdit" type="text"
+																class="form-control date-picker"
+																placeholder="Select date">
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Ngày kết thúc :</label>
+															<input id="endDateEdit" type="text" value="18/5/2021"
+																class="form-control date-picker"
+																placeholder="Select date">
+														</div>
 													</div>
 												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Số ngày đã thực hiện :</label>
-														<input type="text" value="5" class="form-control" disabled>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Số nhân viên tham gia :</label>
+															<input id="numberOfStaffsEdit" type="text" value="5" class="form-control">
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Trạng thái :</label>
+															<select name="role" id="statusSelectionEdit" class="form-control">
+																<option value="Đã hoàn thành">Đã hoàn thành</option>
+																<option value="Đang thực hiện">Đang thực hiện</option>
+																<option value="Trễ hạn">Trễ hạn</option>
+															</select>
+														</div>
 													</div>
 												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Ngày kết thúc :</label>
-														<input type="text" value="18/5/2021" class="form-control date-picker" placeholder="Select date" disabled>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Số nhân viên tham gia :</label>
-														<input type="text" value="5" class="form-control" disabled>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Tình trạng :</label>
-														<input type="text" value="Đã hoàn thành" class="form-control" disabled>
-													</div>
-												</div>
-											</div>
-										</section>
-									</form>
+											</section>
+										</form>
+									</div>
 								</div>
 							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button id="cancelEditedProjectModal" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+						<button id="saveEditedProjectModal" type="button" class="btn btn-primary">Lưu</button>
+					</div>
 				</div>
 			</div>
 		</div>
 
-	</div>
-	<!--Alert -->
-	<div class="col-md-4 col-sm-12 mb-30">
-		<div class="modal fade" id="confirmation-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+		<!--Confirm modal-->
+		<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" style="display: none;"
+			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-body text-center font-18">
-						<h4 class="padding-top-30 mb-30 weight-500">You really want to delete?</h4>
+						<h4 class="padding-top-30 mb-30 weight-500">Bạn có muốn xóa dòng hiện tại?</h4>
 						<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
 							<div class="col-6">
-								<button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn" data-dismiss="modal">
-									<i class="fa fa-times"></i>
-								</button>
-								NO
+								<button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+									data-dismiss="modal"><i class="fa fa-times"></i></button>
+								Không
 							</div>
 							<div class="col-6">
-								<button type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn" data-dismiss="modal">
-									<i class="fa fa-check"></i>
-								</button>
-								YES
+								<button type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
+									data-dismiss="modal"><i class="fa fa-check"></i></button>
+								Có
 							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Table projects-->
+		<div class="pd-20 card-box mb-30">
+			<!--Title-->
+			<div class="clearfix mb-20">
+				<div class="pull-left">
+					<h4 class="text-blue h4">
+						<Strong>DANH SÁCH DỰ ÁN</Strong>
+					</h4>
+				</div>
+			</div>
+
+			<!--Search field, add button, Table-->
+			<div class="pb-20">
+				<!--Search field, add button-->
+				<div class="row">
+					<div class="col-lg-10 col-sm-10 col-10 pd-2">
+						<div id="DataTables_Table_0_filter" class="dataTables_filter">
+							<label>
+								<input id="projectSearch" type="search" class="form-control form-control-sm"
+									placeholder="Tìm kiếm..." aria-controls="DataTables_Table_0">
+							</label>
+						</div>
+					</div>
+					<div class="col-lg-2 col-sm-2 col-2 pb-2">
+						<button id="addProjectsButton" type="button" class="lmaoB btn btn-sm btn-primary pull-right"
+							data-toggle="modal" data-target="#addProjectModal">Thêm mới
+						</button>
+					</div>
+				</div>
+
+				<!--Table-->
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="data-table table stripe hover nowrap dataTable no-footer dtr-inline"
+							id="projectTable" role="grid" aria-describedby="DataTables_Table_0_info">
+							<thead>
+								<tr role="row">
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Staff Name: activate to sort column ascending">Tên dự án</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Birthday: activate to sort column ascending">Ngày bắt đầu</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Gender: activate to sort column ascending">Ngày kết thúc</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Phonenumber: activate to sort column ascending">Số nhân viên tham
+										gia</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Phonenumber: activate to sort column ascending">Trạng thái</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody id="projectList">
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!--Pagination next,pre-->
+				<div class="row">
+					<div class="col-sm-12 col-md-12">
+						<div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+							<ul class="pagination pull-right">
+								<li class="paginate_button page-item previous disabled"
+									id="DataTables_Table_0_previous">
+									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0"
+										class="page-link">
+										<i class="ion-chevron-left"></i>
+									</a>
+								</li>
+								<li class="paginate_button page-item active">
+									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0"
+										class="page-link">1</a>
+								</li>
+								<li class="paginate_button page-item ">
+									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0"
+										class="page-link">2</a>
+								</li>
+								<li class="paginate_button page-item next" id="DataTables_Table_0_next">
+									<a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0"
+										class="page-link">
+										<i class="ion-chevron-right"></i>
+									</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
