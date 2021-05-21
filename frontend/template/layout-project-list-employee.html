@@ -73,8 +73,7 @@
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="staff_info.html">
 							<i class="dw dw-user1"></i> Thông Tin tài khoản</a>
-						<a class="dropdown-item" href="faq.html">
-							<i class="dw dw-help"></i> Trợ giúp</a>
+						
 						<a class="dropdown-item" href="login.html">
 							<i class="dw dw-logout"></i> Đăng Xuất</a>
 					</div>
@@ -102,37 +101,25 @@
 			<div class="sidebar-menu">
 				<ul id="accordion-menu">
 					<li class="dropdown">
-						<a href="index3.html" class="dropdown-toggle no-arrow">
+						<a href="index4-employee.html" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-house-1"></span>
 							<span class="mtext">Trang Chủ</span>
 						</a>
 					</li>
 					<li class="dropdown">
-						<a href="rptext.html" class="dropdown-toggle no-arrow">
+						<a href="rptext-nhanvien.html" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-edit2"></span>
 							<span class="mtext">Báo Cáo</span>
 						</a>
 					</li>
 					<li class="dropdown">
-						<a href="javascript:;" class="dropdown-toggle">
+						<a href="layout-project-list-employee.html" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-library"></span>
-							<span class="mtext">Dữ Liệu</span>
+							<span class="mtext">Dự án</span>
 						</a>
-						<ul class="submenu">
-							<li>
-								<a href="layout-project-list.html">Dự Án</a>
-							</li>
-							<li>
-								<a href="layout-staff-list.html">Nhân Viên</a>
-							</li>
-						</ul>
+						
 					</li>
-					<li>
-						<a href="calendar.html" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-calendar1"></span>
-							<span class="mtext">Lịch</span>
-						</a>
-					</li>
+					
 				</ul>
 			</div>
 		</div>
@@ -142,186 +129,8 @@
 	<!-- Table projects list and modal -->
 	<div class="main-container">
 		<!--Add project modal model-->
-		<div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-			aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title" id="myLargeModalLabel">Thêm dự án</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					</div>
-					<div class="modal-body">
-						<form method="POST">
-							<div class="form-group">
-								<div class="pd-20 card-box mb-30">
-									<div class="wizard-content">
-										<form class="tab-wizard wizard-circle wizard">
-											<section>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Tên dự án :</label>
-															<input id="projectNameAdd" type="text" class="form-control">
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Mô tả :</label>
-															<textarea class="form-control" name="descrip" id="descriptionAdd" cols="30" rows="5"></textarea>
-														</div>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Ngày bắt đầu :</label>
-															<input id="startDateAdd" type="text"
-																class="form-control date-picker"
-																placeholder="Select date">
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Ngày kết thúc :</label>
-															<input id="endDateAdd" type="text"
-																class="form-control date-picker"
-																placeholder="Select date">
-														</div>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Số nhân viên tham gia :</label>
-															<input id="numberOfStaffsAdd" type="text" class="form-control">
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Trạng thái :</label>
-															<select name="role" id="statusSelectionAdd" class="form-control">
-																<option value="Đã hoàn thành">Đã hoàn thành</option>
-																<option value="Đang thực hiện">Đang thực hiện</option>
-																<option value="Trễ hạn">Trễ hạn</option>
-															</select>
-														</div>
-													</div>
-												</div>
-											</section>
-										</form>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button id="cancelProjectButtonAddModal" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-						<button id="saveProjectButtonAddModal" type="button" class="btn btn-primary">Lưu</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<!--Edit project modal model-->
-		<div class="modal fade" id="editProjectModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-			aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title" id="myLargeModalLabel">Thông tin dự án</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					</div>
-					<div class="modal-body">
-						<form action="">
-							<div class="form-group">
-								<div class="pd-20 card-box mb-30">
-									<div class="wizard-content">
-										<form class="tab-wizard wizard-circle wizard">
-											<section>
-												<div class="row">
-													<div class="col-md-12">
-														<div class="form-group">
-															<label>Tên dự án :</label>
-															<input id="projectNameEdit" type="text" class="form-control" value="Web demo"
-																disabled>
-														</div>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Ngày bắt đầu :</label>
-															<input id="startDateEdit" type="text"
-																class="form-control date-picker"
-																placeholder="Select date">
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Ngày kết thúc :</label>
-															<input id="endDateEdit" type="text" value="18/5/2021"
-																class="form-control date-picker"
-																placeholder="Select date">
-														</div>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Số nhân viên tham gia :</label>
-															<input id="numberOfStaffsEdit" type="text" value="5" class="form-control">
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Trạng thái :</label>
-															<select name="role" id="statusSelectionEdit" class="form-control">
-																<option value="Đã hoàn thành">Đã hoàn thành</option>
-																<option value="Đang thực hiện">Đang thực hiện</option>
-																<option value="Trễ hạn">Trễ hạn</option>
-															</select>
-														</div>
-													</div>
-												</div>
-											</section>
-										</form>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button id="cancelEditedProjectModal" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-						<button id="saveEditedProjectModal" type="button" class="btn btn-primary">Lưu</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<!--Confirm modal-->
-		<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" style="display: none;"
-			aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-body text-center font-18">
-						<h4 class="padding-top-30 mb-30 weight-500">Bạn có muốn xóa dòng hiện tại?</h4>
-						<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
-							<div class="col-6">
-								<button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
-									data-dismiss="modal"><i class="fa fa-times"></i></button>
-								Không
-							</div>
-							<div class="col-6">
-								<button type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
-									data-dismiss="modal"><i class="fa fa-check"></i></button>
-								Có
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<!--Table projects-->
 		<div class="pd-20 card-box mb-30">
 			<!--Title-->
@@ -345,11 +154,7 @@
 							</label>
 						</div>
 					</div>
-					<div class="col-lg-2 col-sm-2 col-2 pb-2">
-						<button id="addProjectsButton" type="button" class="lmaoB btn btn-sm btn-primary pull-right"
-							data-toggle="modal" data-target="#addProjectModal">Thêm mới
-						</button>
-					</div>
+					
 				</div>
 
 				<!--Table-->
@@ -374,11 +179,17 @@
 								</tr>
 							</thead>
 							<tbody id="projectList">
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+									<td>4</td>
+									<td>5</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
-
 				<!--Pagination next,pre-->
 				<div class="row">
 					<div class="col-sm-12 col-md-12">
