@@ -56,7 +56,7 @@
 						<span class="user-icon">
 							<img src="vendors/images/photo1.jpg" alt="">
 						</span>
-						<span class="user-name">Emryh Var Emreis</span>
+						<span id="displayUserName" class="user-name"></span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="staff_info.html"><i class="dw dw-user1"></i> Thông Tin tài khoản</a>
@@ -135,61 +135,25 @@
 					<div class="form-group row">
 						<label class="col-sm-12 col-md-2 col-form-label">Tài khoản</label>
 						<div class="col-sm-12 col-md-10">
-							<input id="sti_username" class="form-control" type="text" value="Emryh Var Emreis" disabled>
+							<input id="accountInfoUserName" class="form-control" type="text" disabled>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-12 col-md-2 col-form-label">Email</label>
 						<div class="col-sm-12 col-md-10">
-							<input id="sti_email" class="form-control" type="email" value="Example@email.com" disabled>
+							<input id="accountInfoEmail" class="form-control" type="email" disabled>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-12 col-md-2 col-form-label">Số điện thoại</label>
 						<div class="col-sm-12 col-md-10">
-							<input id="sti_phoneNumber" class="form-control" type="email" value="0123456789" disabled>
+							<input id="accountInfoPhoneNumber" class="form-control" type="email" disabled>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-12 col-md-2 col-form-label">Địa chỉ</label>
 						<div class="col-sm-12 col-md-10">
-							<input id="sti_address" class="form-control" type="email" value="Trái Đất" disabled>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-12 col-md-2 col-form-label">Giới Tính</label>
-						<div class="col-sm-12 col-md-10 text-align-center">
-							<input type="radio" name="gender" id="sti_genderRadioMale" disabled checked> Nam
-							<input type="radio" name="gender" id="sti_genderRadioFemale" disabled> Nữ
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group" id="sti_passwordForm">
-					<div class="collapse" id="collapseForm">
-						<div class="card card-body">
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Nhập mật khẩu cũ</label>
-								<div class="col-sm-12 col-md-10">
-									<input id="sti_currentPassword" class="form-control" placeholder="Mật khẩu hiện tại" type="password" value="Emryh123@">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Mật khẩu mới</label>
-								<div class="col-sm-12 col-md-10">
-									<input id="sti_newPassword" class="form-control" placeholder="Mật khẩu mới" type="password" value="Emryh456789@">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Nhập lại mật khẩu mới</label>
-								<div class="col-sm-12 col-md-10">
-									<input id="sti_reEnterNewPassword" class="form-control" placeholder="Nhập lại mật khẩu mới" type="password" value="Emryh456789@">
-								</div>
-							</div>
-							<div class="row  justify-content-center">
-								<button id="sti_submitButton" type="submit" class="btn btn-sm btn-primary mr-2">Xác nhận thông tin</button>
-								<button id="sti_cancelButton" type="button" class="btn btn-sm btn-secondary">Hủy</button>
-							</div>
+							<input id="accountInfoAddress" class="form-control" type="email" disabled>
 						</div>
 					</div>
 				</div>
