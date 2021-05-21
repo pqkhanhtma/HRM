@@ -65,14 +65,14 @@
 						<span class="user-icon">
 							<img src="vendors/images/photo1.jpg" alt="">
 						</span>
-						<span class="user-name">Emryh Var Emreis</span>
+						<span id="displayUserName" class="user-name"></span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="staff_info.html">
 							<i class="dw dw-user1"></i> Thông Tin tài khoản</a>
 						<a class="dropdown-item" href="faq.html">
 							<i class="dw dw-help"></i> Trợ giúp</a>
-						<a class="dropdown-item" href="login.html">
+						<a id="logoutButton" class="dropdown-item" href="login.html">
 							<i class="dw dw-logout"></i> Đăng Xuất</a>
 					</div>
 				</div>
@@ -137,7 +137,7 @@
 			<div class="modal-dialog modal-dialog-centered modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title" id="myLargeModalLabel01">Thêm nhân viên</h4>
+						<h4 class="modal-title" id="addStaffModalTitle">Thêm nhân viên</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					</div>
 					<div class="modal-body">
@@ -167,10 +167,10 @@
 														<div class="form-group">
 															<label>Giới tính :</label>
 															<br>
-															<input class="genderAdd" type="radio" value="true" name="gender"
+															<input class="genderAdd" type="radio" value="true" name="genderAdd"
 																id="genderRadioMaleAdd" checked> Nam
 															<input class="genderAdd" type="radio" value="false"
-																name="gender" id="genderRadioFemaleAdd"> Nữ
+																name="genderAdd" id="genderRadioFemaleAdd"> Nữ
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -204,7 +204,7 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Chức vụ :</label>
-															<select name="role" id="roleSelection" class="form-control">
+															<select name="role" id="roleSelectionAdd" class="form-control">
 																<option value="Manager">Manager</option>
 																<option value="Leader">Leader</option>
 																<option value="Senior">Senior</option>
@@ -221,21 +221,21 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button id="cancelButtonStaffAddModal" type="button" class="btn btn-secondary"
+						<button id="addStaffModalCancelButton" type="button" class="btn btn-secondary"
 							data-dismiss="modal">Hủy</button>
-						<button id="saveButtonStaffAddModal" type="button" class="btn btn-primary">Lưu</button>
+						<button id="addStaffSaveButton" type="button" class="btn btn-primary">Lưu</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	
 		<!--Edit staff modal model-->
-		<div id="editStaffModal" class="modal fade" id="editStaffModal" tabindex="-1" role="dialog"
-			aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal fade" id="editStaffModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title" id="myLargeModalLabel01">Thông tin nhân viên</h4>
+						<h4 class="modal-title" id="editStaffModalTitle">Thêm nhân viên</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					</div>
 					<div class="modal-body">
@@ -249,24 +249,32 @@
 													<div class="col-md-12">
 														<div class="form-group">
 															<label>Họ và tên :</label>
-															<input id="staffName" disabled type="text" class="form-control"
-																value="Emryh Var Emreis">
+															<input id="staffNameEdit" type="text" class="form-control">
 														</div>
 													</div>
 												</div>
 												<div class="row">
-													<div class="col-md-6">
+													<div class="col-md-3">
 														<div class="form-group">
-															<label>Số điện thoại :</label>
-															<input id="phoneNumber" type="text" class="form-control"
-																value="0123456789">
+															<label>Ngày sinh :</label>
+															<input id="birthdayEdit" type="text"
+																class="form-control date-picker" placeholder="Select Date">
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
+															<label>Giới tính :</label>
+															<br>
+															<input class="genderEdit" type="radio" value="true" name="genderEdit"
+																id="genderRadioMaleEdit" checked> Nam
+															<input class="genderEdit" type="radio" value="false"
+																name="genderEdit" id="genderRadioFemaleEdit"> Nữ
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label>Email :</label>
-															<input id="email" type="email" class="form-control"
-																value="Example@email.com">
+															<label>Quốc tịch :</label>
+															<input id="nationalityEdit" type="text" class="form-control">
 														</div>
 													</div>
 												</div>
@@ -274,34 +282,32 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Địa chỉ :</label>
-															<input id="address" type="text" class="form-control"
-																value="Trái Đất">
+															<input id="addressEdit" type="text" class="form-control">
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label>Quốc tịch :</label>
-															<input id="nationality" type="text" class="form-control"
-																value="Tây Ban Nha">
+															<label>Số điện thoại :</label>
+															<input id="phoneNumberEdit" type="text" class="form-control">
 														</div>
 													</div>
 												</div>
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label>Ngày sinh :</label>
-															<input id="birthday" type="text"
-																class="form-control date-picker" placeholder="Select Date"
-																value="20/5/1981">
+															<label>Email :</label>
+															<input id="emailEdit" type="email" class="form-control">
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label>Giới tính :</label>
-															<br>
-															<input type="radio" name="gender" id="genderRadioMale" checked>
-															Nam
-															<input type="radio" name="gender" id="genderRadioFemale"> Nữ
+															<label>Chức vụ :</label>
+															<select name="role" id="roleSelectionEdit" class="form-control">
+																<option value="Manager">Manager</option>
+																<option value="Leader">Leader</option>
+																<option value="Senior">Senior</option>
+																<option value="Intern">Intern</option>
+															</select>
 														</div>
 													</div>
 												</div>
@@ -313,15 +319,16 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-primary">Lưu</button>
+						<button id="editedStaffModalCancelButton" type="button" class="btn btn-secondary"
+							data-dismiss="modal">Hủy</button>
+						<button id="editedStaffSaveButton" type="button" class="btn btn-primary">Lưu</button>
 					</div>
 				</div>
 			</div>
 		</div>
-	
-		<!--Confirm modal-->
-		<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" style="display: none;"
+
+		<!--Delete specified staff confirm modal-->
+		<div class="modal fade" id="deleteStaffConfirmationModal" tabindex="-1" role="dialog" style="display: none;"
 			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
@@ -329,14 +336,37 @@
 						<h4 class="padding-top-30 mb-30 weight-500">Bạn có muốn xóa dòng hiện tại?</h4>
 						<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
 							<div class="col-6">
-								<button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+								<button id="deleteStaffCancelButton" type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
 									data-dismiss="modal"><i class="fa fa-times"></i></button>
 								Không
 							</div>
 							<div class="col-6">
-								<button type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
+								<button id="deleteStaffAcceptButton" type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
 									data-dismiss="modal"><i class="fa fa-check"></i></button>
 								Có
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<!--Staff status modal-->
+		<div class="modal fade" id="staffStatusModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body text-center font-18">
+						<h4 id="staffStatusModalTitle" class="padding-top-30 mb-30 weight-500"></h4>
+						<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+							<div class="col-12">
+								<button id="staffStatusModalConfirmButton" type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
+									data-dismiss="modal"><i class="fa fa-check"></i>
+								</button>
+							</div>
+							<div class="col-12">
+								<button id="staffStatusModalCancelButton" type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+									data-dismiss="modal"><i class="fa fa-times"></i>
+								</button>
 							</div>
 						</div>
 					</div>
@@ -368,7 +398,7 @@
 						</div>
 					</div>
 					<div class="col-lg-2 col-sm-2 col-2 pb-2">
-						<button id="addStaffButton" type="button" class="btn btn-sm btn-primary pull-right" data-toggle="modal"
+						<button id="addButton" type="button" class="btn btn-sm btn-primary pull-right" data-toggle="modal"
 							data-target="#addStaffModal">Thêm mới
 						</button>
 					</div>
