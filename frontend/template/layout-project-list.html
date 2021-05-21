@@ -68,7 +68,7 @@
 						<span class="user-icon">
 							<img src="vendors/images/photo1.jpg" alt="">
 						</span>
-						<span class="user-name">Emryh Var Emreis</span>
+						<span id="displayUserName" class="user-name"></span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="staff_info.html">
@@ -240,8 +240,7 @@
 													<div class="col-md-12">
 														<div class="form-group">
 															<label>Tên dự án :</label>
-															<input id="projectNameEdit" type="text" class="form-control" value="Web demo"
-																disabled>
+															<input id="projectNameEdit" type="text" class="form-control" disabled>
 														</div>
 													</div>
 												</div>
@@ -257,7 +256,7 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Ngày kết thúc :</label>
-															<input id="endDateEdit" type="text" value="18/5/2021"
+															<input id="endDateEdit" type="text"
 																class="form-control date-picker"
 																placeholder="Select date">
 														</div>
@@ -267,7 +266,7 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Số nhân viên tham gia :</label>
-															<input id="numberOfStaffsEdit" type="text" value="5" class="form-control">
+															<input id="numberOfStaffsEdit" type="text" class="form-control">
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -289,15 +288,15 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button id="cancelEditedProjectModal" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-						<button id="saveEditedProjectModal" type="button" class="btn btn-primary">Lưu</button>
+						<button id="editedProjectCancelButton" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+						<button id="editedProjectSaveButton" type="button" class="btn btn-primary">Lưu</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!--Confirm modal-->
-		<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" style="display: none;"
+		<!--Delete specified project confirm modal-->
+		<div class="modal fade" id="deleteProjectConfirmationModal" tabindex="-1" role="dialog" style="display: none;"
 			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
@@ -305,14 +304,37 @@
 						<h4 class="padding-top-30 mb-30 weight-500">Bạn có muốn xóa dòng hiện tại?</h4>
 						<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
 							<div class="col-6">
-								<button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+								<button id="deleteProjectCancelButton" type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
 									data-dismiss="modal"><i class="fa fa-times"></i></button>
 								Không
 							</div>
 							<div class="col-6">
-								<button type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
+								<button id="deleteProjectAcceptButton" type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
 									data-dismiss="modal"><i class="fa fa-check"></i></button>
 								Có
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Project status Modal-->
+		<div class="modal fade" id="projectStatusModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body text-center font-18">
+						<h4 id="projectStatusModalTitle" class="padding-top-30 mb-30 weight-500"></h4>
+						<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+							<div class="col-12">
+								<button id="projectStatusModalConfirmButton" type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
+									data-dismiss="modal"><i class="fa fa-check"></i>
+								</button>
+							</div>
+							<div class="col-12">
+								<button id="projectStatusModalCancelButton" type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+									data-dismiss="modal"><i class="fa fa-times"></i>
+								</button>
 							</div>
 						</div>
 					</div>
@@ -344,7 +366,7 @@
 						</div>
 					</div>
 					<div class="col-lg-2 col-sm-2 col-2 pb-2">
-						<button id="addProjectsButton" type="button" class="lmaoB btn btn-sm btn-primary pull-right"
+						<button id="addButton" type="button" class="lmaoB btn btn-sm btn-primary pull-right"
 							data-toggle="modal" data-target="#addProjectModal">Thêm mới
 						</button>
 					</div>
@@ -358,20 +380,28 @@
 							<thead>
 								<tr role="row">
 									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										aria-label="Staff Name: activate to sort column ascending">Tên dự án</th>
+										aria-label="Project Name: activate to sort column ascending">Tên dự án</th>
 									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										aria-label="Birthday: activate to sort column ascending">Ngày bắt đầu</th>
+										aria-label="Start Date: activate to sort column ascending">Ngày bắt đầu</th>
 									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										aria-label="Gender: activate to sort column ascending">Ngày kết thúc</th>
+										aria-label="End Date: activate to sort column ascending">Ngày kết thúc</th>
 									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										aria-label="Phonenumber: activate to sort column ascending">Số nhân viên tham
+										aria-label="Number Of Staff: activate to sort column ascending">Số nhân viên tham
 										gia</th>
 									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										aria-label="Phonenumber: activate to sort column ascending">Trạng thái</th>
+										aria-label="Status: activate to sort column ascending">Trạng thái</th>
 									<th></th>
 								</tr>
 							</thead>
 							<tbody id="projectList">
+								<tr>
+									<td class="project_name"></td>
+									<td class="start_date"></td>
+									<td class="end_date"></td>
+									<td class="number_of_staffs"></td>
+									<td class="status"></td>
+									<td></td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
