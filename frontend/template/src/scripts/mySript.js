@@ -162,45 +162,6 @@ function loadStaffsInfo_Manager() {
     });
 }
 
-//Retrieve staffs data function for Employees
-function loadStaffsInfo_Employees() {
-    $.ajax({
-        url: 'http://localhost:1337/staffs',
-        type: 'GET',
-        success: function (result) {
-            var str = '';
-            $.each(result, function (i, items) {
-                //Check gender, if true gender is "Male" else "Female"
-                var gender = '';
-                if (items.gender === true) {
-                    gender = 'Nam';
-                } else {
-                    gender = 'Nữ';
-                }
-
-                //Fetch data to html table
-                str += '<tr>';
-                str += '<td>' + items.staff_name + '</td>';
-                str += '<td>' + items.birthday + '</td>';
-                str += '<td>' + gender + '</td>';
-                str += '<td>' + items.phone_number + '</td>';
-                str += '<td>' + items.email + '</td>';
-                str += '<td>' + items.address + '</td>';
-                str += '<td>' + items.nationality + '</td>';
-                str += '<td>' + items.role + '</td>';
-                str += '<td class="dropdownMod">' + '<div class="dropdown">\
-                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
-                                        <i class="dw dw-more"></i>\
-                                    </a>\
-                                </div>'+ '</td>';
-                str += '</tr>';
-            });
-            //Change table on html by data table from above
-            $('#staffList').html(str);
-        }
-    });
-}
-
 //Sent new staff infomation function
 function sentNewStaffInfo() {
     //Collect value from html input elements
@@ -571,18 +532,19 @@ function logIn() {
             "password": password
         },
         success: function (result) {
+            //Set accountinfomation to local storage
             localStorage.setItem('token', result.jwt);
+            localStorage.setItem('staff_name', result.user.staff.staff_name);
             localStorage.setItem('username', result.user.username);
-            localStorage.setItem('Authorization', result.user.role.type);
             localStorage.setItem('email', result.user.email);
             localStorage.setItem('phone_number', result.user.staff.phone_number);
-            localStorage.setItem('staff_name', result.user.staff.staff_name);
             localStorage.setItem('birthday', result.user.staff.birthday);
             localStorage.setItem('address', result.user.staff.address);
             localStorage.setItem('staff_description', result.user.staff.description);
+            localStorage.setItem('Authorization', result.user.role.type);
             localStorage.setItem('role', result.user.staff.role);
             localStorage.setItem('department', result.user.department.department_name);
-
+            //Check if user avatar availble then set user avatar to local storage
             if (result.user.user_avatar) {
                 localStorage.setItem('avatar', result.user.user_avatar.formats.thumbnail.url);
             }
@@ -590,9 +552,7 @@ function logIn() {
             $('#loginStatusModalConfirmButton').show();
             $('#loginStatusModalTitle').html('Xin chào ' + localStorage.username);
             $('#loginStatusModal').modal();
-            $('#loginStatusModalConfirmButton').click(function () {
-                window.location.replace('index3.html');
-            });
+            checkRole();
         },
         error: function () {
             $('#loginStatusModalCancelButton').show();
@@ -606,16 +566,16 @@ function logIn() {
 //Logout function
 function logOut() {
     localStorage.removeItem('token');
+    localStorage.removeItem('staff_name');
     localStorage.removeItem('username');
+    localStorage.removeItem('email');
+    localStorage.removeItem('phone_number');
+    localStorage.removeItem('birthday');
+    localStorage.removeItem('address');
+    localStorage.removeItem('staff_description');
+    localStorage.removeItem('Authorization');
     localStorage.removeItem('role');
     localStorage.removeItem('avatar');
-    localStorage.removeItem('phone_number');
-    localStorage.removeItem('address');
-    localStorage.removeItem('email');
-    localStorage.removeItem('birthday');
-    localStorage.removeItem('staff_name');
-    localStorage.removeItem('Authorization');
-    localStorage.removeItem('staff_description');
     localStorage.removeItem('department');
     window.location.replace('login.html');
 }
@@ -623,10 +583,13 @@ function logOut() {
 //Check logged in
 function checkRole() {
     if(localStorage.Authorization == 'public') {
-        loadProjectsInfo_Employees();
+        $('#loginStatusModalConfirmButton').click(function () {
+            window.location.replace('index4.html');
+        });
     }else {
-        loadStaffsInfo_Manager();
-        loadProjectsInfo_Manager();
+        $('#loginStatusModalConfirmButton').click(function () {
+            window.location.replace('index3.html');
+        });
     }
 }
 
