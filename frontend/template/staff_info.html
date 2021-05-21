@@ -119,49 +119,25 @@
 	<div class="mobile-menu-overlay"></div>
 
 	<!--Staff infomation-->
-	<div class="main-container container">
-		<div class="pd-20 card-box mb-30">
-			<div class="clearfix">
-				<div class="pull-left">
-					<h4 class="text-blue h4">Thông tin tài khoản</h4>
-				</div>
-				<div class="pull-right">
-					<button id="sti_editButton" type="button" class="btn btn-sm btn-primary">Chỉnh sửa</button>
-				</div>
-	
+	<div class="main-container container mb-30 pd-30">
+		<div class="card card-box mx-auto" style="width: 50%;">
+			<img id="staffAvatar" src="" alt="staffAvatar" class="card-img-top">
+			<div class="card-body">
+				<h4 id="staffNameAccountInfo" class="card-title weight-500">Cao Trường Vũ</h5>
+				<p id="staffDescription" class="card-tex"></p>
 			</div>
-			<br>
-
-			<!--Infomation form-->
-			<form action="">
-				<div id="sti_infoForm">
-					<div class="form-group row">
-						<label class="col-sm-12 col-md-2 col-form-label">Tài khoản</label>
-						<div class="col-sm-12 col-md-10">
-							<input id="accountInfoUserName" class="form-control" type="text" disabled>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-12 col-md-2 col-form-label">Email</label>
-						<div class="col-sm-12 col-md-10">
-							<input id="accountInfoEmail" class="form-control" type="email" disabled>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-12 col-md-2 col-form-label">Số điện thoại</label>
-						<div class="col-sm-12 col-md-10">
-							<input id="accountInfoPhoneNumber" class="form-control" type="email" disabled>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-12 col-md-2 col-form-label">Địa chỉ</label>
-						<div class="col-sm-12 col-md-10">
-							<input id="accountInfoAddress" class="form-control" type="email" disabled>
-						</div>
-					</div>
-				</div>
-			</form>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item"><label for="staffAddress" class="d-flex"><strong>Địa chỉ:</strong><h5 id="staffAddressAccountInfo" class="pl-2"></h5></label></li>
+				<li class="list-group-item"><label for="staffPhoneNumber" class="d-flex"><strong>Số điện thoại:</strong><h5 id="staffPhoneNumberAccountInfo" class="pl-2"></h5></label></li>
+				<li class="list-group-item"><label for="staffEmail" class="d-flex"><strong>Email:</strong><h5 id="staffEmailAccountInfo" class="pl-2"></h5></label></li>
+				<li class="list-group-item"><label for="staffDepartment" class="d-flex"><strong>Bộ phận:</strong><h5 id="staffDepartmentAccountInfo" class="pl-2"></h5></label></li>
+			</ul>
 		</div>
+	</div>
+
+	<div class="footer-wrap pd-20 mb-20 card-box">
+		DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit
+			Hingarajiya</a>
 	</div>
 
 	<!-- js -->

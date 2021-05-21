@@ -1,7 +1,7 @@
 $(document).ready(function () {
     //=============MAIN===========================
     //Check role
-    checkRole();
+    // checkRole();
 
     //Account infomation
     loadAccountInfo();
@@ -26,7 +26,7 @@ $(document).ready(function () {
 
     //==============PROJECTS======================
     //Retrieve projects data from server
-    loadProjectsInfo();
+    loadProjectsInfo_Manager();
 
     //projectlist filter
     $("#projectSearch").on("keyup", function () {
@@ -55,7 +55,7 @@ $(document).ready(function () {
 
     //==============STAFFS========================
     //Retrieve projects data from server
-    loadStaffsInfo();
+    loadStaffsInfo_Manager();
 
     //Staffslist filter
     $("#staffSearch").on("keyup", function () {
@@ -85,8 +85,8 @@ $(document).ready(function () {
 
 
 //===============STAFFS FUNCTIONS==========================
-//Retrieve staffs data function
-function loadStaffsInfo() {
+//Retrieve staffs data function for Manager
+function loadStaffsInfo_Manager() {
     $.ajax({
         url: 'http://localhost:1337/staffs',
         type: 'GET',
@@ -158,6 +158,45 @@ function loadStaffsInfo() {
                     sentEditedStaffInfo(id);
                 });
             });
+        }
+    });
+}
+
+//Retrieve staffs data function for Employees
+function loadStaffsInfo_Employees() {
+    $.ajax({
+        url: 'http://localhost:1337/staffs',
+        type: 'GET',
+        success: function (result) {
+            var str = '';
+            $.each(result, function (i, items) {
+                //Check gender, if true gender is "Male" else "Female"
+                var gender = '';
+                if (items.gender === true) {
+                    gender = 'Nam';
+                } else {
+                    gender = 'Nữ';
+                }
+
+                //Fetch data to html table
+                str += '<tr>';
+                str += '<td>' + items.staff_name + '</td>';
+                str += '<td>' + items.birthday + '</td>';
+                str += '<td>' + gender + '</td>';
+                str += '<td>' + items.phone_number + '</td>';
+                str += '<td>' + items.email + '</td>';
+                str += '<td>' + items.address + '</td>';
+                str += '<td>' + items.nationality + '</td>';
+                str += '<td>' + items.role + '</td>';
+                str += '<td class="dropdownMod">' + '<div class="dropdown">\
+                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
+                                        <i class="dw dw-more"></i>\
+                                    </a>\
+                                </div>'+ '</td>';
+                str += '</tr>';
+            });
+            //Change table on html by data table from above
+            $('#staffList').html(str);
         }
     });
 }
@@ -305,8 +344,8 @@ function deleteSpecifiedStaff(id) {
 
 
 //===============PROJECTS FUNCTIONS=========================
-//Retrieve projects data function
-function loadProjectsInfo() {
+//Retrieve projects data function for Manager
+function loadProjectsInfo_Manager() {
     $.ajax({
         url: 'http://localhost:1337/projects',
         type: 'GET',
@@ -534,13 +573,15 @@ function logIn() {
         success: function (result) {
             localStorage.setItem('token', result.jwt);
             localStorage.setItem('username', result.user.username);
-            localStorage.setItem('role', result.user.role.name);
+            localStorage.setItem('Authorization', result.user.role.type);
             localStorage.setItem('email', result.user.email);
             localStorage.setItem('phone_number', result.user.staff.phone_number);
-            localStorage.setItem('staff_name', result.user.staff.name);
+            localStorage.setItem('staff_name', result.user.staff.staff_name);
             localStorage.setItem('birthday', result.user.staff.birthday);
             localStorage.setItem('address', result.user.staff.address);
+            localStorage.setItem('staff_description', result.user.staff.description);
             localStorage.setItem('role', result.user.staff.role);
+            localStorage.setItem('department', result.user.department.department_name);
 
             if (result.user.user_avatar) {
                 localStorage.setItem('avatar', result.user.user_avatar.formats.thumbnail.url);
@@ -573,23 +614,31 @@ function logOut() {
     localStorage.removeItem('email');
     localStorage.removeItem('birthday');
     localStorage.removeItem('staff_name');
+    localStorage.removeItem('Authorization');
+    localStorage.removeItem('staff_description');
+    localStorage.removeItem('department');
     window.location.replace('login.html');
 }
 
 //Check logged in
 function checkRole() {
-    if(localStorage.role == 'Public') {
-        $('#addButton').hide();
-        $('.dropdownMod').hide();
+    if(localStorage.Authorization == 'public') {
+        loadProjectsInfo_Employees();
+    }else {
+        loadStaffsInfo_Manager();
+        loadProjectsInfo_Manager();
     }
 }
 
 //Load account infomation
 function loadAccountInfo() {
-    $('#accountInfoStaffName').val(localStorage.staff_name);
-    $('#accountInfoRole').val(localStorage.role);
-    $('#accountInfoUserName').val(localStorage.username);
-    $('#accountInfoEmail').val(localStorage.email);
-    $('#accountInfoPhoneNumber').val(localStorage.phone_number);
-    $('#accountInfoAddress').val(localStorage.address);
+    if (localStorage.avatar) {
+        $('#staffAvatar').prop('src', 'http://localhost:1337' + localStorage.avatar);
+    }
+    $('#staffNameAccountInfo').html(localStorage.staff_name);
+    $('#staffDescription').html(localStorage.staff_description);
+    $('#staffAddressAccountInfo').html(localStorage.address);
+    $('#staffPhoneNumberAccountInfo').html(localStorage.phone_number);
+    $('#staffEmailAccountInfo').html(localStorage.email);
+    $('#staffDepartmentAccountInfo').html(localStorage.department);
 }
