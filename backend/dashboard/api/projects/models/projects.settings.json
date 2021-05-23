@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "name": "projects",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "project_name": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "date"
+    },
+    "end_date": {
+      "type": "date"
+    },
+    "number_of_staffs": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "string",
+      "maxLength": 20
+    },
+    "departments": {
+      "collection": "departments",
+      "via": "projects",
+      "dominant": true
+    },
+    "staff": {
+      "collection": "staffs",
+      "via": "projects",
+      "dominant": true
+    },
+    "reports": {
+      "via": "project",
+      "collection": "reports"
+    }
+  }
+}
