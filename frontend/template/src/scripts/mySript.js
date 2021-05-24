@@ -78,6 +78,9 @@ $(document).ready(function () {
             deleteSpecifiedStaff(id);
         });
     });
+
+    //========ASSIGNMENTS==================
+    loadAssignmentInfo_Manager();
 });
 
 
@@ -322,7 +325,7 @@ function loadProjectsInfo_Manager() {
                                     </a>\
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
                                         <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editProjectModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
-                                        <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" href="#confirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
+                                        <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal"><i class="dw dw-delete-3"></i> Xóa</a>\
                                     </div>\
                                 </div>'+ '</td>';
                 str += '</tr>';
@@ -497,6 +500,44 @@ function deleteSpecifiedProject(id) {
         }
     });
 }
+
+
+//===============ASSIGNMENTS FUNCTION=======================
+function loadAssignmentInfo_Manager() {
+    $.ajax({
+        url: 'http://localhost:1337/assignments',
+        type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.token
+        },
+        success: function(result) {
+            str = '';
+            $.each(result, function(i, items) {
+                str += '<tr>';
+                str += '<td>' + items.assignment_name + '</td>';
+                str += '<td>' + items.staff.staff_name + '</td>';
+                str += '<td>' + items.assignment_description + '</td>';
+                str += '<td>' + items.assignment_end_date + '</td>';
+                str += '<td>' + items.status + '</td>';
+                str += '<td class="dropdownMod">' + '<div class="dropdown">\
+                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
+                                        <i class="dw dw-more"></i>\
+                                    </a>\
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
+                                        <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editAssignmentModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
+                                        <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" href="#deleteAssignmentConfirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
+                                    </div>\
+                                </div>'+ '</td>';
+                str += '</tr>';
+            });
+            $('#assignmentList').html(str);
+        },
+        error: function() {
+            console.log('nope!');
+        }
+    });
+}
+
 
 
 //===============ACCOUNTS FUNCTIONS=========================

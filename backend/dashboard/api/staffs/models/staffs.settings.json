@@ -61,6 +61,10 @@
       "via": "staff",
       "plugin": "users-permissions",
       "model": "user"
+    },
+    "assignment": {
+      "via": "staff",
+      "model": "assignment"
     }
   }
 }

@@ -29,6 +29,10 @@
     "project": {
       "model": "projects",
       "via": "reports"
+    },
+    "assignment": {
+      "via": "reports",
+      "model": "assignment"
     }
   }
 }

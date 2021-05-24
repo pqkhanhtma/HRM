@@ -41,6 +41,10 @@
     "reports": {
       "via": "project",
       "collection": "reports"
+    },
+    "assignment": {
+      "via": "project",
+      "model": "assignment"
     }
   }
 }
