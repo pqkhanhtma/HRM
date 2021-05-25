@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     //Display user avatar
     if (localStorage.avatar) {
-        $('#user_avatar').prop('src', 'http://localhost:1337' + localStorage.avatar);
+        $('#userAvatar').prop('src', 'http://localhost:1337' + localStorage.avatar);
     }
 
     //Login function
@@ -668,13 +668,19 @@ function loadAssignmentInfo_Employee(id) {
         success: function(result) {
             str = '';
             var arr = result.assignments;
-            for(let i in arr) {
+            if(arr.length == 0) {
                 str += '<tr>';
-                str += '<td>' + arr[i].assignment_name + '</td>';
-                str += '<td>' + arr[i].assignment_description + '</td>';
-                str += '<td>' + arr[i].assignment_end_date + '</td>';
-                str += '<td>' + arr[i].status + '</td>';
+                str += '<td class="text-center" colspan = "4">Bạn hiện đang không có nhiệm vụ nào</td>'
                 str += '</tr>';
+            }else {
+                for(let i in arr) {
+                    str += '<tr>';
+                    str += '<td>' + arr[i].assignment_name + '</td>';
+                    str += '<td>' + arr[i].assignment_description + '</td>';
+                    str += '<td>' + arr[i].assignment_end_date + '</td>';
+                    str += '<td>' + arr[i].status + '</td>';
+                    str += '</tr>';
+                };
             }
             $('#assignmentListEmployee').html(str);
         },
