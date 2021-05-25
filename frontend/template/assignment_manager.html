@@ -169,7 +169,13 @@
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <label>Nhân viên :</label>
-                                                                    <input id="assignmentStaffsAdd" type="text" class="form-control">
+                                                                    <select name="staffList" id="assignmentStaffListAdd" class="form-control"></select>
+                                                                </div>
+                                                            </div>
+															<div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Dự án :</label>
+                                                                    <select name="projectList" id="assignmentProjectListAdd" class="form-control"></select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -209,8 +215,8 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button id="cancelProjectButtonAddModal" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-						<button id="saveProjectButtonAddModal" type="button" class="btn btn-primary">Lưu</button>
+						<button id="cancelAssignmentButtonAddModal" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+						<button id="saveAssignmentButtonAddModal" type="button" class="btn btn-primary">Lưu</button>
 					</div>
 				</div>
 			</div>
@@ -244,7 +250,13 @@
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <label>Nhân viên :</label>
-                                                                    <input id="assignmentStaffsEdit" type="text" class="form-control">
+                                                                    <select name="staffList" id="assignmentStaffListEdit" class="form-control"></select>
+                                                                </div>
+                                                            </div>
+															<div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Dự án :</label>
+                                                                    <select name="projectList" id="assignmentProjectListEdit" class="form-control"></select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -284,8 +296,8 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button id="cancelProjectButtonAddModal" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-						<button id="saveProjectButtonAddModal" type="button" class="btn btn-primary">Lưu</button>
+						<button id="cancelAssignmentButtonEditModal" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+						<button id="saveAssignmentButtonEditModal" type="button" class="btn btn-primary">Lưu</button>
 					</div>
 				</div>
 			</div>
@@ -316,11 +328,11 @@
 		</div>
 
 		<!--Assignment status Modal-->
-		<div class="modal fade" id="projectStatusModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+		<div class="modal fade" id="assignmentStatusModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-body text-center font-18">
-						<h4 id="projectStatusModalTitle" class="padding-top-30 mb-30 weight-500"></h4>
+						<h4 id="assignmentStatusModalTitle" class="padding-top-30 mb-30 weight-500"></h4>
 						<div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
 							<div class="col-12">
 								<button id="assignmentStatusModalConfirmButton" type="button" class="btn btn-primary border-radius-100 btn-block confirmation-btn"
