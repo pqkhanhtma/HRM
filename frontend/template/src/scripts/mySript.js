@@ -1,10 +1,11 @@
 $(document).ready(function () {
     //=============MAIN===========================
-    //Check role
-    checkRole();
-
     //Account infomation
     loadAccountInfo();
+
+    $('#assignmentStaffList').on('change', function() {
+        console.log($('#assignmentStaffList').val());
+    });
 
     //Display username
     $('#displayUserName').html(localStorage.username);
@@ -26,12 +27,18 @@ $(document).ready(function () {
 
     //==============PROJECTS======================
     //Retrieve projects data from server
-    loadProjectsInfo();
+    loadProjectsInfo_Manager();
+    loadProjectsInfo_Employee();
 
     //projectlist filter
     $("#projectSearch").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $("#projectList tr").filter(function () {
+        //For Manager template
+        $("#projectListManager tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+        //For Employee emplate
+        $("#projectListEmployee tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
@@ -55,7 +62,7 @@ $(document).ready(function () {
 
     //==============STAFFS========================
     //Retrieve projects data from server
-    loadStaffsInfo();
+    loadStaffsInfo_Manager();
 
     //Staffslist filter
     $("#staffSearch").on("keyup", function () {
@@ -70,7 +77,7 @@ $(document).ready(function () {
         sentNewStaffInfo();
     });
 
-    //Delete specified project
+    //Delete specified staff
     $(document).on('click', '.delete-modal', function() {
         var id = '';
         var elementId = $(this).attr('id');
@@ -81,16 +88,58 @@ $(document).ready(function () {
             deleteSpecifiedStaff(id);
         });
     });
+
+    //========ASSIGNMENTS==================
+    //Retrieve assignments data from server
+    var getId = localStorage.staff_id;
+    loadAssignmentInfo_Employee(getId);
+    loadAssignmentInfo_Manager();;  
+
+    //Assignment filter
+    $("#assignmentSearch").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        //For Employee template
+        $("#assignmentListEmployee tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+        //For Manager template
+        $("#assignmentListManager tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    //Save new assignment infomation to server
+    $('#saveAssignmentButtonAddModal').click(function() {
+        sentNewAssignmentInfo();
+    });
+
+    //Delete specified assignment 
+    $(document).on('click', '.delete-modal', function() {
+        var id = '';
+        var elementId = $(this).attr('id');
+        var getRealId = elementId.substr(6);
+        id += getRealId;
+        console.log(id);
+        $('#deleteAssignmentConfirmationModal').modal();
+        $('#deleteAssignmentAcceptButton').click(function() {
+            deleteSpecifiedAssignment(id);
+        });
+    });
+
 });
 
 
 //===============STAFFS FUNCTIONS==========================
-//Retrieve staffs data function
-function loadStaffsInfo() {
+//Retrieve staffs data function for Manager
+function loadStaffsInfo_Manager() {
     $.ajax({
         url: 'http://localhost:1337/staffs',
         type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.token
+        },
         success: function (result) {
+            //Collect staff list from database and display on #staffList table
             var str = '';
             $.each(result, function (i, items) {
                 //Check gender, if true gender is "Male" else "Female"
@@ -125,9 +174,6 @@ function loadStaffsInfo() {
             //Change table on html by data table from above
             $('#staffList').html(str);
 
-            //Check role
-            checkRole();
-
             //Specified id
             var id = '';
 
@@ -148,7 +194,7 @@ function loadStaffsInfo() {
                         $('#nationalityEdit').val(result[i].nationality);
                         $('#addressEdit').val(result[i].address);
                         $('#phoneNumberEdit').val(result[i].phone_number);
-                        $('#emailEdit').val(result[i].users_permissions_user.email);
+                        $('#emailEdit').val(result[i].email);
                         $('#roleSelectionEdit').val(result[i].role);
                     }
                 }
@@ -158,6 +204,23 @@ function loadStaffsInfo() {
                     sentEditedStaffInfo(id);
                 });
             });
+
+            //Collect staff id and bring staff list into html select tag
+            var staffListSelectTagAdd = document.getElementById('assignmentStaffListAdd');
+            var staffListSelectTagEdit = document.getElementById('assignmentStaffListEdit');
+            for (var i = 0; i < result.length; i++) {
+                //Create option list for #assignmentStaffListAdd select tag
+                var staffListOptionTagAdd = document.createElement('option');
+                staffListOptionTagAdd.innerHTML = result[i].staff_name;
+                staffListOptionTagAdd.value = result[i].id;
+                staffListSelectTagAdd.appendChild(staffListOptionTagAdd);
+
+                //Create option list for #assignmentStaffListEdit select tag
+                var staffListOptionTagEdit = document.createElement('option');
+                staffListOptionTagEdit.innerHTML = result[i].staff_name;
+                staffListOptionTagEdit.value = result[i].id;
+                staffListSelectTagEdit.appendChild(staffListOptionTagEdit);
+            }
         }
     });
 }
@@ -182,7 +245,7 @@ function sentNewStaffInfo() {
     var address = $('#addressAdd').val();
     var phone_number = $('#phoneNumberAdd').val();
     var email = $('#emailAdd').val();
-    var role = $('#roleSelection').val();
+    var role = $('#roleSelectionAdd').val();
     
 
     //Sent new staff data back to server
@@ -208,7 +271,7 @@ function sentNewStaffInfo() {
             $('#staffStatusModalCancelButton').hide();
             $('#staffStatusModalTitle').html('Đã thêm dữ liệu mới!')
             $('#staffStatusModal').modal();
-            loadStaffsInfo();
+            loadStaffsInfo_Manager();
         },
         error: function () {
             $('#staffStatusModalConfirmButton').hide();
@@ -238,9 +301,6 @@ function sentEditedStaffInfo(id) {
     var address = $('#addressEdit').val();
     var nationality = $('#nationalityEdit').val();
     var role = $('#roleSelectionEdit').val();
-    console.log(birthday);
-    console.log(birthdayString);
-    console.log(finalBirthday);
 
     $.ajax({
         url: 'http://localhost:1337/staffs/' + id,
@@ -264,7 +324,7 @@ function sentEditedStaffInfo(id) {
             $('#staffStatusModalCancelButton').hide();
             $('#staffStatusModalTitle').html('Đã cập nhật thông tin!')
             $('#staffStatusModal').modal();
-            loadStaffsInfo();
+            loadStaffsInfo_Manager();
         },
         error:function() {
             $('#editStaffModal').modal('hide');
@@ -290,7 +350,7 @@ function deleteSpecifiedStaff(id) {
             $('#staffStatusModalCancelButton').hide();
             $('#staffStatusModalTitle').html('Đã xóa 1 bản ghi!')
             $('#staffStatusModal').modal();
-            loadStaffsInfo();
+            loadStaffsInfo_Manager();
         },
         error: function() {
             $('#deleteStaffConfirmationModal').modal('hide');
@@ -303,30 +363,16 @@ function deleteSpecifiedStaff(id) {
 }
 
 
-
 //===============PROJECTS FUNCTIONS=========================
-//Retrieve projects data function
-function loadProjectsInfo() {
+//Retrieve projects data function for Manager
+function loadProjectsInfo_Manager() {
     $.ajax({
         url: 'http://localhost:1337/projects',
         type: 'GET',
         success: function (result) {
+            //Collect project list from database and display on #projectList table
             var str = '';
             $.each(result, function (i, items) {
-                // $('.project_name').html(items.project_name);
-                // $('.start_date').html(items.start_date);
-                // $('.end_date').html(items.end_date);
-                // $('.number_of_staffs').html(items.number_of_staffs);
-                // $('.status').html(items.status);
-                // $('.actionButtons').html('<div class="dropdown">\
-                // <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
-                //     <i class="dw dw-more"></i>\
-                // </a>\
-                // <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
-                //     <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editProjectModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
-                //     <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" href="#confirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
-                // </div>\
-                // </div>');
                 //Fetch data to html table
                 str += '<tr>';
                 str += '<td>' + items.project_name + '</td>';
@@ -340,22 +386,19 @@ function loadProjectsInfo() {
                                     </a>\
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
                                         <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editProjectModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
-                                        <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" href="#confirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
+                                        <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal"><i class="dw dw-delete-3"></i> Xóa</a>\
                                     </div>\
                                 </div>'+ '</td>';
                 str += '</tr>';
             });
             //Change table on html by projects data table from above
-            $('#projectList').html(str);
-            
-            //Check role
-            checkRole();
+            $('#projectListManager').html(str);
 
             //Specified id
             var id = '';
 
             //Collect value that match with id and assign into modal's input
-            $('#projectList').on('click', '.edit-modal', function () {
+            $('#projectListManager').on('click', '.edit-modal', function () {
                 var elementId = $(this).attr('id');
                 var getRealId = elementId.substr(6);
                 id = getRealId;
@@ -374,6 +417,50 @@ function loadProjectsInfo() {
                     sentEditedProjectInfo(id);
                 });
             });
+
+            //Collect project id and bring project list into html slect tag
+            var projectListSelectTagAdd = document.getElementById('assignmentProjectListAdd');
+            var projectListSelectTagEdit = document.getElementById('assignmentProjectListEdit');
+            for(var i = 0; i <result.length; i++) {
+                //Create option list for #assignmentProjectListAdd select tag
+                var projectListOptionTagAdd = document.createElement('option');
+                projectListOptionTagAdd.innerHTML = result[i].project_name;
+                projectListOptionTagAdd.value = result[i].id;
+                projectListSelectTagAdd.appendChild(projectListOptionTagAdd);
+
+                //Create option list for assignmentProjectListEdit select tag
+                var projectListOptionTagEdit = document.createElement('option');
+                projectListOptionTagEdit.innerHTML = result[i].project_name;
+                projectListOptionTagEdit.value = result[i].id;
+                projectListSelectTagEdit.appendChild(projectListOptionTagEdit);
+            }
+        }
+    });
+}
+
+//Retrieve projects data function for Employee
+function loadProjectsInfo_Employee() {
+    $.ajax({
+        url: 'http://localhost:1337/projects',
+        type: 'GET',
+        success: function (result) {
+            //Collect project list from database and display on #projectList table
+            var str = '';
+            $.each(result, function (i, items) {
+                //Fetch data to html table
+                str += '<tr>';
+                str += '<td>' + items.project_name + '</td>';
+                str += '<td>' + items.start_date + '</td>';
+                str += '<td>' + items.end_date + '</td>';
+                str += '<td>' + items.number_of_staffs + '</td>';
+                str += '<td>' + items.status + '</td>';
+                str += '</tr>';
+            });
+            //Change table on html by projects data table from above
+            $('#projectListEmployee').html(str);
+        },
+        error: function() {
+            console.log('Load data failed!');
         }
     });
 }
@@ -423,6 +510,7 @@ function sentNewProjectInfo() {
             $('#projectStatusModalCancelButton').hide();
             $('#projectStatusModalTitle').html('Đã thêm dữ liệu mới!')
             $('#projectStatusModal').modal();
+            loadProjectsInfo_Manager();
         },
         error: function () {
             $('#projectStatusModalConfirmButton').hide();
@@ -477,7 +565,7 @@ function sentEditedProjectInfo(id) {
             $('#projectStatusModalCancelButton').hide();
             $('#projectStatusModalTitle').html('Đã cập nhật thông tin!')
             $('#projectStatusModal').modal();
-            loadProjectsInfo();
+            loadProjectsInfo_Manager();
         },
         error: function () {
             $('#projectStatusModalConfirmButton').hide();
@@ -503,7 +591,7 @@ function deleteSpecifiedProject(id) {
             $('#projectStatusModalCancelButton').hide();
             $('#projectStatusModalTitle').html('Đã xóa!')
             $('#projectStatusModal').modal();
-            loadProjectsInfo();
+            loadProjectsInfo_Manager();
         },
         error: function () {
             $('#deleteProjectConfirmationModal').modal('hide');
@@ -511,6 +599,220 @@ function deleteSpecifiedProject(id) {
             $('#projectStatusModalCancelButton').show();
             $('#projectStatusModalTitle').html('Không thể xóa!')
             $('#projectStatusModal').modal();
+        }
+    });
+}
+
+
+//===============ASSIGNMENTS FUNCTION=======================
+//Retrieve assignments data function for Manager
+function loadAssignmentInfo_Manager() {
+    //Collect assignment list from database and display on #assignmentList table
+    $.ajax({
+        url: 'http://localhost:1337/assignments',
+        type: 'GET',
+        success: function(result) {
+            str = '';
+            $.each(result, function(i, items) {
+                str += '<tr>';
+                str += '<td>' + items.assignment_name + '</td>';
+                str += '<td>' + items.staff.staff_name + '</td>';
+                str += '<td>' + items.assignment_description + '</td>';
+                str += '<td>' + items.assignment_end_date + '</td>';
+                str += '<td>' + items.status + '</td>';
+                str += '<td class="dropdownMod">' + '<div class="dropdown">\
+                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
+                                        <i class="dw dw-more"></i>\
+                                    </a>\
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
+                                        <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editAssignmentModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
+                                        <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" href="#deleteAssignmentConfirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
+                                    </div>\
+                                </div>'+ '</td>';
+                str += '</tr>';
+            });
+            //Change table on html by projects data table from above
+            $('#assignmentListManager').html(str);
+
+            //Specified id
+            var id = '';
+
+            //Collect value that match with id and assign into modal's input
+            $('#assignmentListManager').on('click', '.edit-modal', function() {
+                var elementId = $(this).attr('id');
+                var getRealId = elementId.substr(6);
+                id = getRealId;
+                for(let i in result) {
+                    if(result[i].id == id) {
+                        $('#assignmentTitleEdit').val(result[i].assignment_name);
+                        $('#assignmentDescriptionEdit').val(result[i].assignment_description);
+                        $('#assignmentEndDateEdit').val(result[i].assignment_end_date);
+                        $('#assignmentStatusSelectionEdit').val(result[i].status);
+                    }
+                }
+
+                //Sent edited assignment infomation
+                $('#saveAssignmentButtonEditModal').click(function() {
+                    sentEditedAssignmentInfo(id);
+                });
+            });
+        }
+    });
+}
+
+//Retrieve assignments data function for Employee
+function loadAssignmentInfo_Employee(id) {
+    $.ajax({
+        url: 'http://localhost:1337/staffs/' + id,
+        type: 'GET',
+        success: function(result) {
+            str = '';
+            var arr = result.assignments;
+            for(let i in arr) {
+                str += '<tr>';
+                str += '<td>' + arr[i].assignment_name + '</td>';
+                str += '<td>' + arr[i].assignment_description + '</td>';
+                str += '<td>' + arr[i].assignment_end_date + '</td>';
+                str += '<td>' + arr[i].status + '</td>';
+                str += '</tr>';
+            }
+            $('#assignmentListEmployee').html(str);
+        },
+        error: function() {
+            console.log("load data Failed!");
+        }
+    });
+}
+
+//Sent new assignment infomation function
+function sentNewAssignmentInfo() {
+    //Collect value of html input tag from create new assignment modal
+    var assignment_name = $('#assignmentTitleAdd').val();
+    var assignment_description = $('#assignmentDescriptionAdd').val();
+    var status = $('#assignmentStatusSelectionAdd').val();
+    var specified_staff = $('#assignmentStaffListAdd').val();
+    var specified_project = $('#assignmentProjectListAdd').val()
+
+    //Collect assignment end date from date input of create new assignment modal
+    var assignmentEndDate = new Date($('#assignmentEndDateAdd').val() + 'UTC');
+    //Convert assignmentEndDate into ISO date format
+    var assignmentEndDateString = assignmentEndDate.toISOString();
+    //Check assignmentEndDateString format
+    var check_assignmentEndDateString = moment(assignmentEndDateString);
+    //Convert check_assignmentEndDateString to format 'YYYY-MM-DD'
+    var finalAssignmentEndDate = check_assignmentEndDateString.utc().format('YYYY-MM-DD');
+
+    $.ajax({
+        url: 'http://localhost:1337/assignments',
+        type: 'POST',
+        headers: {
+            'Authorization' : 'Bearer ' + localStorage.token
+        },
+        data: {
+            "assignment_name" : assignment_name,
+            "assignment_description" : assignment_description,
+            "status" : status,
+            "assignment_end_date" : finalAssignmentEndDate,
+            "staff" : {
+                "id" : specified_staff
+            },
+            "project" : {
+                "id" : specified_project
+            }
+        },
+        success: function() {
+            $('#addAssignmentModal').modal('hide');
+            $('#assignmentStatusModalConfirmButton').show();
+            $('#assignmentStatusModalCancelButton').hide();
+            $('#assignmentStatusModalTitle').html('Đã thêm nhiệm vụ mới!')
+            $('#assignmentStatusModal').modal();
+            loadAssignmentInfo_Manager();
+        },
+        error: function() {
+            $('#assignmentStatusModalConfirmButton').hide();
+            $('#assignmentStatusModalCancelButton').show();
+            $('#assignmentStatusModalTitle').html('Không thể thêm nhiệm vụ mới!')
+            $('#assignmentStatusModal').modal();
+        }
+    });
+}
+
+//Sent Edited assignment infomation function
+function sentEditedAssignmentInfo(id) {
+    //Collect value of html input tag from assignment edit modal
+    var assignment_name = $('#assignmentTitleEdit').val();
+    var assignment_description = $('#assignmentDescriptionEdit').val();
+    var status = $('#assignmentStatusSelectionEdit').val();
+    var specified_staff = $('#assignmentStaffsEdit').val();
+    var specified_project = $('#assignmentProjectListEdit').val();
+
+    //Collect assignment end date from date input of edit assignment modal
+    var assignmentEndDate = new Date($('#assignmentEndDateEdit').val() + 'UTC');
+    //Convert assignmentEndDate to ISO format
+    var assignmentEndDateString = assignmentEndDate.toISOString();
+    //Check assignmentEndDateString format
+    var check_assignmentEndDate = moment(assignmentEndDateString);
+    //convert check_assignmentEndDateString to format 'YYYY-MM-DD'
+    var finalAssignmentEndDate = check_assignmentEndDate.utc().format('YYYY-MM-DD');
+
+    // Sent edited project data back to server
+    $.ajax({
+        url : 'http://localhost:1337/assignments/' + id,
+        type: 'PUT',
+        headers: {
+            'Authorization' : 'Bearer ' + localStorage.token
+        },
+        data: {
+            "assignment_name" : assignment_name,
+            "assignment_description": assignment_description,
+            "status" : status,
+            "staff" : {
+                "id" : specified_staff
+            },
+            "project" : {
+                "id" : specified_project
+            },
+            "assignment_end_date" : finalAssignmentEndDate
+        },
+        success: function() {
+            $('#editAssignmentModal').modal('hide');
+            $('#assignmentStatusModalConfirmButton').show();
+            $('#assignmentStatusModalCancelButton').hide();
+            $('#assignmentStatusModalTitle').html('Đã chỉnh sửa thông tin nhiệm vụ!')
+            $('#assignmentStatusModal').modal();
+            loadAssignmentInfo_Manager();
+        },
+        error: function() {
+            $('#assignmentStatusModalConfirmButton').hide();
+            $('#assignmentStatusModalCancelButton').show();
+            $('#assignmentStatusModalTitle').html('Không thể chỉnh sửa thông tin nhiệm vụ!')
+            $('#assignmentStatusModal').modal();
+        }
+    });
+}
+
+//Delete specified assignment
+function deleteSpecifiedAssignment(id) {
+    $.ajax({
+        url : 'http://localhost:1337/assignments/' + id,
+        type: 'DELETE',
+        headers: {
+            'Authorization' : 'Bearer ' + localStorage.token
+        },
+        success: function() {
+            $('#deleteAssignmentConfirmationModal').modal('hide');
+            $('#assignmentStatusModalConfirmButton').show();
+            $('#assignmentStatusModalCancelButton').hide();
+            $('#assignmentStatusModalTitle').html('Đã xóa nhiệm vụ!')
+            $('#assignmentStatusModal').modal();
+            loadAssignmentInfo_Manager();
+        },
+        error: function() {
+            $('#deleteAssignmentConfirmationModal').modal('hide');
+            $('#assignmentStatusModalCancelButton').show();
+            $('#assignmentStatusModalConfirmButton').hide();
+            $('#assignmentStatusModalTitle').html('Không thể xóa nhiệm vụ!')
+            $('#assignmentStatusModal').modal();
         }
     });
 }
@@ -532,16 +834,20 @@ function logIn() {
             "password": password
         },
         success: function (result) {
+            //Set accountinfomation to local storage
             localStorage.setItem('token', result.jwt);
+            localStorage.setItem('staff_id', result.user.staff.id);
+            localStorage.setItem('staff_name', result.user.staff.staff_name);
             localStorage.setItem('username', result.user.username);
-            localStorage.setItem('role', result.user.role.name);
             localStorage.setItem('email', result.user.email);
             localStorage.setItem('phone_number', result.user.staff.phone_number);
-            localStorage.setItem('staff_name', result.user.staff.name);
             localStorage.setItem('birthday', result.user.staff.birthday);
             localStorage.setItem('address', result.user.staff.address);
+            localStorage.setItem('staff_description', result.user.staff.description);
+            localStorage.setItem('Authorization', result.user.role.type);
             localStorage.setItem('role', result.user.staff.role);
-
+            localStorage.setItem('department', result.user.department.department_name);
+            //Check if user avatar availble then set user avatar to local storage
             if (result.user.user_avatar) {
                 localStorage.setItem('avatar', result.user.user_avatar.formats.thumbnail.url);
             }
@@ -549,9 +855,7 @@ function logIn() {
             $('#loginStatusModalConfirmButton').show();
             $('#loginStatusModalTitle').html('Xin chào ' + localStorage.username);
             $('#loginStatusModal').modal();
-            $('#loginStatusModalConfirmButton').click(function () {
-                window.location.replace('index3.html');
-            });
+            checkRole();
         },
         error: function () {
             $('#loginStatusModalCancelButton').show();
@@ -565,31 +869,43 @@ function logIn() {
 //Logout function
 function logOut() {
     localStorage.removeItem('token');
+    localStorage.removeItem('staff_id');
+    localStorage.removeItem('staff_name');
     localStorage.removeItem('username');
+    localStorage.removeItem('email');
+    localStorage.removeItem('phone_number');
+    localStorage.removeItem('birthday');
+    localStorage.removeItem('address');
+    localStorage.removeItem('staff_description');
+    localStorage.removeItem('Authorization');
     localStorage.removeItem('role');
     localStorage.removeItem('avatar');
-    localStorage.removeItem('phone_number');
-    localStorage.removeItem('address');
-    localStorage.removeItem('email');
-    localStorage.removeItem('birthday');
-    localStorage.removeItem('staff_name');
+    localStorage.removeItem('department');
     window.location.replace('login.html');
 }
 
 //Check logged in
 function checkRole() {
-    if(localStorage.role == 'Public') {
-        $('#addButton').hide();
-        $('.dropdownMod').hide();
+    if(localStorage.Authorization == 'public') {
+        $('#loginStatusModalConfirmButton').click(function () {
+            window.location.replace('index_employees.html');
+        });
+    }else {
+        $('#loginStatusModalConfirmButton').click(function () {
+            window.location.replace('index_manager.html');
+        });
     }
 }
 
 //Load account infomation
 function loadAccountInfo() {
-    $('#accountInfoStaffName').val(localStorage.staff_name);
-    $('#accountInfoRole').val(localStorage.role);
-    $('#accountInfoUserName').val(localStorage.username);
-    $('#accountInfoEmail').val(localStorage.email);
-    $('#accountInfoPhoneNumber').val(localStorage.phone_number);
-    $('#accountInfoAddress').val(localStorage.address);
+    if (localStorage.avatar) {
+        $('#staffAvatar').prop('src', 'http://localhost:1337' + localStorage.avatar);
+    }
+    $('#staffNameAccountInfo').html(localStorage.staff_name);
+    $('#staffDescription').html(localStorage.staff_description);
+    $('#staffAddressAccountInfo').html(localStorage.address);
+    $('#staffPhoneNumberAccountInfo').html(localStorage.phone_number);
+    $('#staffEmailAccountInfo').html(localStorage.email);
+    $('#staffDepartmentAccountInfo').html(localStorage.department);
 }
