@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "departments",
+  "info": {
+    "name": "departments"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "department_name": {
+      "type": "string",
+      "maxLength": 20
+    },
+    "department_description": {
+      "type": "string"
+    },
+    "staff": {
+      "via": "department",
+      "collection": "staffs"
+    },
+    "projects": {
+      "via": "departments",
+      "collection": "projects"
+    },
+    "users": {
+      "via": "department",
+      "plugin": "users-permissions",
+      "collection": "user"
+    }
+  }
+}
