@@ -3,6 +3,10 @@ $(document).ready(function () {
     //Account infomation
     loadAccountInfo();
 
+    $('#assignmentStaffList').on('change', function() {
+        console.log($('#assignmentStaffList').val());
+    });
+
     //Display username
     $('#displayUserName').html(localStorage.username);
 
@@ -24,11 +28,17 @@ $(document).ready(function () {
     //==============PROJECTS======================
     //Retrieve projects data from server
     loadProjectsInfo_Manager();
+    loadProjectsInfo_Employee();
 
     //projectlist filter
     $("#projectSearch").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $("#projectList tr").filter(function () {
+        //For Manager template
+        $("#projectListManager tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+        //For Employee emplate
+        $("#projectListEmployee tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
@@ -67,7 +77,7 @@ $(document).ready(function () {
         sentNewStaffInfo();
     });
 
-    //Delete specified project
+    //Delete specified staff
     $(document).on('click', '.delete-modal', function() {
         var id = '';
         var elementId = $(this).attr('id');
@@ -80,7 +90,42 @@ $(document).ready(function () {
     });
 
     //========ASSIGNMENTS==================
-    loadAssignmentInfo_Manager();
+    //Retrieve assignments data from server
+    var getId = localStorage.staff_id;
+    loadAssignmentInfo_Employee(getId);
+    loadAssignmentInfo_Manager();;  
+
+    //Assignment filter
+    $("#assignmentSearch").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        //For Employee template
+        $("#assignmentListEmployee tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+        //For Manager template
+        $("#assignmentListManager tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    //Save new assignment infomation to server
+    $('#saveAssignmentButtonAddModal').click(function() {
+        sentNewAssignmentInfo();
+    });
+
+    //Delete specified assignment 
+    $(document).on('click', '.delete-modal', function() {
+        var id = '';
+        var elementId = $(this).attr('id');
+        var getRealId = elementId.substr(6);
+        id += getRealId;
+        console.log(id);
+        $('#deleteAssignmentConfirmationModal').modal();
+        $('#deleteAssignmentAcceptButton').click(function() {
+            deleteSpecifiedAssignment(id);
+        });
+    });
+
 });
 
 
@@ -94,6 +139,7 @@ function loadStaffsInfo_Manager() {
             'Authorization': 'Bearer ' + localStorage.token
         },
         success: function (result) {
+            //Collect staff list from database and display on #staffList table
             var str = '';
             $.each(result, function (i, items) {
                 //Check gender, if true gender is "Male" else "Female"
@@ -128,9 +174,6 @@ function loadStaffsInfo_Manager() {
             //Change table on html by data table from above
             $('#staffList').html(str);
 
-            //Check role
-            checkRole();
-
             //Specified id
             var id = '';
 
@@ -161,6 +204,23 @@ function loadStaffsInfo_Manager() {
                     sentEditedStaffInfo(id);
                 });
             });
+
+            //Collect staff id and bring staff list into html select tag
+            var staffListSelectTagAdd = document.getElementById('assignmentStaffListAdd');
+            var staffListSelectTagEdit = document.getElementById('assignmentStaffListEdit');
+            for (var i = 0; i < result.length; i++) {
+                //Create option list for #assignmentStaffListAdd select tag
+                var staffListOptionTagAdd = document.createElement('option');
+                staffListOptionTagAdd.innerHTML = result[i].staff_name;
+                staffListOptionTagAdd.value = result[i].id;
+                staffListSelectTagAdd.appendChild(staffListOptionTagAdd);
+
+                //Create option list for #assignmentStaffListEdit select tag
+                var staffListOptionTagEdit = document.createElement('option');
+                staffListOptionTagEdit.innerHTML = result[i].staff_name;
+                staffListOptionTagEdit.value = result[i].id;
+                staffListSelectTagEdit.appendChild(staffListOptionTagEdit);
+            }
         }
     });
 }
@@ -310,6 +370,7 @@ function loadProjectsInfo_Manager() {
         url: 'http://localhost:1337/projects',
         type: 'GET',
         success: function (result) {
+            //Collect project list from database and display on #projectList table
             var str = '';
             $.each(result, function (i, items) {
                 //Fetch data to html table
@@ -331,16 +392,13 @@ function loadProjectsInfo_Manager() {
                 str += '</tr>';
             });
             //Change table on html by projects data table from above
-            $('#projectList').html(str);
-            
-            //Check role
-            checkRole();
+            $('#projectListManager').html(str);
 
             //Specified id
             var id = '';
 
             //Collect value that match with id and assign into modal's input
-            $('#projectList').on('click', '.edit-modal', function () {
+            $('#projectListManager').on('click', '.edit-modal', function () {
                 var elementId = $(this).attr('id');
                 var getRealId = elementId.substr(6);
                 id = getRealId;
@@ -359,6 +417,50 @@ function loadProjectsInfo_Manager() {
                     sentEditedProjectInfo(id);
                 });
             });
+
+            //Collect project id and bring project list into html slect tag
+            var projectListSelectTagAdd = document.getElementById('assignmentProjectListAdd');
+            var projectListSelectTagEdit = document.getElementById('assignmentProjectListEdit');
+            for(var i = 0; i <result.length; i++) {
+                //Create option list for #assignmentProjectListAdd select tag
+                var projectListOptionTagAdd = document.createElement('option');
+                projectListOptionTagAdd.innerHTML = result[i].project_name;
+                projectListOptionTagAdd.value = result[i].id;
+                projectListSelectTagAdd.appendChild(projectListOptionTagAdd);
+
+                //Create option list for assignmentProjectListEdit select tag
+                var projectListOptionTagEdit = document.createElement('option');
+                projectListOptionTagEdit.innerHTML = result[i].project_name;
+                projectListOptionTagEdit.value = result[i].id;
+                projectListSelectTagEdit.appendChild(projectListOptionTagEdit);
+            }
+        }
+    });
+}
+
+//Retrieve projects data function for Employee
+function loadProjectsInfo_Employee() {
+    $.ajax({
+        url: 'http://localhost:1337/projects',
+        type: 'GET',
+        success: function (result) {
+            //Collect project list from database and display on #projectList table
+            var str = '';
+            $.each(result, function (i, items) {
+                //Fetch data to html table
+                str += '<tr>';
+                str += '<td>' + items.project_name + '</td>';
+                str += '<td>' + items.start_date + '</td>';
+                str += '<td>' + items.end_date + '</td>';
+                str += '<td>' + items.number_of_staffs + '</td>';
+                str += '<td>' + items.status + '</td>';
+                str += '</tr>';
+            });
+            //Change table on html by projects data table from above
+            $('#projectListEmployee').html(str);
+        },
+        error: function() {
+            console.log('Load data failed!');
         }
     });
 }
@@ -503,13 +605,12 @@ function deleteSpecifiedProject(id) {
 
 
 //===============ASSIGNMENTS FUNCTION=======================
+//Retrieve assignments data function for Manager
 function loadAssignmentInfo_Manager() {
+    //Collect assignment list from database and display on #assignmentList table
     $.ajax({
         url: 'http://localhost:1337/assignments',
         type: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.token
-        },
         success: function(result) {
             str = '';
             $.each(result, function(i, items) {
@@ -530,10 +631,188 @@ function loadAssignmentInfo_Manager() {
                                 </div>'+ '</td>';
                 str += '</tr>';
             });
-            $('#assignmentList').html(str);
+            //Change table on html by projects data table from above
+            $('#assignmentListManager').html(str);
+
+            //Specified id
+            var id = '';
+
+            //Collect value that match with id and assign into modal's input
+            $('#assignmentListManager').on('click', '.edit-modal', function() {
+                var elementId = $(this).attr('id');
+                var getRealId = elementId.substr(6);
+                id = getRealId;
+                for(let i in result) {
+                    if(result[i].id == id) {
+                        $('#assignmentTitleEdit').val(result[i].assignment_name);
+                        $('#assignmentDescriptionEdit').val(result[i].assignment_description);
+                        $('#assignmentEndDateEdit').val(result[i].assignment_end_date);
+                        $('#assignmentStatusSelectionEdit').val(result[i].status);
+                    }
+                }
+
+                //Sent edited assignment infomation
+                $('#saveAssignmentButtonEditModal').click(function() {
+                    sentEditedAssignmentInfo(id);
+                });
+            });
+        }
+    });
+}
+
+//Retrieve assignments data function for Employee
+function loadAssignmentInfo_Employee(id) {
+    $.ajax({
+        url: 'http://localhost:1337/staffs/' + id,
+        type: 'GET',
+        success: function(result) {
+            str = '';
+            var arr = result.assignments;
+            for(let i in arr) {
+                str += '<tr>';
+                str += '<td>' + arr[i].assignment_name + '</td>';
+                str += '<td>' + arr[i].assignment_description + '</td>';
+                str += '<td>' + arr[i].assignment_end_date + '</td>';
+                str += '<td>' + arr[i].status + '</td>';
+                str += '</tr>';
+            }
+            $('#assignmentListEmployee').html(str);
         },
         error: function() {
-            console.log('nope!');
+            console.log("load data Failed!");
+        }
+    });
+}
+
+//Sent new assignment infomation function
+function sentNewAssignmentInfo() {
+    //Collect value of html input tag from create new assignment modal
+    var assignment_name = $('#assignmentTitleAdd').val();
+    var assignment_description = $('#assignmentDescriptionAdd').val();
+    var status = $('#assignmentStatusSelectionAdd').val();
+    var specified_staff = $('#assignmentStaffListAdd').val();
+    var specified_project = $('#assignmentProjectListAdd').val()
+
+    //Collect assignment end date from date input of create new assignment modal
+    var assignmentEndDate = new Date($('#assignmentEndDateAdd').val() + 'UTC');
+    //Convert assignmentEndDate into ISO date format
+    var assignmentEndDateString = assignmentEndDate.toISOString();
+    //Check assignmentEndDateString format
+    var check_assignmentEndDateString = moment(assignmentEndDateString);
+    //Convert check_assignmentEndDateString to format 'YYYY-MM-DD'
+    var finalAssignmentEndDate = check_assignmentEndDateString.utc().format('YYYY-MM-DD');
+
+    $.ajax({
+        url: 'http://localhost:1337/assignments',
+        type: 'POST',
+        headers: {
+            'Authorization' : 'Bearer ' + localStorage.token
+        },
+        data: {
+            "assignment_name" : assignment_name,
+            "assignment_description" : assignment_description,
+            "status" : status,
+            "assignment_end_date" : finalAssignmentEndDate,
+            "staff" : {
+                "id" : specified_staff
+            },
+            "project" : {
+                "id" : specified_project
+            }
+        },
+        success: function() {
+            $('#addAssignmentModal').modal('hide');
+            $('#assignmentStatusModalConfirmButton').show();
+            $('#assignmentStatusModalCancelButton').hide();
+            $('#assignmentStatusModalTitle').html('Đã thêm nhiệm vụ mới!')
+            $('#assignmentStatusModal').modal();
+            loadAssignmentInfo_Manager();
+        },
+        error: function() {
+            $('#assignmentStatusModalConfirmButton').hide();
+            $('#assignmentStatusModalCancelButton').show();
+            $('#assignmentStatusModalTitle').html('Không thể thêm nhiệm vụ mới!')
+            $('#assignmentStatusModal').modal();
+        }
+    });
+}
+
+//Sent Edited assignment infomation function
+function sentEditedAssignmentInfo(id) {
+    //Collect value of html input tag from assignment edit modal
+    var assignment_name = $('#assignmentTitleEdit').val();
+    var assignment_description = $('#assignmentDescriptionEdit').val();
+    var status = $('#assignmentStatusSelectionEdit').val();
+    var specified_staff = $('#assignmentStaffsEdit').val();
+    var specified_project = $('#assignmentProjectListEdit').val();
+
+    //Collect assignment end date from date input of edit assignment modal
+    var assignmentEndDate = new Date($('#assignmentEndDateEdit').val() + 'UTC');
+    //Convert assignmentEndDate to ISO format
+    var assignmentEndDateString = assignmentEndDate.toISOString();
+    //Check assignmentEndDateString format
+    var check_assignmentEndDate = moment(assignmentEndDateString);
+    //convert check_assignmentEndDateString to format 'YYYY-MM-DD'
+    var finalAssignmentEndDate = check_assignmentEndDate.utc().format('YYYY-MM-DD');
+
+    // Sent edited project data back to server
+    $.ajax({
+        url : 'http://localhost:1337/assignments/' + id,
+        type: 'PUT',
+        headers: {
+            'Authorization' : 'Bearer ' + localStorage.token
+        },
+        data: {
+            "assignment_name" : assignment_name,
+            "assignment_description": assignment_description,
+            "status" : status,
+            "staff" : {
+                "id" : specified_staff
+            },
+            "project" : {
+                "id" : specified_project
+            },
+            "assignment_end_date" : finalAssignmentEndDate
+        },
+        success: function() {
+            $('#editAssignmentModal').modal('hide');
+            $('#assignmentStatusModalConfirmButton').show();
+            $('#assignmentStatusModalCancelButton').hide();
+            $('#assignmentStatusModalTitle').html('Đã chỉnh sửa thông tin nhiệm vụ!')
+            $('#assignmentStatusModal').modal();
+            loadAssignmentInfo_Manager();
+        },
+        error: function() {
+            $('#assignmentStatusModalConfirmButton').hide();
+            $('#assignmentStatusModalCancelButton').show();
+            $('#assignmentStatusModalTitle').html('Không thể chỉnh sửa thông tin nhiệm vụ!')
+            $('#assignmentStatusModal').modal();
+        }
+    });
+}
+
+//Delete specified assignment
+function deleteSpecifiedAssignment(id) {
+    $.ajax({
+        url : 'http://localhost:1337/assignments/' + id,
+        type: 'DELETE',
+        headers: {
+            'Authorization' : 'Bearer ' + localStorage.token
+        },
+        success: function() {
+            $('#deleteAssignmentConfirmationModal').modal('hide');
+            $('#assignmentStatusModalConfirmButton').show();
+            $('#assignmentStatusModalCancelButton').hide();
+            $('#assignmentStatusModalTitle').html('Đã xóa nhiệm vụ!')
+            $('#assignmentStatusModal').modal();
+            loadAssignmentInfo_Manager();
+        },
+        error: function() {
+            $('#deleteAssignmentConfirmationModal').modal('hide');
+            $('#assignmentStatusModalCancelButton').show();
+            $('#assignmentStatusModalConfirmButton').hide();
+            $('#assignmentStatusModalTitle').html('Không thể xóa nhiệm vụ!')
+            $('#assignmentStatusModal').modal();
         }
     });
 }
@@ -557,6 +836,7 @@ function logIn() {
         success: function (result) {
             //Set accountinfomation to local storage
             localStorage.setItem('token', result.jwt);
+            localStorage.setItem('staff_id', result.user.staff.id);
             localStorage.setItem('staff_name', result.user.staff.staff_name);
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('email', result.user.email);
@@ -589,6 +869,7 @@ function logIn() {
 //Logout function
 function logOut() {
     localStorage.removeItem('token');
+    localStorage.removeItem('staff_id');
     localStorage.removeItem('staff_name');
     localStorage.removeItem('username');
     localStorage.removeItem('email');
@@ -607,11 +888,11 @@ function logOut() {
 function checkRole() {
     if(localStorage.Authorization == 'public') {
         $('#loginStatusModalConfirmButton').click(function () {
-            window.location.replace('index.html');
+            window.location.replace('index_employees.html');
         });
     }else {
         $('#loginStatusModalConfirmButton').click(function () {
-            window.location.replace('index3.html');
+            window.location.replace('index_manager.html');
         });
     }
 }
