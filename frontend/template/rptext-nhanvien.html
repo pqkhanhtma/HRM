@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic Page Info -->
+    <meta charset="utf-8">
+    <title>Web Quan ly nhan vien - Quan ly du an</title>
+
+    <!-- Site favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="vendors/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="vendors/images/favicon-16x16.png">
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
+    <link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="vendors/styles/style.css">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-119386393-1');
+    </script>
+</head>
+
+<body>
+    <!--Pre-loader page animation-->
+    <div class="pre-loader">
+        <div class="pre-loader-box">
+            <div class="loader-logo">
+                <Strong>
+                    <h1>TheWhiteFrost</h1>
+                </Strong>
+            </div>
+            <div class='loader-progress' id="progress_div">
+                <div class='bar' id='bar1'></div>
+            </div>
+            <div class='percent' id='percent1'>0%</div>
+            <div class="loading-text">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!--Header-->
+    <div class="header">
+        <div class="header-left">
+            <div class="menu-icon dw dw-menu"></div>
+            <div class="search-toggle-icon dw dw-search2" data-toggle="header_search"></div>
+        </div>
+        <div class="header-right">
+            <div class="user-info-dropdown">
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <span class="user-icon">
+                            <img src="vendors/images/photo1.jpg" alt="">
+                        </span>
+                        <span id="displayUserName" class="user-name">Emryh Var Emreis</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                        <a class="dropdown-item" href="staff_info.html">
+                            <i class="dw dw-user1"></i> Thông Tin tài khoản</a>
+                        <a class="dropdown-item" href="login.html">
+                            <i class="dw dw-logout"></i> Đăng Xuất</a>
+                    </div>
+                </div>
+            </div>
+            <div class="github-link">
+                <a href="https://github.com/dropways/deskapp" target="_blank">
+                    <img src="vendors/images/github.svg" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!--Side menu-->
+    <div class="left-side-bar">
+        <div class="brand-logo">
+            <a href="index3.html">
+                <strong>TheWhiteFrost</strong>
+            </a>
+            <div class="close-sidebar" data-toggle="left-sidebar-close">
+                <i class="ion-close-round"></i>
+            </div>
+        </div>
+        <div class="menu-block customscroll">
+            <div class="sidebar-menu">
+                <ul id="accordion-menu">
+                    <li class="dropdown">
+                        <a href="index3.html" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-house-1"></span>
+                            <span class="mtext">Trang Chủ</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="rptext.html" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-edit2"></span>
+                            <span class="mtext">Báo Cáo</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon dw dw-library"></span>
+                            <span class="mtext">Dữ Liệu</span>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="layout-project-list.html">Dự Án</a>
+                            </li>
+                            <li>
+                                <a href="layout-staff-list.html">Nhân Viên</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="calendar.html" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-calendar1"></span>
+                            <span class="mtext">Lịch</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-menu-overlay"></div>
+
+
+    <!--Report form-->
+    <div class="main-container">
+        <div class="pd-20 card-box mb-30 container">
+            <div class="row">
+                <h4 class="text-blue h4 col-md-12"><strong>BÁO CÁO DỮ LIỆU</strong></h4>
+            </div>
+            <div class="row row-cols-2">
+                <div>
+                    <label class="col-sm-12">Họ và tên</label>
+                    <div class="col-md-12 col-sm-12">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div>
+                    <label class="col-md-12">Thời gian</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control date-picker">
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <form class="">
+                <div class="form-group row">
+                    <label class=" col-md-12 col-form-label">Tiêu đề</label>
+                    <div class="col-md-12">
+                        <input class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-12 col-form-label">Nội dung</label>
+                    <div class="col-md-12">
+                        <textarea class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row  justify-content-center">
+                    <button type="button" class="btn btn-primary">Cập nhật thông tin</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--Footer-->
+    <div class="footer-wrap pd-20 mb-20 card-box">
+        DeskApp - Bootstrap 4 Admin Template By
+        <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya
+        </a>
+    </div>
+
+
+    <!-- js -->
+    <script src="vendors/scripts/core.js"></script>
+    <script src="vendors/scripts/script.min.js"></script>
+    <script src="vendors/scripts/process.js"></script>
+    <script src="vendors/scripts/layout-settings.js"></script>
+</body>
+
+</html>

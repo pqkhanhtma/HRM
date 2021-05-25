@@ -15,8 +15,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 	<!-- Google Font -->
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
 	<link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
@@ -30,9 +29,11 @@
 	<!--Pre-loader page animation-->
 	<div class="pre-loader">
 		<div class="pre-loader-box">
-			<div class="loader-logo"><Strong>
+			<div class="loader-logo">
+				<Strong>
 					<h1>TheWhiteFrost</h1>
-				</Strong></div>
+				</Strong>
+			</div>
 			<div class='loader-progress' id="progress_div">
 				<div class='bar' id='bar1'></div>
 			</div>
@@ -61,16 +62,15 @@
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="staff_info.html">
 							<i class="dw dw-user1"></i> Thông Tin tài khoản</a>
-						<a class="dropdown-item" href="faq.html">
-							<i class="dw dw-help"></i> Trợ giúp</a>
-						<a id="logoutButton" class="dropdown-item" href="login.html">
+						<a class="dropdown-item" href="login.html">
 							<i class="dw dw-logout"></i> Đăng Xuất</a>
 					</div>
 				</div>
 			</div>
 			<div class="github-link">
-				<a href="https://github.com/dropways/deskapp" target="_blank"><img src="vendors/images/github.svg"
-						alt=""></a>
+				<a href="https://github.com/dropways/deskapp" target="_blank">
+					<img src="vendors/images/github.svg" alt="">
+				</a>
 			</div>
 		</div>
 	</div>
@@ -90,26 +90,34 @@
 				<ul id="accordion-menu">
 					<li class="dropdown">
 						<a href="index3.html" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-house-1"></span><span class="mtext">Trang Chủ</span>
+							<span class="micon dw dw-house-1"></span>
+							<span class="mtext">Trang Chủ</span>
 						</a>
 					</li>
 					<li class="dropdown">
 						<a href="rptext.html" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-edit2"></span><span class="mtext">Báo Cáo</span>
+							<span class="micon dw dw-edit2"></span>
+							<span class="mtext">Báo Cáo</span>
 						</a>
 					</li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-library"></span><span class="mtext">Dữ Liệu</span>
+							<span class="micon dw dw-library"></span>
+							<span class="mtext">Dữ Liệu</span>
 						</a>
 						<ul class="submenu">
-							<li><a href="layout-project-list.html">Dự Án</a></li>
-							<li><a href="layout-staff-list.html">Nhân Viên</a></li>
+							<li>
+								<a href="layout-project-list.html">Dự Án</a>
+							</li>
+							<li>
+								<a href="layout-staff-list.html">Nhân Viên</a>
+							</li>
 						</ul>
 					</li>
 					<li>
 						<a href="calendar.html" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-calendar1"></span><span class="mtext">Lịch</span>
+							<span class="micon dw dw-calendar1"></span>
+							<span class="mtext">Lịch</span>
 						</a>
 					</li>
 				</ul>
@@ -125,16 +133,24 @@
 				<div class="pull-left">
 					<h4 class="text-blue h4">Thông tin tài khoản</h4>
 				</div>
-				<div class="pull-right">
-					<button id="sti_editButton" type="button" class="btn btn-sm btn-primary">Chỉnh sửa</button>
-				</div>
-	
 			</div>
 			<br>
 
 			<!--Infomation form-->
 			<form action="">
 				<div id="sti_infoForm">
+					<div class="form-group row">
+						<label class="col-sm-12 col-md-2 col-form-label">Họ và tên</label>
+						<div class="col-sm-12 col-md-10">
+							<input id="sti_username" class="form-control" type="text" value="Emryh Var Emreis" disabled>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-12 col-md-2 col-form-label">Chức vụ</label>
+						<div class="col-sm-12 col-md-10">
+							<input id="sti_username" class="form-control" type="text" value="Emryh Var Emreis" disabled>
+						</div>
+					</div>
 					<div class="form-group row">
 						<label class="col-sm-12 col-md-2 col-form-label">Tài khoản</label>
 						<div class="col-sm-12 col-md-10">
