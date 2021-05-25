@@ -28,11 +28,17 @@ $(document).ready(function () {
     //==============PROJECTS======================
     //Retrieve projects data from server
     loadProjectsInfo_Manager();
+    loadProjectsInfo_Employee();
 
     //projectlist filter
     $("#projectSearch").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $("#projectList tr").filter(function () {
+        //For Manager template
+        $("#projectListManager tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+        //For Employee emplate
+        $("#projectListEmployee tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
@@ -85,7 +91,22 @@ $(document).ready(function () {
 
     //========ASSIGNMENTS==================
     //Retrieve assignments data from server
-    loadAssignmentInfo_Manager();
+    var getId = localStorage.staff_id;
+    loadAssignmentInfo_Employee(getId);
+    loadAssignmentInfo_Manager();;  
+
+    //Assignment filter
+    $("#assignmentSearch").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        //For Employee template
+        $("#assignmentListEmployee tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+        //For Manager template
+        $("#assignmentListManager tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 
     //Save new assignment infomation to server
     $('#saveAssignmentButtonAddModal').click(function() {
@@ -371,7 +392,7 @@ function loadProjectsInfo_Manager() {
                 str += '</tr>';
             });
             //Change table on html by projects data table from above
-            $('#projectList').html(str);
+            $('#projectListManager').html(str);
 
             //Specified id
             var id = '';
@@ -413,6 +434,33 @@ function loadProjectsInfo_Manager() {
                 projectListOptionTagEdit.value = result[i].id;
                 projectListSelectTagEdit.appendChild(projectListOptionTagEdit);
             }
+        }
+    });
+}
+
+//Retrieve projects data function for Employee
+function loadProjectsInfo_Employee() {
+    $.ajax({
+        url: 'http://localhost:1337/projects',
+        type: 'GET',
+        success: function (result) {
+            //Collect project list from database and display on #projectList table
+            var str = '';
+            $.each(result, function (i, items) {
+                //Fetch data to html table
+                str += '<tr>';
+                str += '<td>' + items.project_name + '</td>';
+                str += '<td>' + items.start_date + '</td>';
+                str += '<td>' + items.end_date + '</td>';
+                str += '<td>' + items.number_of_staffs + '</td>';
+                str += '<td>' + items.status + '</td>';
+                str += '</tr>';
+            });
+            //Change table on html by projects data table from above
+            $('#projectListEmployee').html(str);
+        },
+        error: function() {
+            console.log('Load data failed!');
         }
     });
 }
@@ -563,9 +611,6 @@ function loadAssignmentInfo_Manager() {
     $.ajax({
         url: 'http://localhost:1337/assignments',
         type: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.token
-        },
         success: function(result) {
             str = '';
             $.each(result, function(i, items) {
@@ -587,17 +632,16 @@ function loadAssignmentInfo_Manager() {
                 str += '</tr>';
             });
             //Change table on html by projects data table from above
-            $('#assignmentList').html(str);
+            $('#assignmentListManager').html(str);
 
             //Specified id
             var id = '';
 
             //Collect value that match with id and assign into modal's input
-            $('#assignmentList').on('click', '.edit-modal', function() {
+            $('#assignmentListManager').on('click', '.edit-modal', function() {
                 var elementId = $(this).attr('id');
                 var getRealId = elementId.substr(6);
                 id = getRealId;
-                console.log(id);
                 for(let i in result) {
                     if(result[i].id == id) {
                         $('#assignmentTitleEdit').val(result[i].assignment_name);
@@ -619,22 +663,20 @@ function loadAssignmentInfo_Manager() {
 //Retrieve assignments data function for Employee
 function loadAssignmentInfo_Employee(id) {
     $.ajax({
-        url: 'http://localhost:1337/staffs' + id,
+        url: 'http://localhost:1337/staffs/' + id,
         type: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.token
-        },
         success: function(result) {
             str = '';
-            $.each(result, function(i, items) {
+            var arr = result.assignments;
+            for(let i in arr) {
                 str += '<tr>';
-                str += '<td>' + items.assignments.assignment_name + '</td>';
-                str += '<td>' + items.assignments.assignment_description + '</td>';
-                str += '<td>' + items.assignments.assignment_end_date + '</td>';
-                str += '<td>' + items.assignments.status + '</td>';
+                str += '<td>' + arr[i].assignment_name + '</td>';
+                str += '<td>' + arr[i].assignment_description + '</td>';
+                str += '<td>' + arr[i].assignment_end_date + '</td>';
+                str += '<td>' + arr[i].status + '</td>';
                 str += '</tr>';
-            });
-            $('#assignmentList').html(str);
+            }
+            $('#assignmentListEmployee').html(str);
         },
         error: function() {
             console.log("load data Failed!");
@@ -698,11 +740,11 @@ function sentNewAssignmentInfo() {
 //Sent Edited assignment infomation function
 function sentEditedAssignmentInfo(id) {
     //Collect value of html input tag from assignment edit modal
-    var assignment_name = $('#assignmentTitleEdit');
-    var assignment_description = $('#assignmentDescriptionEdit');
-    var status = $('#assignmentStatusSelectionEdit');
-    var specified_staff = $('#assignmentStaffsEdit');
-    var specified_project = $('#assignmentProjectListEdit');
+    var assignment_name = $('#assignmentTitleEdit').val();
+    var assignment_description = $('#assignmentDescriptionEdit').val();
+    var status = $('#assignmentStatusSelectionEdit').val();
+    var specified_staff = $('#assignmentStaffsEdit').val();
+    var specified_project = $('#assignmentProjectListEdit').val();
 
     //Collect assignment end date from date input of edit assignment modal
     var assignmentEndDate = new Date($('#assignmentEndDateEdit').val() + 'UTC');
@@ -713,6 +755,7 @@ function sentEditedAssignmentInfo(id) {
     //convert check_assignmentEndDateString to format 'YYYY-MM-DD'
     var finalAssignmentEndDate = check_assignmentEndDate.utc().format('YYYY-MM-DD');
 
+    // Sent edited project data back to server
     $.ajax({
         url : 'http://localhost:1337/assignments/' + id,
         type: 'PUT',
@@ -732,7 +775,7 @@ function sentEditedAssignmentInfo(id) {
             "assignment_end_date" : finalAssignmentEndDate
         },
         success: function() {
-            $('#addAssignmentModal').modal('hide');
+            $('#editAssignmentModal').modal('hide');
             $('#assignmentStatusModalConfirmButton').show();
             $('#assignmentStatusModalCancelButton').hide();
             $('#assignmentStatusModalTitle').html('Đã chỉnh sửa thông tin nhiệm vụ!')
@@ -793,6 +836,7 @@ function logIn() {
         success: function (result) {
             //Set accountinfomation to local storage
             localStorage.setItem('token', result.jwt);
+            localStorage.setItem('staff_id', result.user.staff.id);
             localStorage.setItem('staff_name', result.user.staff.staff_name);
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('email', result.user.email);
@@ -825,6 +869,7 @@ function logIn() {
 //Logout function
 function logOut() {
     localStorage.removeItem('token');
+    localStorage.removeItem('staff_id');
     localStorage.removeItem('staff_name');
     localStorage.removeItem('username');
     localStorage.removeItem('email');
@@ -843,11 +888,11 @@ function logOut() {
 function checkRole() {
     if(localStorage.Authorization == 'public') {
         $('#loginStatusModalConfirmButton').click(function () {
-            window.location.replace('index.html');
+            window.location.replace('index_employees.html');
         });
     }else {
         $('#loginStatusModalConfirmButton').click(function () {
-            window.location.replace('index3.html');
+            window.location.replace('index_manager.html');
         });
     }
 }

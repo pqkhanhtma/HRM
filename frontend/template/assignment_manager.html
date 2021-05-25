@@ -71,10 +71,8 @@
 						<span id="displayUserName" class="user-name"></span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-						<a class="dropdown-item" href="staff_info.html">
+						<a class="dropdown-item" href="staff_info_manager.html">
 							<i class="dw dw-user1"></i> Thông Tin tài khoản</a>
-						<a class="dropdown-item" href="faq.html">
-							<i class="dw dw-help"></i> Trợ giúp</a>
 						<a id="logoutButton" class="dropdown-item">
 							<i class="dw dw-logout"></i> Đăng Xuất</a>
 					</div>
@@ -128,7 +126,7 @@
 						</ul>
 					</li>
 					<li>
-						<a href="calendar.html" class="dropdown-toggle no-arrow">
+						<a href="assignment_manager.html" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-calendar1"></span>
 							<span class="mtext">Nhiệm vụ</span>
 						</a>
@@ -232,7 +230,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					</div>
 					<div class="modal-body">
-						<form method="POST">
+						<form>
 							<div class="form-group">
 								<div class="pd-20 card-box mb-30">
 									<div class="wizard-content">
@@ -368,7 +366,7 @@
 					<div class="col-lg-10 col-sm-10 col-10 pd-2">
 						<div id="DataTables_Table_0_filter" class="dataTables_filter">
 							<label>
-								<input id="projectSearch" type="search" class="form-control form-control-sm"
+								<input id="assignmentSearch" type="search" class="form-control form-control-sm"
 									placeholder="Tìm kiếm..." aria-controls="DataTables_Table_0">
 							</label>
 						</div>
@@ -400,7 +398,7 @@
                                     <th></th>
                                 </tr>
                             </thead>
-							<tbody id="assignmentList">
+							<tbody id="assignmentListManager">
 							</tbody>
 						</table>
 					</div>
