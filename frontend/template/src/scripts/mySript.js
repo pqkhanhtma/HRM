@@ -531,9 +531,6 @@ function loadAssignmentInfo_Manager() {
                 str += '</tr>';
             });
             $('#assignmentList').html(str);
-        },
-        error: function() {
-            console.log('nope!');
         }
     });
 }
