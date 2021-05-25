@@ -398,7 +398,7 @@ function loadProjectsInfo_Manager() {
             var id = '';
 
             //Collect value that match with id and assign into modal's input
-            $('#projectList').on('click', '.edit-modal', function () {
+            $('#projectListManager').on('click', '.edit-modal', function () {
                 var elementId = $(this).attr('id');
                 var getRealId = elementId.substr(6);
                 id = getRealId;
