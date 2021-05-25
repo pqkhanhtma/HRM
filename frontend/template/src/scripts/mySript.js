@@ -313,20 +313,6 @@ function loadProjectsInfo_Manager() {
         success: function (result) {
             var str = '';
             $.each(result, function (i, items) {
-                // $('.project_name').html(items.project_name);
-                // $('.start_date').html(items.start_date);
-                // $('.end_date').html(items.end_date);
-                // $('.number_of_staffs').html(items.number_of_staffs);
-                // $('.status').html(items.status);
-                // $('.actionButtons').html('<div class="dropdown">\
-                // <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
-                //     <i class="dw dw-more"></i>\
-                // </a>\
-                // <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
-                //     <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editProjectModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
-                //     <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" href="#confirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
-                // </div>\
-                // </div>');
                 //Fetch data to html table
                 str += '<tr>';
                 str += '<td>' + items.project_name + '</td>';
