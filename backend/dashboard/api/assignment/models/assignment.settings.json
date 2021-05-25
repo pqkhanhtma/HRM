@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "assignments",
+  "info": {
+    "name": "assignment",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "assignment_name": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "assignment_end_date": {
+      "type": "date"
+    },
+    "assignment_description": {
+      "type": "text"
+    },
+    "reports": {
+      "collection": "reports",
+      "via": "assignment"
+    },
+    "project": {
+      "model": "projects",
+      "via": "assignment"
+    },
+    "staff": {
+      "model": "staffs",
+      "via": "assignment"
+    },
+    "status": {
+      "type": "string",
+      "maxLength": 20
+    }
+  }
+}

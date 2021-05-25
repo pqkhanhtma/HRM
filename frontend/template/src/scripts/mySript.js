@@ -1,8 +1,5 @@
 $(document).ready(function () {
     //=============MAIN===========================
-    //Check role
-    // checkRole();
-
     //Account infomation
     loadAccountInfo();
 
@@ -81,6 +78,9 @@ $(document).ready(function () {
             deleteSpecifiedStaff(id);
         });
     });
+
+    //========ASSIGNMENTS==================
+    loadAssignmentInfo_Manager();
 });
 
 
@@ -90,6 +90,9 @@ function loadStaffsInfo_Manager() {
     $.ajax({
         url: 'http://localhost:1337/staffs',
         type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.token
+        },
         success: function (result) {
             var str = '';
             $.each(result, function (i, items) {
@@ -148,7 +151,7 @@ function loadStaffsInfo_Manager() {
                         $('#nationalityEdit').val(result[i].nationality);
                         $('#addressEdit').val(result[i].address);
                         $('#phoneNumberEdit').val(result[i].phone_number);
-                        $('#emailEdit').val(result[i].users_permissions_user.email);
+                        $('#emailEdit').val(result[i].email);
                         $('#roleSelectionEdit').val(result[i].role);
                     }
                 }
@@ -182,7 +185,7 @@ function sentNewStaffInfo() {
     var address = $('#addressAdd').val();
     var phone_number = $('#phoneNumberAdd').val();
     var email = $('#emailAdd').val();
-    var role = $('#roleSelection').val();
+    var role = $('#roleSelectionAdd').val();
     
 
     //Sent new staff data back to server
@@ -208,7 +211,7 @@ function sentNewStaffInfo() {
             $('#staffStatusModalCancelButton').hide();
             $('#staffStatusModalTitle').html('Đã thêm dữ liệu mới!')
             $('#staffStatusModal').modal();
-            loadStaffsInfo();
+            loadStaffsInfo_Manager();
         },
         error: function () {
             $('#staffStatusModalConfirmButton').hide();
@@ -238,9 +241,6 @@ function sentEditedStaffInfo(id) {
     var address = $('#addressEdit').val();
     var nationality = $('#nationalityEdit').val();
     var role = $('#roleSelectionEdit').val();
-    console.log(birthday);
-    console.log(birthdayString);
-    console.log(finalBirthday);
 
     $.ajax({
         url: 'http://localhost:1337/staffs/' + id,
@@ -264,7 +264,7 @@ function sentEditedStaffInfo(id) {
             $('#staffStatusModalCancelButton').hide();
             $('#staffStatusModalTitle').html('Đã cập nhật thông tin!')
             $('#staffStatusModal').modal();
-            loadStaffsInfo();
+            loadStaffsInfo_Manager();
         },
         error:function() {
             $('#editStaffModal').modal('hide');
@@ -290,7 +290,7 @@ function deleteSpecifiedStaff(id) {
             $('#staffStatusModalCancelButton').hide();
             $('#staffStatusModalTitle').html('Đã xóa 1 bản ghi!')
             $('#staffStatusModal').modal();
-            loadStaffsInfo();
+            loadStaffsInfo_Manager();
         },
         error: function() {
             $('#deleteStaffConfirmationModal').modal('hide');
@@ -301,7 +301,6 @@ function deleteSpecifiedStaff(id) {
         }
     });
 }
-
 
 
 //===============PROJECTS FUNCTIONS=========================
@@ -326,7 +325,7 @@ function loadProjectsInfo_Manager() {
                                     </a>\
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
                                         <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editProjectModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
-                                        <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" href="#confirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
+                                        <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal"><i class="dw dw-delete-3"></i> Xóa</a>\
                                     </div>\
                                 </div>'+ '</td>';
                 str += '</tr>';
@@ -409,6 +408,7 @@ function sentNewProjectInfo() {
             $('#projectStatusModalCancelButton').hide();
             $('#projectStatusModalTitle').html('Đã thêm dữ liệu mới!')
             $('#projectStatusModal').modal();
+            loadProjectsInfo_Manager();
         },
         error: function () {
             $('#projectStatusModalConfirmButton').hide();
@@ -463,7 +463,7 @@ function sentEditedProjectInfo(id) {
             $('#projectStatusModalCancelButton').hide();
             $('#projectStatusModalTitle').html('Đã cập nhật thông tin!')
             $('#projectStatusModal').modal();
-            loadProjectsInfo();
+            loadProjectsInfo_Manager();
         },
         error: function () {
             $('#projectStatusModalConfirmButton').hide();
@@ -489,7 +489,7 @@ function deleteSpecifiedProject(id) {
             $('#projectStatusModalCancelButton').hide();
             $('#projectStatusModalTitle').html('Đã xóa!')
             $('#projectStatusModal').modal();
-            loadProjectsInfo();
+            loadProjectsInfo_Manager();
         },
         error: function () {
             $('#deleteProjectConfirmationModal').modal('hide');
@@ -497,6 +497,43 @@ function deleteSpecifiedProject(id) {
             $('#projectStatusModalCancelButton').show();
             $('#projectStatusModalTitle').html('Không thể xóa!')
             $('#projectStatusModal').modal();
+        }
+    });
+}
+
+
+//===============ASSIGNMENTS FUNCTION=======================
+function loadAssignmentInfo_Manager() {
+    $.ajax({
+        url: 'http://localhost:1337/assignments',
+        type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.token
+        },
+        success: function(result) {
+            str = '';
+            $.each(result, function(i, items) {
+                str += '<tr>';
+                str += '<td>' + items.assignment_name + '</td>';
+                str += '<td>' + items.staff.staff_name + '</td>';
+                str += '<td>' + items.assignment_description + '</td>';
+                str += '<td>' + items.assignment_end_date + '</td>';
+                str += '<td>' + items.status + '</td>';
+                str += '<td class="dropdownMod">' + '<div class="dropdown">\
+                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
+                                        <i class="dw dw-more"></i>\
+                                    </a>\
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
+                                        <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editAssignmentModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
+                                        <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" href="#deleteAssignmentConfirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
+                                    </div>\
+                                </div>'+ '</td>';
+                str += '</tr>';
+            });
+            $('#assignmentList').html(str);
+        },
+        error: function() {
+            console.log('nope!');
         }
     });
 }
@@ -570,7 +607,7 @@ function logOut() {
 function checkRole() {
     if(localStorage.Authorization == 'public') {
         $('#loginStatusModalConfirmButton').click(function () {
-            window.location.replace('index4.html');
+            window.location.replace('index.html');
         });
     }else {
         $('#loginStatusModalConfirmButton').click(function () {

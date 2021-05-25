@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reports",
+  "info": {
+    "name": "reports",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "report_title": {
+      "type": "string",
+      "maxLength": 20
+    },
+    "report_content": {
+      "type": "text"
+    },
+    "report_date": {
+      "type": "date"
+    },
+    "staff": {
+      "model": "staffs",
+      "via": "reports"
+    },
+    "project": {
+      "model": "projects",
+      "via": "reports"
+    },
+    "assignment": {
+      "via": "reports",
+      "model": "assignment"
+    }
+  }
+}
