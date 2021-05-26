@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic Page Info -->
+    <meta charset="utf-8">
+    <title>Web Quan ly nhan vien - Quan ly du an</title>
+
+    <!-- Site favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="vendors/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="vendors/images/favicon-16x16.png">
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
+    <link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="vendors/styles/style.css">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-119386393-1');
+    </script>
+</head>
+
+<body>
+    <!--Pre-loader page animation-->
+    <div class="pre-loader">
+        <div class="pre-loader-box">
+            <div class="loader-logo">
+                <Strong>
+                    <h1>TheWhiteFrost</h1>
+                </Strong>
+            </div>
+            <div class='loader-progress' id="progress_div">
+                <div class='bar' id='bar1'></div>
+            </div>
+            <div class='percent' id='percent1'>0%</div>
+            <div class="loading-text">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!--Header-->
+    <div class="header">
+        <div class="header-left">
+            <div class="menu-icon dw dw-menu"></div>
+            <div class="search-toggle-icon dw dw-search2" data-toggle="header_search"></div>
+        </div>
+        <div class="header-right">
+            <div class="user-info-dropdown">
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <span class="user-icon">
+                            <img id="userAvatar" src="vendors/images/photo1.jpg" alt="">
+                        </span>
+                        <span id="displayUserName" class="user-name"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                        <a class="dropdown-item" href="staff_info.html">
+                            <i class="dw dw-user1"></i> Thông Tin tài khoản</a>
+                        <a class="dropdown-item" href="login.html">
+                            <i class="dw dw-logout"></i> Đăng Xuất</a>
+                    </div>
+                </div>
+            </div>
+            <div class="github-link">
+                <a href="https://github.com/dropways/deskapp" target="_blank">
+                    <img src="vendors/images/github.svg" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!--Side menu-->
+    <div class="left-side-bar">
+        <div class="brand-logo">
+            <a href="index_employees.html">
+                <strong>TheWhiteFrost</strong>
+            </a>
+            <div class="close-sidebar" data-toggle="left-sidebar-close">
+                <i class="ion-close-round"></i>
+            </div>
+        </div>
+        <div class="menu-block customscroll">
+            <div class="sidebar-menu">
+                <ul id="accordion-menu">
+                    <li class="dropdown">
+                        <a href="index_employees.html" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-house-1"></span>
+                            <span class="mtext">Trang Chủ</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="report_employee.html" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-edit2"></span>
+                            <span class="mtext">Báo Cáo</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="project_list_employee.html" class="dropdown-toggle">
+                            <span class="micon dw dw-library"></span>
+                            <span class="mtext">Dữ Liệu</span>
+                        </a>
+                    </li>
+                    <li>
+						<a href="assignment_employees.html" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-calendar1"></span>
+							<span class="mtext">Nhiệm vụ</span>
+						</a>
+					</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-menu-overlay"></div>
+
+
+    <!--Report form-->
+    <div class="main-container">
+        <!--Add report modal model-->
+        <div class="modal fade" id="addReportModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myLargeModalLabel"><strong>Tạo báo cáo</strong></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <div class="pd-20 card-box mb-30">
+                                    <div class="wizard-content">
+                                        <form class="tab-wizard wizard-circle wizard">
+                                            <section>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Tiêu đề :</label>
+                                                                    <input id="reportTitleAdd" type="text"
+                                                                        class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Dự án :</label>
+                                                                    <select name="projectList" id="reportProjectListAdd"
+                                                                        class="form-control"></select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Nội dung :</label>
+                                                            <textarea class="form-control" name="descrip"
+                                                                id="reportDescriptionAdd" cols="30" rows="5"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancelReportButtonAddModal" type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Hủy</button>
+                        <button id="saveReportButtonAddModal" type="button" class="btn btn-primary">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!--Edit report modal model-->
+        <div class="modal fade" id="editReportModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myLargeModalLabel"><strong>Thông tin báo cáo</strong></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <div class="pd-20 card-box mb-30">
+                                    <div class="wizard-content">
+                                        <form class="tab-wizard wizard-circle wizard">
+                                            <section>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Tiêu đề :</label>
+                                                                    <input id="reportTitleEdit" type="text"
+                                                                        class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Dự án :</label>
+                                                                    <select name="projectList" id="reportProjectListEdit"
+                                                                        class="form-control"></select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Nội dung :</label>
+                                                            <textarea class="form-control" name="descrip"
+                                                                id="reportDescriptionEdit" cols="30" rows="5"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancelReportButtonEditModal" type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Hủy</button>
+                        <button id="saveReportButtonEditModal" type="button" class="btn btn-primary">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!--Delete specified report confirm modal-->
+        <div class="modal fade" id="deleteReportConfirmationModal" tabindex="-1" role="dialog" style="display: none;"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center font-18">
+                        <h4 class="padding-top-30 mb-30 weight-500">Bạn có muốn xóa báo cáo hiện tại?</h4>
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button id="deleteReportCancelButton" type="button"
+                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                Không
+                            </div>
+                            <div class="col-6">
+                                <button id="deleteReportAcceptButton" type="button"
+                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-check"></i></button>
+                                Có
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!--Report status Modal-->
+        <div class="modal fade" id="reportStatusModal" tabindex="-1" role="dialog" style="display: none;"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center font-18">
+                        <h4 id="reportStatusModalTitle" class="padding-top-30 mb-30 weight-500"></h4>
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-12">
+                                <button id="reportStatusModalConfirmButton" type="button"
+                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-check"></i>
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <button id="reportStatusModalCancelButton" type="button"
+                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Report List-->
+        <div class="pd-20 card-box mb-30">
+            <!--Title-->
+            <div class="clearfix mb-20">
+                <div class="pull-left">
+                    <h4 class="text-blue h4">
+                        <Strong>DANH SÁCH BÁO CÁO</Strong>
+                    </h4>
+                </div>
+            </div>
+    
+            <!--Search field, add button, Table-->
+            <div class="pb-20">
+                <!--Search field, add button-->
+                <div class="row">
+                    <div class="col-lg-10 col-sm-10 col-10 pd-2">
+                        <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                            <label>
+                                <input id="reportSearch" type="search" class="form-control form-control-sm"
+                                    placeholder="Tìm kiếm..." aria-controls="DataTables_Table_0">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-2 pb-2">
+                        <button id="createReportButton" type="button" class="btn btn-sm btn-primary pull-right"
+                            data-toggle="modal" data-target="#addReportModal"><strong>Tạo báo cáo</strong>
+                        </button>
+                    </div>
+                </div>
+    
+                <!--Table report-->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="data-table table stripe hover nowrap dataTable no-footer dtr-inline" id="projectTable"
+                            role="grid" aria-describedby="DataTables_Table_0_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                        aria-label="Report title: activate to sort column ascending">Tiêu đề</th>
+                                    <th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                        aria-label="Report content: activate to sort column ascending">Dự án</th>
+                                    <th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                        aria-label="Report date: activate to sort column ascending">Thời gian</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+    
+                            <!--Report list-->
+                            <tbody id="reportListEmployee">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Footer-->
+    <div class="footer-wrap pd-20 mb-20 card-box">
+        DeskApp - Bootstrap 4 Admin Template By
+        <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya
+        </a>
+    </div>
+
+
+    <!-- js -->
+    <script src="vendors/scripts/core.js"></script>
+    <script src="vendors/scripts/script.min.js"></script>
+    <script src="vendors/scripts/process.js"></script>
+    <script src="vendors/scripts/layout-settings.js"></script>
+    <script src="./src/scripts/mySript.js"></script>
+</body>
+
+</html>
