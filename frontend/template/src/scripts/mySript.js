@@ -1321,6 +1321,7 @@ function deleteSpecifiedDepartment(id) {
     });
 }
 
+
 //===============ACCOUNTS FUNCTIONS=========================
 //Login function
 function logIn() {
