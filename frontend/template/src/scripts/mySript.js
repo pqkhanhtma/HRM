@@ -114,7 +114,7 @@ $(document).ready(function () {
     });
 
     //Delete specified assignment 
-    $(document).on('click', '.delete-modal', function() {
+    $('#assignmentListManager').on('click', '.delete-modal', function() {
         var id = '';
         var elementId = $(this).attr('id');
         var getRealId = elementId.substr(6);
@@ -132,6 +132,19 @@ $(document).ready(function () {
     loadReportInfo_Manager();
     loadReportInfo_Employee();
 
+    //Report filter
+    $("#reportSearch").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        //For Employee template
+        $("#reportListEmployee tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+        //For Manager template
+        $("#reportListManager tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
     //Save new report information to server
     $('#saveReportButtonAddModal').click(function() {
         sentNewReportInfo();
@@ -143,10 +156,51 @@ $(document).ready(function () {
         var elementId = $(this).attr('id');
         var getRealId = elementId.substr(6);
         reportId = getRealId;
-        console.log(reportId);
         loadSpecifiedStaffInfo(reportId);
     });
 
+    //Delete specified report
+    $('#reportListEmployee').on('click', '.delete-modal', function() {
+        var elementId = $(this).attr('id');
+        var getRealId = elementId.substr(6);
+        reportId = getRealId;
+        console.log(reportId);
+        $('#deleteReportConfirmationModal').modal();
+        $('#deleteReportAcceptButton').click(function() {
+            deleteSpecifiedReport_Employee(reportId);
+        });
+    });
+
+
+    //===========DEPARTMENTS==============
+    //Retrieve department data from server
+    loadDepartmentInfo();
+
+    //Department filter
+    $("#departmentSearch").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#departmentList tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    //Sent new department infomation to server
+    $('#saveDepartmentButtonAddModal').click(function() {
+        sentNewDepartmentInfo();
+    });
+
+    //Delete specified department
+    var departmentId = '';
+    $('#departmentList').on('click', '.delete-modal', function() {
+        var elementId = $(this).attr('id');
+        var getRealId = elementId.substr(6);
+        departmentId = getRealId;
+        console.log(departmentId);
+        $('#deleteDepartmentConfirmationModal').modal();
+        $('#deleteDepartmentAcceptButton').click(function() {
+            deleteSpecifiedDepartment(departmentId);
+        });
+    });
     
 });
 
@@ -270,7 +324,6 @@ function loadSpecifiedStaffInfo(reportId) {
             var reportArray = result.reports;
             for(let i in reportArray) {
                 if(reportId == reportArray[i].id) {
-                    console.log(reportArray[i].id);
                     $('#reportTitleEdit').val(reportArray[i].report_title);
                     $('#reportDescriptionEdit').val(reportArray[i].report_content);
                     $('#reportProjectListEdit').val(reportArray[i].project);
@@ -327,14 +380,14 @@ function sentNewStaffInfo() {
             $('#addStaffModal').modal('hide');
             $('#staffStatusModalConfirmButton').show();
             $('#staffStatusModalCancelButton').hide();
-            $('#staffStatusModalTitle').html('Đã thêm dữ liệu mới!')
+            $('#staffStatusModalTitle').html('Đã thêm ' + staff_name + ' vào danh sách nhân viên!')
             $('#staffStatusModal').modal();
             loadStaffsInfo_Manager();
         },
         error: function () {
             $('#staffStatusModalConfirmButton').hide();
             $('#staffStatusModalCancelButton').show();
-            $('#staffStatusModalTitle').html('Không thể thêm dữ liệu mới!')
+            $('#staffStatusModalTitle').html('Không thể thêm ' + staff_name + ' vào danh sách nhân viên!')
             $('#staffStatusModal').modal();
         }
     });
@@ -380,7 +433,7 @@ function sentEditedStaffInfo(id) {
             $('#editStaffModal').modal('hide');
             $('#staffStatusModalConfirmButton').show();
             $('#staffStatusModalCancelButton').hide();
-            $('#staffStatusModalTitle').html('Đã cập nhật thông tin!')
+            $('#staffStatusModalTitle').html('Đã cập nhật thông tin cho ' + staff_name);
             $('#staffStatusModal').modal();
             loadStaffsInfo_Manager();
         },
@@ -388,7 +441,7 @@ function sentEditedStaffInfo(id) {
             $('#editStaffModal').modal('hide');
             $('#staffStatusModalConfirmButton').hide();
             $('#staffStatusModalCancelButton').show();
-            $('#staffStatusModalTitle').html('Không thể cập nhật thông tin!')
+            $('#staffStatusModalTitle').html('Không thể cập nhật thông tin cho ' + staff_name);
             $('#staffStatusModal').modal();
         }
     });
@@ -406,7 +459,7 @@ function deleteSpecifiedStaff(id) {
             $('#deleteStaffConfirmationModal').modal('hide');
             $('#staffStatusModalConfirmButton').show();
             $('#staffStatusModalCancelButton').hide();
-            $('#staffStatusModalTitle').html('Đã xóa 1 bản ghi!')
+            $('#staffStatusModalTitle').html('Đã xóa nhân viên!')
             $('#staffStatusModal').modal();
             loadStaffsInfo_Manager();
         },
@@ -414,7 +467,7 @@ function deleteSpecifiedStaff(id) {
             $('#deleteStaffConfirmationModal').modal('hide');
             $('#staffStatusModalConfirmButton').hide();
             $('#staffStatusModalCancelButton').show();
-            $('#staffStatusModalTitle').html('Không thể xóa bản ghi này!')
+            $('#staffStatusModalTitle').html('Không thể xóa nhân viên này!')
             $('#staffStatusModal').modal();
         }
     });
@@ -572,7 +625,6 @@ function loadProjectsInfo_Employee() {
 //Sent new project infomation function
 function sentNewProjectInfo() {
     //Collect value from html input elements
-    var project_id = $('#projectIdAdd').val();
     var project_name = $('#projectNameAdd').val();
     var description = $('#descriptionAdd').val();
 
@@ -612,14 +664,14 @@ function sentNewProjectInfo() {
             $('#addProjectModal').modal('hide');
             $('#projectStatusModalConfirmButton').show();
             $('#projectStatusModalCancelButton').hide();
-            $('#projectStatusModalTitle').html('Đã thêm dữ liệu mới!')
+            $('#projectStatusModalTitle').html('Đã thêm ' + project_name + ' vào danh sách dự án!');
             $('#projectStatusModal').modal();
             loadProjectsInfo_Manager();
         },
         error: function () {
             $('#projectStatusModalConfirmButton').hide();
             $('#projectStatusModalCancelButton').show();
-            $('#projectStatusModalTitle').html('Không thể thêm dữ liệu!')
+            $('#projectStatusModalTitle').html('Không thể thêm ' + project_name + ' vào danh sách dữ liệu!');
             $('#projectStatusModal').modal();
         }
     });
@@ -667,14 +719,14 @@ function sentEditedProjectInfo(id) {
             $('#editProjectModal').modal('hide');
             $('#projectStatusModalConfirmButton').show();
             $('#projectStatusModalCancelButton').hide();
-            $('#projectStatusModalTitle').html('Đã cập nhật thông tin!')
+            $('#projectStatusModalTitle').html('Đã cập nhật thông tin cho ' + project_name + '!');
             $('#projectStatusModal').modal();
             loadProjectsInfo_Manager();
         },
         error: function () {
             $('#projectStatusModalConfirmButton').hide();
             $('#projectStatusModalCancelButton').show();
-            $('#projectStatusModalTitle').html('Không thể cập nhật thông tin!')
+            $('#projectStatusModalTitle').html('Không thể cập nhật thông tin cho ' + project_name + '!');
             $('#projectStatusModal').modal();
         }
     });
@@ -888,14 +940,14 @@ function sentEditedAssignmentInfo(id) {
             $('#editAssignmentModal').modal('hide');
             $('#assignmentStatusModalConfirmButton').show();
             $('#assignmentStatusModalCancelButton').hide();
-            $('#assignmentStatusModalTitle').html('Đã chỉnh sửa thông tin nhiệm vụ!')
+            $('#assignmentStatusModalTitle').html('Đã chỉnh sửa thông tin nhiệm vụ ' + assignment_name + '!');
             $('#assignmentStatusModal').modal();
             loadAssignmentInfo_Manager();
         },
         error: function() {
             $('#assignmentStatusModalConfirmButton').hide();
             $('#assignmentStatusModalCancelButton').show();
-            $('#assignmentStatusModalTitle').html('Không thể chỉnh sửa thông tin nhiệm vụ!')
+            $('#assignmentStatusModalTitle').html('Không thể chỉnh sửa thông tin nhiệm vụ ' + assignment_name + '!');
             $('#assignmentStatusModal').modal();
         }
     });
@@ -962,7 +1014,7 @@ function loadReportInfo_Manager() {
                     var getRealId = elementId.substr(6);
                     reportViewId = getRealId;
                     if(reportViewId == result[i].id ) {
-                        console.log(result[i].id);
+                        // console.log(result[i].id);
                         $('#reportViewTitle').html(result[i].report_title);
                         var reportContent = result[i].report_content;
                         var fixedReportContent = reportContent.replace(/\n/i, '<br>');
@@ -973,20 +1025,6 @@ function loadReportInfo_Manager() {
                     }
                 });
             }
-        },
-        error: function() {
-            console.log('Load data failed!');
-        }
-    });
-}
-
-//Retrive specified report data function for manager
-function loadSpecifiedReportInfo_Manager(id) {
-    $.ajax({
-        url: 'http://localhost:1337/reports/' + id,
-        type: 'GET',
-        success: function(result) {
-            
         },
         error: function() {
             console.log('Load data failed!');
@@ -1008,6 +1046,7 @@ function loadReportInfo_Employee() {
                 str += '</tr>';
             }else {
                 for(let i in staffReportArray) {
+                    // console.log(staffReportArray[i].id);
                     str += '<tr>';
                     str += '<td>'+ staffReportArray[i].report_title + '</td>';
                     str += '<td>'+ staffReportArray[i].report_project + '</td>';
@@ -1102,18 +1141,186 @@ function sentEditedReportInfo(specifiedReportId) {
             $('#editReportModal').modal('hide');
             $('#reportStatusModalConfirmButton').show();
             $('#reportStatusModalCancelButton').hide();
-            $('#reportStatusModalTitle').html('Đã sửa thông tin báo cáo!')
+            $('#reportStatusModalTitle').html('Đã sửa thông tin báo cáo ' + report_title + '!');
             $('#reportStatusModal').modal();
             loadReportInfo_Employee();
         },
         error: function() {
             $('#reportStatusModalConfirmButton').hide();
             $('#reportStatusModalCancelButton').show();
-            $('#reportStatusModalTitle').html('Không thể sửa thông tin báo cáo!')
+            $('#reportStatusModalTitle').html('Không thể sửa thông tin báo cáo ' + report_title + '!');
             $('#reportStatusModal').modal();
         }
     });
 }
+
+//delete specified report data function for employee
+function deleteSpecifiedReport_Employee(specifiedReportId) {
+    $.ajax({
+        url: 'http://localhost:1337/reports/' + specifiedReportId,
+        type: 'DELETE',
+        success: function(result) {
+            $('#deleteReportConfirmationModal').modal('hide');
+            $('#reportStatusModalConfirmButton').show();
+            $('#reportStatusModalCancelButton').hide();
+            $('#reportStatusModalTitle').html('Đã xóa báo cáo!')
+            $('#reportStatusModal').modal();
+            loadReportInfo_Employee();
+        },
+        error: function() {
+            $('#reportStatusModalConfirmButton').hide();
+            $('#reportStatusModalCancelButton').show();
+            $('#reportStatusModalTitle').html('Không thể xóa báo cáo này!')
+            $('#reportStatusModal').modal();
+        }
+    });
+}
+
+
+//===============DEPARTMENT FUNCTIONS=======================
+//Retrieve department data function
+function loadDepartmentInfo() {
+    $.ajax({
+        url: 'http://localhost:1337/departments',
+        type: 'GET',
+        success: function(result) {
+            // console.log(result);
+            // console.log(result[0].department_name);
+            var str = '';
+            $.each(result, function(i, items) {
+                str += '<tr>';
+                str += '<td>' + items.department_name + '</td>';
+                str += '<td>' + items.staffs.length + '</td>';
+                str += '<td>' + items.department_description + '</td>';
+                str += '<td class="dropdownMod">' + '<div class="dropdown">\
+                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
+                                        <i class="dw dw-more"></i>\
+                                    </a>\
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
+                                        <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editDepartmentModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
+                                        <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
+                                    </div>\
+                                </div>'+'</td>';
+                str += '</tr>';
+                // console.log(items.department_name);
+            });
+            $('#departmentList').html(str);
+
+            var departmentId = '';
+            $('#departmentList').on('click', '.edit-modal', function() {
+                var elementId = $(this).attr('id');
+                var getRealId = elementId.substr(6);
+                departmentId = getRealId;
+
+                for(let i in result) {
+                    if(result[i].id == departmentId) {
+                        // console.log(result[i].department_name);
+                        // console.log(result[i].department_description);
+                        $('#departmentNameEdit').val(result[i].department_name);
+                        $('#departmentDescriptionEdit').val(result[i].department_description);
+                    }
+                }
+                $('#saveDepartmentButtonEditModal').click(function() {
+                    sentEditedDepartmentInfo(departmentId);
+                });
+            });
+        }
+    });
+}
+
+//Sent new department infomation back to server
+function sentNewDepartmentInfo() {
+    //Collect value from input add new department infomation
+    var department_name = $('#departmentNameAdd').val();
+    var department_description = $('#departmentDescriptionAdd').val();
+
+    //Sent new department info to server
+    $.ajax({
+        url: 'http://localhost:1337/departments',
+        type: 'POST',
+        data: {
+            "department_name": department_name,
+            "department_description": department_description
+        },
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.token
+        },
+        success: function() {
+            $('#addDepartmentModal').modal('hide');
+            $('#departmentStatusModalTitle').html('Đã thêm '+ department_name + ' vào danh sách phòng ban!');
+            $('#departmentStatusModalConfirmButton').show();
+            $('#departmentStatusModalCancelButton').hide();
+            $('#departmentStatusModal').modal();
+            loadDepartmentInfo();
+        },
+        error: function() {
+            $('#departmentStatusModalTitle').html('Không thể thêm '+ department_name + ' vào danh sách phòng ban!');
+            $('#departmentStatusModalConfirmButton').hide();
+            $('#departmentStatusModalCancelButton').show();
+            $('#departmentStatusModal').modal();
+        }
+    });
+}
+
+//Sent edited department 
+function sentEditedDepartmentInfo(id) {
+    //Collect value from input edit department infomation
+    var department_name = $('#departmentNameEdit').val();
+    var department_description = $('#departmentDescriptionEdit').val();
+
+    //Sent edited department infomation
+    $.ajax({
+        url: 'http://localhost:1337/departments/' + id,
+        type: 'PUT',
+        headers: {
+            'Authorization' : 'Bearer ' + localStorage.token
+        },
+        data: {
+            "department_name": department_name,
+            "department_desciption": department_description
+        },
+        success: function() {
+            $('#editDepartmentModal').modal('hide');
+            $('#departmentStatusModalTitle').html('Đã sửa thông tin '+ department_name + '!');
+            $('#departmentStatusModalConfirmButton').show();
+            $('#departmentStatusModalCancelButton').hide();
+            $('#departmentStatusModal').modal();
+            loadDepartmentInfo();
+        },
+        error: function() {
+            $('#departmentStatusModalTitle').html('Không thể sửa thông tin '+ department_name + '!');
+            $('#departmentStatusModalConfirmButton').hide();
+            $('#departmentStatusModalCancelButton').show();
+            $('#departmentStatusModal').modal();
+        }
+    });
+
+}
+
+//Delete specified department
+function deleteSpecifiedDepartment(id) {
+    $.ajax({
+        url: 'http://localhost:1337/departments/' + id,
+        type: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.token
+        },
+        success: function() {
+            $('#departmentStatusModalTitle').html('Đã xóa!');
+            $('#departmentStatusModalConfirmButton').show();
+            $('#departmentStatusModalCancelButton').hide();
+            $('#departmentStatusModal').modal();
+            loadDepartmentInfo();
+        },
+        error: function() {
+            $('#departmentStatusModalTitle').html('Không thể xóa!');
+            $('#departmentStatusModalConfirmButton').hide();
+            $('#departmentStatusModalCancelButton').show();
+            $('#departmentStatusModal').modal();
+        }
+    });
+}
+
 
 //===============ACCOUNTS FUNCTIONS=========================
 //Login function
