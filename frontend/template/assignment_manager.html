@@ -38,7 +38,7 @@
 
 <body>
 	<!--Pre-loader page animation-->
-	<!-- <div class="pre-loader">
+	<div class="pre-loader">
 		<div class="pre-loader-box">
 			<div class="loader-logo">
 				<Strong>
@@ -53,7 +53,7 @@
 				Loading...
 			</div>
 		</div>
-	</div> -->
+	</div>
 
 	<!--Header-->
 	<div class="header">
@@ -66,9 +66,9 @@
 				<div class="dropdown">
 					<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 						<span class="user-icon">
-							<img id="user_avatar" src="vendors/images/photo1.jpg" alt="">
+							<img id="userAvatar" src="vendors/images/photo1.jpg" alt="">
 						</span>
-						<span class="user-name"></span>
+						<span id="displayUserName" class="user-name"></span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="staff_info_manager.html">
@@ -89,7 +89,7 @@
 	<!--Side menu-->
 	<div class="left-side-bar">
 		<div class="brand-logo">
-			<a href="index3.html">
+			<a href="index_manager.html">
 				<strong>TheWhiteFrost</strong>
 			</a>
 			<div class="close-sidebar" data-toggle="left-sidebar-close">
@@ -100,13 +100,13 @@
 			<div class="sidebar-menu">
 				<ul id="accordion-menu">
 					<li class="dropdown">
-						<a href="index3.html" class="dropdown-toggle no-arrow">
+						<a href="index_manager.html" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-house-1"></span>
 							<span class="mtext">Trang Chủ</span>
 						</a>
 					</li>
 					<li class="dropdown">
-						<a href="rptext.html" class="dropdown-toggle no-arrow">
+						<a href="report_manager.html" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-edit2"></span>
 							<span class="mtext">Báo Cáo</span>
 						</a>
@@ -118,10 +118,10 @@
 						</a>
 						<ul class="submenu">
 							<li>
-								<a href="layout-project-list.html">Dự Án</a>
+								<a href="project_list_manager.html">Dự Án</a>
 							</li>
 							<li>
-								<a href="layout-staff-list.html">Nhân Viên</a>
+								<a href="staff_list.html">Nhân Viên</a>
 							</li>
 						</ul>
 					</li>
@@ -129,6 +129,11 @@
 						<a href="assignment_manager.html" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-calendar1"></span>
 							<span class="mtext">Nhiệm vụ</span>
+						</a>
+					</li>
+					<li>
+						<a href="department.html" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-diagram"></span><span class="mtext">Phòng ban</span>
 						</a>
 					</li>
 				</ul>
@@ -149,7 +154,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					</div>
 					<div class="modal-body">
-						<form method="POST">
+						<form>
 							<div class="form-group">
 								<div class="pd-20 card-box mb-30">
 									<div class="wizard-content">
@@ -372,7 +377,7 @@
 						</div>
 					</div>
 					<div class="col-lg-2 col-sm-2 col-2 pb-2">
-						<button id="addButton" type="button" class="lmaoB btn btn-sm btn-primary pull-right"
+						<button id="addAssignmentButton" type="button" class="lmaoB btn btn-sm btn-primary pull-right"
 							data-toggle="modal" data-target="#addAssignmentModal">Thêm mới
 						</button>
 					</div>
