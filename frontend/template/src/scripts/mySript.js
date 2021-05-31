@@ -379,7 +379,7 @@ function sentNewStaffInfo() {
             "Authorization": "Bearer " + localStorage.token
         },
         data: {
-            "staff_name": staff_name,
+            "name": staff_name,
             "birthday": finalBirthday,
             "gender": gender,
             "phone_number": phone_number,
@@ -432,7 +432,7 @@ function sentEditedStaffInfo(id) {
             'Authorization': 'Bearer ' + localStorage.token
         },
         data: {
-            "staff_name": staff_name,
+            "name": staff_name,
             "birthday": finalBirthday,
             "gender": gender,
             "phone_number": phone_number,
@@ -525,13 +525,17 @@ function loadProjectsInfo_Manager() {
                 var elementId = $(this).attr('id');
                 var getRealId = elementId.substr(6);
                 id = getRealId;
+                console.log(id);
                 // console.log(result.filter(el => el.id == id));
                 for (let i in result) {
                     if (result[i].id == id) {
-                        $('#projectNameEdit').val(result[i].project_name);
+                        $('#projectNameEdit').val(result[i].name);
+                        var projectDescription = result[i].description;
+                        var fixedProjectDescription = projectDescription.replace(/\n/i, '<br>');
+                        $('#descriptionEdit').val(fixedProjectDescription);
                         $('#startDateEdit').val(result[i].start_date);
                         $('#endDateEdit').val(result[i].end_date);
-                        $('#numberOfStaffsEdit').val(result[i].number_of_staffs);
+                        $('#numberOfStaffsEdit').val(result[i].staff.length);
                     }
                 }
 
@@ -624,13 +628,48 @@ function loadProjectsInfo_Employee(id) {
                 str += '<td>' + items.end_date + '</td>';
                 str += '<td>' + items.staff.length + '</td>';
                 str += '<td>' + items.status + '</td>';
+                str += '<td class="dropdownMod">' + '<div class="dropdown">\
+                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
+                                        <i class="dw dw-more"></i>\
+                                    </a>\
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
+                                        <a id="dataV_'+ items.id + '"' + ' class="dropdown-item view-modal" href="#projectViewModalEmployee" data-toggle="modal" role="button"><i class="dw dw-eye"></i> Xem nội dung</a>\
+                                    </div>\
+                                </div>'+ '</td>';
                 str += '</tr>';
             });
             //Change table on html by projects data table from above
             $('#projectListEmployee').html(str);
+
+            var projectId = '';
+            //Display project info Employee
+            $('#projectListEmployee').on('click', '.view-modal', function() {
+                var elementID = $(this).attr('id');
+                var getRealId = elementID.substr(6);
+                projectId = getRealId;
+                loadSpecifiedProjectInfo_Employee(projectId);
+            });
         },
         error: function() {
             console.log('Load data failed!');
+        }
+    });
+}
+
+function loadSpecifiedProjectInfo_Employee(projectId) {
+    $.ajax({
+        url: 'http://localhost:1337/projects/' + projectId,
+        type: 'GET',
+        success: function(result) {
+            $('#projectViewTitleEmployee').html(result.name);
+            var projectDescription = result.description;
+            var fixedProjectDescription = projectDescription.replace(/\n/i, '<br>');
+            // document.getElementById('projectViewDescriptionEmployee').innerHTML = fixedProjectDescription;
+            $('#projectViewDescriptionEmployee').html(fixedProjectDescription);
+            $('#projectViewStartDateEmployee').html(result.start_date);
+            $('#projectViewEndDateEmployee').html(result.end_date);
+            $('#projectViewNumberOfStaffEmployee').html(result.staff.length);
+            $('#projectViewStatusEmployee').html(result.status);
         }
     });
 }
@@ -655,7 +694,6 @@ function sentNewProjectInfo() {
     var finalEndDate = check_endDateString.utc().format('YYYY-MM-DD');
 
     //Continue collect value from html input elements
-    var number_of_staffs = $('#numberOfStaffsAdd').val();
     var status = $('#statusSelectionAdd').val();
 
     //Sent new project data back to server
@@ -663,11 +701,10 @@ function sentNewProjectInfo() {
         url: 'http://localhost:1337/projects',
         type: 'POST',
         data: {
-            "project_name": project_name,
+            "name": project_name,
             "description": description,
             "start_date": finalStartDate,
             "end_date": finalEndDate,
-            "number_of_staffs": number_of_staffs,
             "status": status
         },
         headers: {
@@ -694,7 +731,7 @@ function sentNewProjectInfo() {
 function sentEditedProjectInfo(id) {
     //Collect value from html input elements
     var project_name = $('#projectNameEdit').val();
-    var description = $('#descriptionAdd').val();
+    var description = $('#descriptionEdit').val();
 
     //Get start_date and end_date format
     var startDate = new Date($('#startDateEdit').val() + 'UTC');
@@ -710,19 +747,20 @@ function sentEditedProjectInfo(id) {
     var finalEndDate = check_endDateString.utc().format('YYYY-MM-DD');
 
     //Continue collect value from html input elements
-    var number_of_staffs = $('#numberOfStaffsEdit').val();
     var status = $('#statusSelectionEdit').val();
 
     // Sent edited project data back to server
     $.ajax({
         url: 'http://localhost:1337/projects/' + id,
         type: 'PUT',
+        headers: {
+            'Authorization' : 'Bearer ' + localStorage.token
+        },
         data: {
-            "project_name": project_name,
+            "name": project_name,
             "description": description,
             "start_date": finalStartDate,
             "end_date": finalEndDate,
-            "number_of_staffs": number_of_staffs,
             "status": status
         },
         headers: {
@@ -833,7 +871,6 @@ function loadAssignmentInfo_Manager() {
                 var elementId = $(this).attr('id');
                 var getRealId = elementId.substr(6);
                 var assignmentID = getRealId;
-                console.log(result);
                 for(let i in result) {
                     var assignmentDescription = result[i].description;
                     var fixedAssignmentDescription = assignmentDescription.replace(/\n/i, '<br>');
@@ -935,6 +972,11 @@ function sentNewAssignmentInfo() {
     //Convert check_assignmentEndDateString to format 'YYYY-MM-DD'
     var finalAssignmentEndDate = check_assignmentEndDateString.utc().format('YYYY-MM-DD');
 
+    var assignment_date = new Date();
+    var assignment_dateString = assignment_date.toISOString();
+    var check_assignment_dateString = moment(assignment_dateString);
+    var finalAssignmentDate = check_assignment_dateString.utc().format('YYYY-MM-DD');
+
     $.ajax({
         url: 'http://localhost:1337/assignments',
         type: 'POST',
@@ -942,15 +984,16 @@ function sentNewAssignmentInfo() {
             'Authorization' : 'Bearer ' + localStorage.token
         },
         data: {
-            "assignment_name" : assignment_name,
-            "assignment_description" : assignment_description,
+            "name" : assignment_name,
+            "description" : assignment_description,
             "status" : status,
-            "assignment_end_date" : finalAssignmentEndDate,
+            "create_date" : finalAssignmentDate,
+            "end_date" : finalAssignmentEndDate,
             "staff" : {
-                "id" : specified_staff
+                "_id" : specified_staff
             },
             "project" : {
-                "id" : specified_project
+                "_id" : specified_project
             }
         },
         success: function() {
@@ -996,16 +1039,16 @@ function sentEditedAssignmentInfo(id) {
             'Authorization' : 'Bearer ' + localStorage.token
         },
         data: {
-            "assignment_name" : assignment_name,
-            "assignment_description": assignment_description,
+            "name" : assignment_name,
+            "description": assignment_description,
             "status" : status,
             "staff" : {
-                "id" : specified_staff
+                "_id" : specified_staff
             },
             "project" : {
-                "id" : specified_project
+                "_id" : specified_project
             },
-            "assignment_end_date" : finalAssignmentEndDate
+            "end_date" : finalAssignmentEndDate
         },
         success: function() {
             $('#editAssignmentModal').modal('hide');
@@ -1262,9 +1305,9 @@ function loadDepartmentInfo() {
             var str = '';
             $.each(result, function(i, items) {
                 str += '<tr>';
-                str += '<td>' + items.department_name + '</td>';
+                str += '<td>' + items.name + '</td>';
                 str += '<td>' + items.staffs.length + '</td>';
-                str += '<td>' + items.department_description + '</td>';
+                str += '<td>' + items.description + '</td>';
                 str += '<td class="dropdownMod">' + '<div class="dropdown">\
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
                                         <i class="dw dw-more"></i>\
@@ -1406,21 +1449,28 @@ function getDepartmentStaffList(id) {
             var str = '';
             var satffGender = '';
             // console.log(result.staff);
-            var departmentStaffListArray = result.staff;
-            for(let i in departmentStaffListArray) {
-                // console.log(departmentStaffListArray[i].staff_name);
-                if(departmentStaffListArray[i].gender == true) {
-                    satffGender = 'Nam';
-                }else {
-                    satffGender = 'Nữ';
-                }
-                str += '<tr>';
-                str += '<td>' + departmentStaffListArray[i].staff_name + '</td>';
-                str += '<td>' + satffGender + '</td>';
-                str += '<td>' + departmentStaffListArray[i].email + '</td>';
-                str += '<td>' + departmentStaffListArray[i].phone_number + '</td>';
+            var departmentStaffListArray = result.staffs;
+            if(departmentStaffListArray == 0) {
+                str += '<tr class="text-center">';
+                str += '<td colspan="4">Chưa có nhân viên</td>';
                 str += '</tr>';
-            };
+            }else {
+                for(let i in departmentStaffListArray) {
+                    // console.log(departmentStaffListArray[i].staff_name);
+                    if(departmentStaffListArray[i].gender == true) {
+                        satffGender = 'Nam';
+                    }else {
+                        satffGender = 'Nữ';
+                    }
+                    str += '<tr class="text-center">';
+                    str += '<td>' + departmentStaffListArray[i].name + '</td>';
+                    str += '<td>' + satffGender + '</td>';
+                    str += '<td>' + departmentStaffListArray[i].email + '</td>';
+                    str += '<td>' + departmentStaffListArray[i].phone_number + '</td>';
+                    str += '</tr>';
+                };
+            }
+            
             $('#departmentStaffList').html(str);
         }
     });

@@ -128,6 +128,33 @@
 
 	<!-- Table projects list and modal -->
 	<div class="main-container">
+		<!--Project view modal-->
+		<div class="modal fade" id="projectViewModalEmployee">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<h4><strong>Thông tin nhiệm vụ</strong></h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					</div>
+					<div class="modal-body">
+						<div class="pd-20">
+							<h4 id="projectViewTitleEmployee" class="card-title weight-500"></h4>
+							<p id="projectViewDescriptionEmployee" class="card-tex"></p>
+						</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item"><label for="projectStartDate" class="d-flex"><strong>Ngày bắt đầu:</strong><h5 id="projectViewStartDateEmployee" class="pl-2"></h5></label></li>
+							<li class="list-group-item"><label for="projectEndDate" class="d-flex"><strong>Ngày kết thúc:</strong><h5 id="projectViewEndDateEmployee" class="pl-2"></h5></label></li>
+							<li class="list-group-item"><label for="projectNumberOfStaff" class="d-flex"><strong>Số nhân viên tham gia:</strong><h5 id="projectViewNumberOfStaffEmployee" class="pl-2"></h5></label></li>
+							<li class="list-group-item"><label for="projectStatus" class="d-flex"><strong>Trạng thái:</strong><h5 id="projectViewStatusEmployee" class="pl-2"></h5></label></li>
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary btn-sm" data-dismiss="modal">Đóng</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!--Table projects-->
 		<div class="pd-20 card-box mb-30">
 			<!--Title-->
@@ -179,8 +206,9 @@
 						</table>
 					</div>
 				</div>
+
 				<!--Pagination next,pre-->
-				<div class="row">
+				<!-- <div class="row">
 					<div class="col-sm-12 col-md-12">
 						<div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
 							<ul class="pagination pull-right">
@@ -208,7 +236,7 @@
 							</ul>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
