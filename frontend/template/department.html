@@ -275,6 +275,40 @@
 				</div>
 			</div>
 		</div>
+
+		<!--Department display staff list modal-->
+		<div class="modal fade" id="departmentStaffListModal">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4><strong>Danh sách nhân viên </strong></h4>
+					</div>
+					<div class="modal-body">
+						<table class="data-table table stripe hover nowrap dataTable no-footer dtr-inline"
+							id="staffTable" role="grid" aria-describedby="DataTables_Table_0_info">
+							<thead>
+								<tr role="row">
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Department Staff Name: activate to sort column ascending">Họ tên</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Department Staff Gender: activate to sort column ascending">Giới tính</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Description: activate to sort column ascending">Email</th>
+									<th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+										aria-label="Description: activate to sort column ascending">Số điện thoại</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody id="departmentStaffList">
+							</tbody>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary btn-sm" data-dismiss="modal"><strong>Đóng</strong></button>
+					</div>
+				</div>
+			</div>
+		</div>
 	
 		<!--Table departments-->
 		<div class="pd-20 card-box mb-30">

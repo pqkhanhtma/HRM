@@ -131,6 +131,34 @@
 
 	<!-- Table assignment and modal -->
 	<div class="main-container">
+		<!--Assignment view modal-->
+		<div class="modal fade" id="assignmentViewModalEmployee">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<h4><strong>Thông tin nhiệm vụ</strong></h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					</div>
+					<div class="modal-body">
+						<div class="pd-20">
+							<h4 id="assignmentViewTitleEmployee" class="card-title weight-500"></h4>
+							<p id="assignmentViewDescriptionEmployee" class="card-tex"></p>
+						</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item"><label for="assignmentStartDate" class="d-flex"><strong>Ngày bắt đầu:</strong><h5 id="assignmentViewStartDateEmployee" class="pl-2"></h5></label></li>
+							<li class="list-group-item"><label for="assignmentEndDate" class="d-flex"><strong>Ngày kết thúc:</strong><h5 id="assignmentViewEndDateEmployee" class="pl-2"></h5></label></li>
+							<li class="list-group-item"><label for="assignmentProject" class="d-flex"><strong>Dự án:</strong><h5 id="assignmentViewProjectEmployee" class="pl-2"></h5></label></li>
+							<li class="list-group-item"><label for="assignmentStatus" class="d-flex"><h5 id="assignmentViewStatusEmployee"></h5></label></li>
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary btn-sm" data-dismiss="modal">Đóng</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
 		<!--Table assignments-->
 		<div class="pd-20 card-box mb-30">
 			<!--Title-->
@@ -166,7 +194,7 @@
                                     <th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                         aria-label="Assignment Name: activate to sort column ascending">Tên nhiệm vụ</th>
                                     <th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                        aria-label="Assignment description: activate to sort column ascending">Nội dung</th>
+                                        aria-label="Create Date: activate to sort column ascending">Ngày bắt đầu</th>
                                     <th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                         aria-label="End Date: activate to sort column ascending">Ngày kết thúc</th>
                                     <th class="" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"

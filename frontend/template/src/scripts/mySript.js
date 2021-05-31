@@ -25,10 +25,14 @@ $(document).ready(function () {
         logOut();
     });
 
+    //Collect Staff id
+    var getStaffId = localStorage.staff_id;
+
+
     //==============PROJECTS======================
     //Retrieve projects data from server
     loadProjectsInfo_Manager();
-    loadProjectsInfo_Employee();
+    loadProjectsInfo_Employee(getStaffId)
 
     //projectlist filter
     $("#projectSearch").on("keyup", function () {
@@ -91,9 +95,8 @@ $(document).ready(function () {
 
     //========ASSIGNMENTS==================
     //Retrieve assignments data from server
-    var getId = localStorage.staff_id;
-    loadAssignmentInfo_Employee(getId);
-    loadAssignmentInfo_Manager();;  
+    loadAssignmentInfo_Employee(getStaffId);
+    loadAssignmentInfo_Manager();;
 
     //Assignment filter
     $("#assignmentSearch").on("keyup", function () {
@@ -113,7 +116,7 @@ $(document).ready(function () {
         sentNewAssignmentInfo();
     });
 
-    //Delete specified assignment 
+    //Delete specified assignment
     $('#assignmentListManager').on('click', '.delete-modal', function() {
         var id = '';
         var elementId = $(this).attr('id');
@@ -201,7 +204,16 @@ $(document).ready(function () {
             deleteSpecifiedDepartment(departmentId);
         });
     });
-    
+
+    //View department staff list
+    $('#departmentList').on('click', '.view-modal', function() {
+        var elementId = $(this).attr('id');
+        var getRealId = elementId.substr(6);
+        departmentId = getRealId;
+        // console.log(departmentId);
+        getDepartmentStaffList(departmentId);
+    });
+
 });
 
 
@@ -228,7 +240,7 @@ function loadStaffsInfo_Manager() {
 
                 //Fetch data to html table
                 str += '<tr>';
-                str += '<td>' + items.staff_name + '</td>';
+                str += '<td>' + items.name + '</td>';
                 str += '<td>' + items.birthday + '</td>';
                 str += '<td>' + gender + '</td>';
                 str += '<td>' + items.phone_number + '</td>';
@@ -260,7 +272,7 @@ function loadStaffsInfo_Manager() {
                 id = getRealId;
                 for (let i in result) {
                     if (result[i].id == id) {
-                        $('#staffNameEdit').val(result[i].staff_name);
+                        $('#staffNameEdit').val(result[i].name);
                         $('#birthdayEdit').val(result[i].birthday);
                         if(result[i].gender == true) {
                             $('#genderRadioMaleEdit').prop('checked', true);
@@ -287,7 +299,7 @@ function loadStaffsInfo_Manager() {
                 for (var i = 0; i < result.length; i++) {
                     //Create option list for #assignmentStaffListAdd select tag
                     var staffListOptionTagAdd = document.createElement('option');
-                    staffListOptionTagAdd.innerHTML = result[i].staff_name;
+                    staffListOptionTagAdd.innerHTML = result[i].name;
                     staffListOptionTagAdd.value = result[i].id;
                     staffListSelectTagAdd.appendChild(staffListOptionTagAdd);
                 }
@@ -302,7 +314,7 @@ function loadStaffsInfo_Manager() {
                 for (var i = 0; i < result.length; i++) {
                     //Create option list for #assignmentStaffListEdit select tag
                     var staffListOptionTagEdit = document.createElement('option');
-                    staffListOptionTagEdit.innerHTML = result[i].staff_name;
+                    staffListOptionTagEdit.innerHTML = result[i].name;
                     staffListOptionTagEdit.value = result[i].id;
                     staffListSelectTagEdit.appendChild(staffListOptionTagEdit);
                 }
@@ -324,8 +336,8 @@ function loadSpecifiedStaffInfo(reportId) {
             var reportArray = result.reports;
             for(let i in reportArray) {
                 if(reportId == reportArray[i].id) {
-                    $('#reportTitleEdit').val(reportArray[i].report_title);
-                    $('#reportDescriptionEdit').val(reportArray[i].report_content);
+                    $('#reportTitleEdit').val(reportArray[i].name);
+                    $('#reportDescriptionEdit').val(reportArray[i].description);
                     $('#reportProjectListEdit').val(reportArray[i].project);
                     $('#saveReportButtonEditModal').click(function() {
                         sentEditedReportInfo(reportArray[i].id);
@@ -357,7 +369,7 @@ function sentNewStaffInfo() {
     var phone_number = $('#phoneNumberAdd').val();
     var email = $('#emailAdd').val();
     var role = $('#roleSelectionAdd').val();
-    
+
 
     //Sent new staff data back to server
     $.ajax({
@@ -486,10 +498,10 @@ function loadProjectsInfo_Manager() {
             $.each(result, function (i, items) {
                 //Fetch data to html table
                 str += '<tr>';
-                str += '<td>' + items.project_name + '</td>';
+                str += '<td>' + items.name + '</td>';
                 str += '<td>' + items.start_date + '</td>';
                 str += '<td>' + items.end_date + '</td>';
-                str += '<td>' + items.number_of_staffs + '</td>';
+                str += '<td>' + items.staff.length + '</td>';
                 str += '<td>' + items.status + '</td>';
                 str += '<td class="dropdownMod">' + '<div class="dropdown">\
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
@@ -520,7 +532,7 @@ function loadProjectsInfo_Manager() {
                         $('#startDateEdit').val(result[i].start_date);
                         $('#endDateEdit').val(result[i].end_date);
                         $('#numberOfStaffsEdit').val(result[i].number_of_staffs);
-                    } 
+                    }
                 }
 
                 //Sent edited project infomation
@@ -535,7 +547,7 @@ function loadProjectsInfo_Manager() {
                 for (var i = 0; i < result.length; i++) {
                     //Create option list for #assignmentProjectListAdd select tag
                     var projectListOptionTagAdd = document.createElement('option');
-                    projectListOptionTagAdd.innerHTML = result[i].project_name;
+                    projectListOptionTagAdd.innerHTML = result[i].name;
                     projectListOptionTagAdd.value = result[i].id;
                     projectListSelectTagAdd.appendChild(projectListOptionTagAdd);
                 }
@@ -550,7 +562,7 @@ function loadProjectsInfo_Manager() {
                 for (var i = 0; i < result.length; i++) {
                     //Create option list for #assignmentProjectListEdit select tag
                     var projectListOptionTagEdit = document.createElement('option');
-                    projectListOptionTagEdit.innerHTML = result[i].project_name;
+                    projectListOptionTagEdit.innerHTML = result[i].name;
                     projectListOptionTagEdit.value = result[i].id;
                     projectListSelectTagEdit.appendChild(projectListOptionTagEdit);
                 }
@@ -567,7 +579,7 @@ function loadProjectsInfo_Manager() {
                 for (var i = 0; i < result.length; i++) {
                     //Create option list for #reportProjectListAdd select tag
                     var reportProjectListOptionTagAdd = document.createElement('option');
-                    reportProjectListOptionTagAdd.innerHTML = result[i].project_name;
+                    reportProjectListOptionTagAdd.innerHTML = result[i].name;
                     reportProjectListOptionTagAdd.value = result[i].id;
                     reportProjectListSelectTagAdd.appendChild(reportProjectListOptionTagAdd);
                 }
@@ -582,7 +594,7 @@ function loadProjectsInfo_Manager() {
                 for (var i = 0; i < result.length; i++) {
                     //Create option list for #reportProjectListEdit select tag
                     var reportProjectListOptionTagEdit = document.createElement('option');
-                    reportProjectListOptionTagEdit.innerHTML = result[i].project_name;
+                    reportProjectListOptionTagEdit.innerHTML = result[i].name;
                     reportProjectListOptionTagEdit.value = result[i].id;
                     reportProjectListSelectTagEdit.appendChild(reportProjectListOptionTagEdit);
                 }
@@ -596,20 +608,21 @@ function loadProjectsInfo_Manager() {
 }
 
 //Retrieve projects data function for Employee
-function loadProjectsInfo_Employee() {
+function loadProjectsInfo_Employee(id) {
     $.ajax({
-        url: 'http://localhost:1337/projects',
+        url: 'http://localhost:1337/staffs/' + id,
         type: 'GET',
         success: function (result) {
             //Collect project list from database and display on #projectList table
             var str = '';
-            $.each(result, function (i, items) {
+            var employeeProjectListArray = result.projects;
+            $.each(employeeProjectListArray, function (i, items) {
                 //Fetch data to html table
                 str += '<tr>';
-                str += '<td>' + items.project_name + '</td>';
+                str += '<td>' + items.name + '</td>';
                 str += '<td>' + items.start_date + '</td>';
                 str += '<td>' + items.end_date + '</td>';
-                str += '<td>' + items.number_of_staffs + '</td>';
+                str += '<td>' + items.staff.length + '</td>';
                 str += '<td>' + items.status + '</td>';
                 str += '</tr>';
             });
@@ -771,16 +784,17 @@ function loadAssignmentInfo_Manager() {
             str = '';
             $.each(result, function(i, items) {
                 str += '<tr>';
-                str += '<td>' + items.assignment_name + '</td>';
-                str += '<td>' + items.staff.staff_name + '</td>';
-                str += '<td>' + items.assignment_description + '</td>';
-                str += '<td>' + items.assignment_end_date + '</td>';
+                str += '<td>' + items.name + '</td>';
+                str += '<td>' + items.staff.name + '</td>';
+                str += '<td>' + items.create_date + '</td>';
+                str += '<td>' + items.end_date + '</td>';
                 str += '<td>' + items.status + '</td>';
                 str += '<td class="dropdownMod">' + '<div class="dropdown">\
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
                                         <i class="dw dw-more"></i>\
                                     </a>\
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
+                                        <a id="dataV_'+ items.id + '"' + ' class="dropdown-item view-modal" href="#assignmentViewModalManager" data-toggle="modal" role="button"><i class="dw dw-eye"></i> Xem nội dung</a>\
                                         <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editAssignmentModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
                                         <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" href="#deleteAssignmentConfirmationModal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
                                     </div>\
@@ -800,9 +814,10 @@ function loadAssignmentInfo_Manager() {
                 id = getRealId;
                 for(let i in result) {
                     if(result[i].id == id) {
-                        $('#assignmentTitleEdit').val(result[i].assignment_name);
-                        $('#assignmentDescriptionEdit').val(result[i].assignment_description);
-                        $('#assignmentEndDateEdit').val(result[i].assignment_end_date);
+                        // console.log(result[i].status);
+                        $('#assignmentTitleEdit').val(result[i].name);
+                        $('#assignmentDescriptionEdit').val(result[i].description);
+                        $('#assignmentEndDateEdit').val(result[i].end_date);
                         $('#assignmentStatusSelectionEdit').val(result[i].status);
                     }
                 }
@@ -811,6 +826,29 @@ function loadAssignmentInfo_Manager() {
                 $('#saveAssignmentButtonEditModal').click(function() {
                     sentEditedAssignmentInfo(id);
                 });
+            });
+
+            //View assignment detail for Manager
+            $('#assignmentListManager').on('click', '.view-modal', function () {
+                var elementId = $(this).attr('id');
+                var getRealId = elementId.substr(6);
+                var assignmentID = getRealId;
+                console.log(result);
+                for(let i in result) {
+                    var assignmentDescription = result[i].description;
+                    var fixedAssignmentDescription = assignmentDescription.replace(/\n/i, '<br>');
+                    $('#assignmentViewTitleManager').html(result[i].name);
+                    $('#assignmentViewDescriptionManager').html(fixedAssignmentDescription);
+                    $('#assignmentViewStartDateManager').html(result[i].create_date);
+                    $('#assignmentViewEndDateManager').html(result[i].end_date);
+                    var assignmentProjectInfoArray = result[i].project;
+                    if(result[i].id == assignmentID) {
+                        $('#assignmentViewProjectManager').html(assignmentProjectInfoArray.name);
+                    }
+                    if (result[i].id == assignmentID) {
+                        $('#assignmentViewStatusManager').html(result[i].status);
+                    }
+                }
             });
         }
     });
@@ -824,6 +862,7 @@ function loadAssignmentInfo_Employee(id) {
         success: function(result) {
             str = '';
             var staffAssignmentArray = result.assignments;
+            var staffProjectInfoArray = result.projects;
             if(staffAssignmentArray.length == 0) {
                 str += '<tr>';
                 str += '<td class="text-center" colspan = "4">Bạn hiện đang không có nhiệm vụ nào</td>'
@@ -831,14 +870,46 @@ function loadAssignmentInfo_Employee(id) {
             }else {
                 for(let i in staffAssignmentArray) {
                     str += '<tr>';
-                    str += '<td>' + staffAssignmentArray[i].assignment_name + '</td>';
-                    str += '<td>' + staffAssignmentArray[i].assignment_description + '</td>';
-                    str += '<td>' + staffAssignmentArray[i].assignment_end_date + '</td>';
+                    str += '<td>' + staffAssignmentArray[i].name + '</td>';
+                    str += '<td>' + staffAssignmentArray[i].create_date + '</td>';
+                    str += '<td>' + staffAssignmentArray[i].end_date + '</td>';
                     str += '<td>' + staffAssignmentArray[i].status + '</td>';
+                    str += '<td class="dropdownMod">' + '<div class="dropdown">\
+                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
+                                        <i class="dw dw-more"></i>\
+                                    </a>\
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
+                                        <a id="dataV_'+ staffAssignmentArray[i].id + '"' + ' class="dropdown-item view-modal" href="#assignmentViewModalEmployee" data-toggle="modal" role="button"><i class="dw dw-eye"></i> Xem nội dung</a>\
+                                    </div>\
+                                </div>'+ '</td>';
                     str += '</tr>';
                 };
             }
             $('#assignmentListEmployee').html(str);
+
+            //View assignment detail for Employee
+            $('#assignmentListEmployee').on('click', '.view-modal', function () {
+                var elementId = $(this).attr('id');
+                var getRealId = elementId.substr(6);
+                var assignmentID = getRealId;
+                for(let i in staffAssignmentArray) {
+                    var assignmentDescription = staffAssignmentArray[i].description;
+                    var fixedAssignmentDescription = assignmentDescription.replace(/\n/i, '<br>');
+                    $('#assignmentViewTitleEmployee').html(staffAssignmentArray[i].name);
+                    $('#assignmentViewDescriptionEmployee').html(fixedAssignmentDescription);
+                    $('#assignmentViewStartDateEmployee').html(staffAssignmentArray[i].create_date);
+                    $('#assignmentViewEndDateEmployee').html(staffAssignmentArray[i].end_date);
+                    for(let j in staffProjectInfoArray) {
+                        if(staffAssignmentArray[i].project == staffProjectInfoArray[j].id) {
+                            // console.log(staffProjectInfoArray[j].name);
+                            $('#assignmentViewProjectEmployee').html(staffProjectInfoArray[j].name);
+                        }
+                    }
+                    if (staffAssignmentArray[i].id == assignmentID) {
+                        $('#assignmentViewStatusEmployee').html(staffAssignmentArray[i].status);
+                    }
+                }
+            });
         },
         error: function() {
             console.log("load data Failed!");
@@ -990,10 +1061,10 @@ function loadReportInfo_Manager() {
             str = '';
             $.each(result, function(i, items) {
                 str += '<tr>';
-                str += '<td>' + items.report_title + '</td>';
-                str += '<td>' + items.staff.staff_name + '</td>';
-                str += '<td>' + items.project.project_name + '</td>';
-                str += '<td>' + items.report_date + '</td>';
+                str += '<td>' + items.name + '</td>';
+                str += '<td>' + items.staff.name + '</td>';
+                str += '<td>' + items.project.name + '</td>';
+                str += '<td>' + items.create_date + '</td>';
                 str += '<td class="dropdownMod">' + '<div class="dropdown">\
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
                                         <i class="dw dw-more"></i>\
@@ -1005,7 +1076,7 @@ function loadReportInfo_Manager() {
                 str += '</tr>';
             });
             $('#reportListManager').html(str);
-            
+
             var reportViewId = '';
             for (let i in result) {
                 //Load detail specified report
@@ -1015,13 +1086,13 @@ function loadReportInfo_Manager() {
                     reportViewId = getRealId;
                     if(reportViewId == result[i].id ) {
                         // console.log(result[i].id);
-                        $('#reportViewTitle').html(result[i].report_title);
-                        var reportContent = result[i].report_content;
+                        $('#reportViewTitle').html(result[i].name);
+                        var reportContent = result[i].description;
                         var fixedReportContent = reportContent.replace(/\n/i, '<br>');
                         $('#reportViewDescription').html(fixedReportContent);
-                        $('#reportViewStaff').html(result[i].staff.staff_name);
-                        $('#reportViewDate').html(result[i].report_date);
-                        $('#reportViewProject').html(result[i].project.project_name);
+                        $('#reportViewStaff').html(result[i].staff.name);
+                        $('#reportViewDate').html(result[i].create_date);
+                        $('#reportViewProject').html(result[i].project.name);
                     }
                 });
             }
@@ -1046,11 +1117,10 @@ function loadReportInfo_Employee() {
                 str += '</tr>';
             }else {
                 for(let i in staffReportArray) {
-                    // console.log(staffReportArray[i].id);
                     str += '<tr>';
-                    str += '<td>'+ staffReportArray[i].report_title + '</td>';
-                    str += '<td>'+ staffReportArray[i].report_project + '</td>';
-                    str += '<td>'+ staffReportArray[i].report_date + '</td>';
+                    str += '<td>'+ staffReportArray[i].name + '</td>';
+                    str += '<td>'+ staffReportArray[i].report_project_name + '</td>';
+                    str += '<td>'+ staffReportArray[i].create_date + '</td>';
                     str += '<td class="dropdownMod">' + '<div class="dropdown">\
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">\
                                         <i class="dw dw-more"></i>\
@@ -1089,16 +1159,16 @@ function sentNewReportInfo() {
         url: 'http://localhost:1337/reports',
         type: 'POST',
         data: {
-            "report_title" : report_title,
-            "report_content" : report_content,
-            "report_date": finalReportDate,
+            "name" : report_title,
+            "description" : report_content,
+            "create_date": finalReportDate,
             "staff": {
-                "id": specified_staff
+                "_id": specified_staff
             },
             "project": {
-                "id": specified_project
+                "_id": specified_project
             },
-            "report_project": report_project
+            "report_project_name": report_project
         },
         success: function() {
             $('#addReportModal').modal('hide');
@@ -1130,25 +1200,25 @@ function sentEditedReportInfo(specifiedReportId) {
         url: 'http://localhost:1337/reports/' + specifiedReportId,
         type: 'PUT',
         data: {
-            "report_title": report_title,
-            "report_content": report_content,
-            "report_project": report_project,
+            "name": report_title,
+            "description": report_content,
+            "report_project_name": report_project,
             "project": {
-                "id": specified_project
+                "_id": specified_project
             }
         },
         success: function() {
             $('#editReportModal').modal('hide');
             $('#reportStatusModalConfirmButton').show();
             $('#reportStatusModalCancelButton').hide();
-            $('#reportStatusModalTitle').html('Đã sửa thông tin báo cáo ' + report_title + '!');
+            $('#reportStatusModalTitle').html('Đã sửa thông tin ' + report_title + '!');
             $('#reportStatusModal').modal();
             loadReportInfo_Employee();
         },
         error: function() {
             $('#reportStatusModalConfirmButton').hide();
             $('#reportStatusModalCancelButton').show();
-            $('#reportStatusModalTitle').html('Không thể sửa thông tin báo cáo ' + report_title + '!');
+            $('#reportStatusModalTitle').html('Không thể sửa thông tin ' + report_title + '!');
             $('#reportStatusModal').modal();
         }
     });
@@ -1183,9 +1253,12 @@ function loadDepartmentInfo() {
     $.ajax({
         url: 'http://localhost:1337/departments',
         type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.token
+        },
         success: function(result) {
             // console.log(result);
-            // console.log(result[0].department_name);
+            // console.log(result[0].staff.length);
             var str = '';
             $.each(result, function(i, items) {
                 str += '<tr>';
@@ -1197,10 +1270,11 @@ function loadDepartmentInfo() {
                                         <i class="dw dw-more"></i>\
                                     </a>\
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">\
+                                        <a id="dataV_'+ items.id + '"' + ' class="dropdown-item view-modal" href="#departmentStaffListModal" data-toggle="modal" role="button"><i class="dw dw-eye"></i> Xem</a>\
                                         <a id="dataE_'+ items.id + '"' + ' class="dropdown-item edit-modal" href="#editDepartmentModal" data-toggle="modal" role="button"><i class="dw dw-edit2"></i> Chỉnh sửa</a>\
                                         <a id="dataR_'+ items.id + '"' + ' class="dropdown-item delete-modal" data-toggle="modal"><i class="dw dw-delete-3"></i> Xóa</a>\
                                     </div>\
-                                </div>'+'</td>';
+                                </div>'+ '</td>';
                 str += '</tr>';
                 // console.log(items.department_name);
             });
@@ -1262,7 +1336,7 @@ function sentNewDepartmentInfo() {
     });
 }
 
-//Sent edited department 
+//Sent edited department
 function sentEditedDepartmentInfo(id) {
     //Collect value from input edit department infomation
     var department_name = $('#departmentNameEdit').val();
@@ -1321,6 +1395,37 @@ function deleteSpecifiedDepartment(id) {
     });
 }
 
+function getDepartmentStaffList(id) {
+    $.ajax({
+        url: 'http://localhost:1337/departments/' + id,
+        type: 'GET',
+        headers: {
+            'Authorization' : 'Bearer ' + localStorage.token
+        },
+        success: function(result) {
+            var str = '';
+            var satffGender = '';
+            // console.log(result.staff);
+            var departmentStaffListArray = result.staff;
+            for(let i in departmentStaffListArray) {
+                // console.log(departmentStaffListArray[i].staff_name);
+                if(departmentStaffListArray[i].gender == true) {
+                    satffGender = 'Nam';
+                }else {
+                    satffGender = 'Nữ';
+                }
+                str += '<tr>';
+                str += '<td>' + departmentStaffListArray[i].staff_name + '</td>';
+                str += '<td>' + satffGender + '</td>';
+                str += '<td>' + departmentStaffListArray[i].email + '</td>';
+                str += '<td>' + departmentStaffListArray[i].phone_number + '</td>';
+                str += '</tr>';
+            };
+            $('#departmentStaffList').html(str);
+        }
+    });
+}
+
 
 //===============ACCOUNTS FUNCTIONS=========================
 //Login function
@@ -1340,19 +1445,21 @@ function logIn() {
             //Set accountinfomation to local storage
             localStorage.setItem('token', result.jwt);
             localStorage.setItem('staff_id', result.user.staff.id);
-            localStorage.setItem('staff_name', result.user.staff.staff_name);
+            localStorage.setItem('staff_name', result.user.staff.name);
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('email', result.user.email);
             localStorage.setItem('phone_number', result.user.staff.phone_number);
             localStorage.setItem('birthday', result.user.staff.birthday);
             localStorage.setItem('address', result.user.staff.address);
-            localStorage.setItem('staff_description', result.user.staff.description);
+            var staffDescription = result.user.staff.description;
+            var fixedStaffDescription = staffDescription.replace(/\n/i, '<br>');
+            localStorage.setItem('staff_description', fixedStaffDescription);
             localStorage.setItem('Authorization', result.user.role.type);
             localStorage.setItem('role', result.user.staff.role);
-            localStorage.setItem('department', result.user.department.department_name);
+            localStorage.setItem('department', result.user.department.name);
             //Check if user avatar availble then set user avatar to local storage
-            if (result.user.user_avatar) {
-                localStorage.setItem('avatar', result.user.user_avatar.formats.thumbnail.url);
+            if (result.user.avatar) {
+                localStorage.setItem('avatar', result.user.avatar.formats.thumbnail.url);
             }
             $('#loginStatusModalCancelButton').hide();
             $('#loginStatusModalConfirmButton').show();
